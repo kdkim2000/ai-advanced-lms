@@ -1,0 +1,354 @@
+---
+title: "텍스트 데이터 변환과 통계 분석"
+description: "텍스트 벡터화 및 통계 분석"
+---
+
+# 텍스트 데이터 변환과 통계 분석
+
+## 1. 텍스트를 숫자로 변환해야 하는 이유
+
+**기계학습과 통계분석**을 위해서는 텍스트를 **수치화**해야 합니다.
+
+```
+텍스트 데이터 → 벡터 변환 → 기계학습/통계분석
+```
+
+<Callout type="info" title="핵심 개념">
+컴퓨터는 텍스트를 직접 이해할 수 없습니다. 텍스트를 숫자(벡터)로 변환해야 유사도 계산, 분류, 클러스터링 등의 분석이 가능합니다.
+</Callout>
+
+---
+
+## 2. 텍스트 데이터 변환의 주요 기법
+
+### 변환 기법 개요
+
+| 기법 | 설명 | 특징 |
+|------|------|------|
+| **Bag of Words** | 단어 출현 횟수를 벡터로 표현 | 구현 간단, 순서 무시 |
+| **TF-IDF** | 단어 빈도 + 희귀성 반영 | 중요 단어 강조 |
+| **N-gram** | 연속 단어 조합 | 문맥 정보 일부 반영 |
+
+### 활용 분야
+
+- **문서 분류**: 스팸 필터링, 감성 분석
+- **키워드 추출**: 문서 요약, 태깅
+- **검색 시스템**: 문서 랭킹
+- **유사도 계산**: 추천 시스템, RAG
+
+---
+
+## 3. Bag of Words (BOW)
+
+### 단어의 출현 횟수를 벡터로 표현
+
+문장 내 **어떤 단어가 몇 번 출현하는지**를 벡터로 표현합니다.
+
+```
+예시: "AI 데이터 AI 머신러닝"
+
+1. 단어 분리 (Tokenization)
+   → AI, 데이터, AI, 머신러닝
+
+2. 단어 가방 (Bag)
+   → AI, AI, 데이터, 머신러닝 (순서 정보 손실)
+
+3. 단어 빈도 (Counter)
+   → 'AI': 2, '데이터': 1, '머신러닝': 1
+
+4. 벡터 표현
+   → [2, 1, 1, 0, ...] (전체 어휘 기준)
+```
+
+### Python 구현
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+
+# 문서 목록
+documents = [
+    "AI 데이터 AI 머신러닝",
+    "데이터 분석 AI",
+    "머신러닝 딥러닝 AI"
+]
+
+# BOW 벡터화
+vectorizer = CountVectorizer()
+bow_matrix = vectorizer.fit_transform(documents)
+
+# 어휘 목록
+print(vectorizer.get_feature_names_out())
+# ['ai', '데이터', '딥러닝', '머신러닝', '분석']
+
+# 벡터 확인
+print(bow_matrix.toarray())
+# [[2 1 0 1 0]   문서1: AI 2번, 데이터 1번, 머신러닝 1번
+#  [1 1 0 0 1]   문서2: AI 1번, 데이터 1번, 분석 1번
+#  [1 0 1 1 0]]  문서3: AI 1번, 딥러닝 1번, 머신러닝 1번
+```
+
+### BOW의 장단점
+
+| 구분 | 내용 |
+|------|------|
+| **장점** | 구현이 간단하고 계산이 빠름 |
+| **단점** | 순서 정보 손실, 희소 행렬 문제 |
+
+<Callout type="warning" title="희소 행렬 문제">
+어휘가 많아지면 대부분의 값이 0인 희소(sparse) 행렬이 됩니다. 이는 메모리 낭비와 계산 비효율을 초래합니다.
+</Callout>
+
+---
+
+## 4. TF-IDF
+
+### 개념
+
+**TF-IDF = TF × IDF**
+
+- **TF (Term Frequency)**: 문서 내 단어 빈도
+- **IDF (Inverse Document Frequency)**: 단어의 희귀성
+
+### 수식
+
+```
+TF(t, d) = 문서 d에서 단어 t의 출현 횟수 / 문서 d의 전체 단어 수
+
+IDF(t, D) = log(전체 문서 수 / 단어 t가 포함된 문서 수)
+
+TF-IDF(t, d, D) = TF(t, d) × IDF(t, D)
+```
+
+### 핵심 아이디어
+
+| 단어 유형 | TF | IDF | TF-IDF |
+|----------|-----|-----|--------|
+| 흔한 단어 (예: "이", "는") | 높음 | 낮음 | 낮음 |
+| 희귀한 단어 (예: "딥러닝") | 낮음~중간 | 높음 | 높음 |
+
+<Callout type="info" title="TF-IDF의 의미">
+**희귀한 단어일수록 중요도가 높아집니다.** 모든 문서에 등장하는 단어는 구별력이 없으므로 낮은 점수를 받습니다.
+</Callout>
+
+### Python 구현
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+documents = [
+    "AI 데이터 AI 머신러닝",
+    "데이터 분석 AI",
+    "머신러닝 딥러닝 AI"
+]
+
+# TF-IDF 벡터화
+tfidf_vectorizer = TfidfVectorizer()
+tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+
+# 어휘 목록
+print(tfidf_vectorizer.get_feature_names_out())
+# ['ai', '데이터', '딥러닝', '머신러닝', '분석']
+
+# TF-IDF 값 확인
+import pandas as pd
+df = pd.DataFrame(
+    tfidf_matrix.toarray(),
+    columns=tfidf_vectorizer.get_feature_names_out()
+)
+print(df.round(3))
+```
+
+---
+
+## 5. 문서 유사도
+
+### 코사인 유사도 (Cosine Similarity)
+
+**두 문서 벡터가 얼마나 비슷한 방향인지** 측정합니다.
+
+```
+cos(θ) = (A · B) / (||A|| × ||B||)
+
+- 값 범위: -1 ~ 1
+- 1에 가까울수록 유사
+- 0은 무관
+- -1은 반대
+```
+
+### 유클리드 거리 (Euclidean Distance)
+
+**두 벡터의 직선 거리**를 측정합니다.
+
+```
+d(A, B) = √(Σ(Ai - Bi)²)
+
+- 값이 작을수록 유사
+```
+
+### Python 구현
+
+```python
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+documents = [
+    "파이썬 데이터 분석",
+    "파이썬 머신러닝",
+    "자바 웹 개발"
+]
+
+# TF-IDF 벡터화
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# 코사인 유사도 계산
+similarity = cosine_similarity(tfidf_matrix)
+print(similarity.round(3))
+# [[1.    0.447 0.   ]   문서1 vs 문서1, 2, 3
+#  [0.447 1.    0.   ]   문서2 vs 문서1, 2, 3
+#  [0.    0.    1.   ]]  문서3 vs 문서1, 2, 3
+```
+
+<Callout type="info" title="결과 해석">
+문서1(파이썬 데이터 분석)과 문서2(파이썬 머신러닝)는 0.447의 유사도를 보이며, 문서3(자바 웹 개발)과는 유사도가 0입니다.
+</Callout>
+
+---
+
+## 6. 문서 유사도의 활용
+
+### 검색 시스템
+
+```python
+def search(query, documents, vectorizer, doc_vectors):
+    """
+    쿼리와 가장 유사한 문서 검색
+    """
+    # 쿼리 벡터화
+    query_vector = vectorizer.transform([query])
+
+    # 유사도 계산
+    similarities = cosine_similarity(query_vector, doc_vectors)[0]
+
+    # 유사도 순으로 정렬
+    ranked_idx = similarities.argsort()[::-1]
+
+    return [(documents[i], similarities[i]) for i in ranked_idx]
+
+# 사용 예시
+query = "파이썬 분석"
+results = search(query, documents, vectorizer, tfidf_matrix)
+for doc, score in results:
+    print(f"{score:.3f}: {doc}")
+```
+
+### RAG (Retrieval Augmented Generation)
+
+TF-IDF 기반 검색은 **RAG 시스템의 기초**가 됩니다.
+
+```
+사용자 질문 → 유사 문서 검색 (TF-IDF/임베딩) → LLM에 컨텍스트 제공 → 답변 생성
+```
+
+---
+
+## 7. 실습: TF-IDF 기반 문서 유사도 분석
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+
+# 뉴스 기사 예시
+articles = [
+    "인공지능 기술이 의료 분야에서 혁신을 이끌고 있다",
+    "딥러닝을 활용한 의료 진단 시스템이 발전하고 있다",
+    "주식 시장이 금리 인상 우려로 하락했다",
+    "미국 연준의 금리 정책이 주식 시장에 영향을 미쳤다",
+    "인공지능 챗봇이 고객 서비스를 혁신하고 있다"
+]
+
+# TF-IDF 벡터화
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(articles)
+
+# 유사도 행렬 계산
+similarity_matrix = cosine_similarity(tfidf_matrix)
+
+# DataFrame으로 시각화
+df = pd.DataFrame(
+    similarity_matrix,
+    index=[f'기사{i+1}' for i in range(len(articles))],
+    columns=[f'기사{i+1}' for i in range(len(articles))]
+)
+print(df.round(3))
+
+# 가장 유사한 기사 쌍 찾기
+import numpy as np
+np.fill_diagonal(similarity_matrix, 0)  # 자기 자신과의 유사도 제외
+max_idx = np.unravel_index(similarity_matrix.argmax(), similarity_matrix.shape)
+print(f"\n가장 유사한 기사: 기사{max_idx[0]+1} ↔ 기사{max_idx[1]+1}")
+print(f"유사도: {similarity_matrix[max_idx]:.3f}")
+```
+
+---
+
+## 8. N-gram과 공출현 행렬
+
+### N-gram 기반 분석
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+
+text = ["딥러닝 모델을 학습시키기 위해 데이터를 전처리합니다"]
+
+# Bigram (2-gram) 추출
+bigram_vectorizer = CountVectorizer(ngram_range=(2, 2))
+bigram_matrix = bigram_vectorizer.fit_transform(text)
+
+print(bigram_vectorizer.get_feature_names_out())
+# ['데이터를 전처리합니다', '딥러닝 모델을', '모델을 학습시키기',
+#  '위해 데이터를', '학습시키기 위해']
+```
+
+### 공출현 행렬
+
+단어들이 **함께 등장하는 빈도**를 행렬로 표현합니다.
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+
+documents = [
+    "AI 머신러닝 딥러닝",
+    "AI 데이터 분석",
+    "머신러닝 데이터 모델"
+]
+
+# 단어 벡터화
+vectorizer = CountVectorizer()
+word_matrix = vectorizer.fit_transform(documents)
+
+# 공출현 행렬 계산 (단어 × 단어)
+co_occurrence = word_matrix.T @ word_matrix
+co_occurrence = co_occurrence.toarray()
+
+# 대각선(자기 자신) 제외
+np.fill_diagonal(co_occurrence, 0)
+
+print("단어 목록:", vectorizer.get_feature_names_out())
+print("공출현 행렬:\n", co_occurrence)
+```
+
+---
+
+## 핵심 요약
+
+| 개념 | 핵심 내용 |
+|------|----------|
+| **텍스트 벡터화** | 텍스트를 숫자로 변환하여 분석 가능하게 함 |
+| **Bag of Words** | 단어 출현 횟수 기반, 간단하지만 순서 무시 |
+| **TF-IDF** | 단어 빈도 + 희귀성 반영, 중요 단어 강조 |
+| **코사인 유사도** | 벡터 방향 기반 유사도 측정 (0~1) |
+| **활용 분야** | 검색, 추천, 문서 분류, RAG 시스템 |
+| **N-gram** | 연속 단어 조합으로 문맥 정보 반영 |

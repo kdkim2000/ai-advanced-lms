@@ -1,0 +1,314 @@
+---
+title: "트랜스포머와 LLM의 탄생"
+description: "Transformer 구조, Self-Attention, BERT와 GPT의 차이"
+---
+
+# 트랜스포머와 LLM의 탄생
+
+## 1. Transformer 기본 개념
+
+### Transformer란?
+
+- **정의**: 문장을 토큰으로 쪼개고 토큰별 벡터 계산을 통해 문맥을 이해하는 신경망 구조
+- **핵심 구조**: Encoder(입력 처리) + Decoder(출력 생성)
+- **혁신성**: RNN의 순차 처리 방식을 벗어나 **병렬 처리 가능**
+
+### RNN vs Transformer
+
+| 구분 | RNN | Transformer |
+|------|-----|-------------|
+| **처리 방식** | 순차적 (문장 길이만큼 순차 처리) | 병렬적 (모든 토큰 동시 처리) |
+| **장기 의존성** | 문장이 길어지면 앞 내용 손실 | 각 토큰을 병렬적으로 처리하여 유지 |
+| **학습 속도** | 느림 | 빠름 |
+| **대표 모델** | LSTM, GRU | BERT, GPT |
+
+---
+
+## 2. Transformer 구조
+
+### 전체 구조
+
+```
+입력 문장 → 토큰화 → 토큰별 임베딩 → Encoder → Decoder → 출력
+```
+
+### Encoder (인코더)
+
+**역할**: 입력 문장의 의미를 효과적으로 파악
+
+**구성 요소**:
+1. **Input Embedding**: 토큰을 벡터로 변환
+2. **Positional Encoding**: 토큰의 위치 정보 추가
+3. **Multi-Head Attention**: 단어 간 관계 파악
+4. **Feed-Forward Neural Network (FFNN)**: 비선형성 추가, 깊은 관계 학습
+5. **Add & Norm**: 잔차 연결과 정규화
+
+**Encoder 6연속 쌓기**:
+- 직전 Encoder의 출력을 다음 Encoder의 입력으로 전달
+- 파라미터 수를 늘리고 복잡한 의미 이해
+- **최종 출력**: 입력 문장의 토큰별 맥락 벡터
+
+### Decoder (디코더)
+
+**역할**: 출력 문장을 자연스럽게 생성
+
+**구성 요소**:
+1. **Output Embedding**: 출력 토큰 임베딩
+2. **Positional Encoding**: 위치 정보 추가
+3. **Masked Multi-Head Attention**: 앞 부분의 단어만 참조 (미래 정보 차단)
+4. **Encoder-Decoder Attention**: Encoder의 입력 정보 참조
+5. **Feed-Forward Neural Network**
+6. **Linear + Softmax**: 다음 토큰 확률 분포 계산
+
+---
+
+## 3. Positional Encoding
+
+### 필요성
+
+- 병렬 처리로는 순서 정보가 사라짐
+- "나는 학교에 간다"와 "학교에 나는 간다"를 구분할 수 없게 됨
+- **해결**: 위치 인코딩 벡터를 통해 토큰의 위치 정보 추가
+
+### 방법
+
+- 각 벡터의 임베딩 벡터에 위치를 나타내는 벡터를 더함
+- RoPE(Rotary Position Embedding) 등의 회전 기반 방법 사용
+
+---
+
+## 4. Self-Attention 메커니즘
+
+### 개념
+
+**"이 문장에서 이 단어는 어떤 의미인가?"**
+
+예시: "나는 밥을 먹었다"
+- "나는" = "나는 밥을 먹었다"에서의 "나는"
+- "밥을" = "나는 밥을 먹었다"에서의 "밥을"
+- "먹었다" = "나는 밥을 먹었다"에서의 "먹었다"
+
+### Query, Key, Value
+
+각 토큰을 **Query, Key, Value** 값으로 변환하여 계산
+
+| 요소 | 역할 | 예시 |
+|------|------|------|
+| **Query** | 질문하는 것 | "나는"이 무엇을 의미하는가? |
+| **Key** | 참조되는 것 | "밥을", "먹었다" 등 |
+| **Value** | 실제 의미 정보 | 각 단어의 의미 벡터 |
+
+**계산 방식**:
+```
+Self-Attention(Q, K, V) = softmax(QK^T / √d_k) × V
+```
+
+<Callout type="info" title="핵심 원리">
+각 토큰이 문장 내 다른 토큰들과의 관계를 파악하고, 병렬적으로 모든 토큰의 의미를 동시에 계산합니다.
+</Callout>
+
+---
+
+## 5. Multi-Head Attention
+
+### N명의 전문가가 읽고 판단
+
+- 토큰과 토큰의 연산을 계산할 때 **한 가지 맥락이 아니라 여러 맥락을 고려**
+- 학습 후에 각각 다른 역할 수행 (문법, 문맥 유사성, 언어적 특징 등)
+
+### 다양한 관점에서 관계 파악
+
+| 차원 | Head 수 | Head당 차원 | 결과 |
+|------|---------|-------------|------|
+| 256 | 8 | 32 | 256 |
+
+```
+256 차원 임베딩 → 32 × 8 → 256
+```
+
+- N가지의 맥락을 고려하고 이를 다시 합쳐 차원 복원
+
+---
+
+## 6. Feed-Forward Neural Network (FFNN)
+
+### 역할
+
+- **비선형성을 추가하여 깊은 관계를 학습**
+- Self-Attention과 결합하여 더 복잡한 패턴 학습
+
+```
+[토큰 임베딩]
+     ↓
+[Self-Attention] → 단어 간 관계 파악
+     ↓
+[FFNN] → 깊은 패턴 학습
+     ↓
+[출력]
+```
+
+---
+
+## 7. Encoder 최종 구조
+
+```
+Input (입력 토큰의 목록)
+  ↓
+[Encoder Layer 1]
+  ├─ Self-Attention
+  ├─ Add & Norm
+  ├─ Feed Forward
+  └─ Add & Norm
+  ↓
+[Encoder Layer 2~6 반복]
+  ↓
+Output (입력 문장의 토큰별 맥락 벡터)
+```
+
+---
+
+## 8. Decoder 구조
+
+### Decoder 구성
+
+```
+<BOS> I had meal (이전 출력)
+  ↓
+[Masked Self-Attention] → 앞 토큰만 참조
+  ↓
+[Encoder-Decoder Attention] → Encoder 정보 참조
+  ↓
+[FFNN]
+  ↓
+[Linear + Softmax]
+  ↓
+다음 토큰 확률 (예: <EOS>)
+```
+
+### Auto-Regressive 출력 방식
+
+**Decoding 과정은 직전 출력의 영향을 받음 (순차적 출력)**
+
+```
+Step 1: <BOS> → I
+Step 2: <BOS> I → had
+Step 3: <BOS> I had → meal
+Step 4: <BOS> I had meal → <EOS>
+```
+
+---
+
+## 9. Masking
+
+### Encoder Self-Attention
+
+- **양방향 맥락**: 앞뒤 단어끼리 모두 연산
+
+### Decoder Self-Attention
+
+- **단방향 맥락**: 이전 단어들과의 Self-Attention만 계산
+- 'I' 계산 시 `<BOS>`, 'I'만 고려 (had, meal은 미래 정보)
+
+**목적**:
+- 자기회귀적 생성 유지
+- 미래 정보 누출 방지
+
+---
+
+## 10. BERT와 GPT
+
+### BERT (2018)
+
+**Encoder 구조를 활용하여 문장 의미 파악**
+
+- **양방향 Transformer**
+- 문장을 입력 받았을 때 벡터를 출력
+- **사용 예시**: 감정 분석, 문서 분류, 질의응답
+
+### GPT (2018)
+
+**Decoder 구조를 활용하여 텍스트 생성**
+
+- **Decoder 구조만 활용**
+- **사용 예시**: 텍스트 생성, 대화형 AI, 자동 완성
+
+### Encoder vs Decoder 비교
+
+| 구분 | Encoder (BERT) | Decoder (GPT) |
+|------|----------------|---------------|
+| **맥락** | 양방향 (모든 토큰 참조) | 단방향 (이전 토큰만 참조) |
+| **최적화** | 문장 의미 파악 | 순차적 생성 |
+| **Masking** | 없음 | 미래 정보 차단 |
+
+<Callout type="info" title="구조는 같지만 목적이 다름">
+**Encoder**: 의미를 뽑는 것
+**Decoder**: 말을 하는 것
+</Callout>
+
+---
+
+## 11. GPT 구조 (Decoder Only)
+
+```
+나는 밥을 먹었다 (입력) → [X] Encoder 없음
+  ↓
+[Decoder Only]
+  = Masked Self-Attention
+  + Feed-Forward NN  ← Encoder 정보 없음
+  ↓
+I → had → meal → <EOS>
+```
+
+### GPT의 학습 방식
+
+**어떤 문장을 주고 이 문장의 다음 단어를 맞추는 구조**
+
+```
+I → had → meal → <EOS>
+```
+
+- 입력: "나는 밥을 먹었다"
+- 학습 목표:
+  - `<BOS>` → I
+  - `<BOS> I` → had
+  - `<BOS> I had` → meal
+  - `<BOS> I had meal` → `<EOS>`
+
+---
+
+## 12. Transformer가 RNN보다 뛰어난 이유
+
+### 장점
+
+1. **긴 맥락 이해**: 토큰 길이가 길어져도 내용을 잊지 않음
+2. **병렬 처리 가능**: 학습 속도 향상
+3. **장기 의존성 문제 해결**: 문장 전체 참조
+4. **확장성**: Layer 추가 용이
+
+---
+
+## 핵심 요약
+
+### Transformer 구조
+
+| 구성 요소 | 역할 |
+|-----------|------|
+| **Encoder** | 입력 문장의 의미 파악 (양방향 맥락) |
+| **Decoder** | 출력 문장 생성 (단방향 맥락, 순차적) |
+| **Self-Attention** | 단어 간 관계 파악 |
+| **Multi-Head Attention** | 다양한 관점에서 관계 파악 |
+| **FFNN** | 비선형성 추가, 깊은 패턴 학습 |
+| **Positional Encoding** | 토큰 위치 정보 추가 |
+
+### 주요 모델
+
+| 모델 | 구조 | 용도 |
+|------|------|------|
+| **BERT** | Encoder만 사용 | 문장 의미 파악 (분류, 질의응답) |
+| **GPT** | Decoder만 사용 | 텍스트 생성 (대화, 자동완성) |
+
+### 핵심 개념
+
+1. **양방향 vs 단방향**: Encoder는 양방향, Decoder는 단방향
+2. **Auto-Regressive 생성**: 이전 출력을 다음 입력으로 사용
+3. **Masking**: 미래 정보 누출 방지 (Decoder 필수)

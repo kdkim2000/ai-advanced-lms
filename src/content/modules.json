@@ -1,0 +1,354 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-12-20",
+  "modules": [
+    {
+      "id": "python",
+      "title": "Python Basics",
+      "titleKo": "Python 기본",
+      "description": "Python 프로그래밍 기초: 변수, 자료형, 함수, 클래스 등 핵심 개념 학습",
+      "icon": "🐍",
+      "order": 1,
+      "chapters": [
+        {
+          "id": "python-setup",
+          "moduleId": "python",
+          "title": "Python 개발환경 설정하기",
+          "slug": "setup",
+          "order": 1,
+          "description": "Python 설치 및 개발 환경 구성"
+        },
+        {
+          "id": "python-variables",
+          "moduleId": "python",
+          "title": "변수, 자료형, 조건문, 반복문",
+          "slug": "variables",
+          "order": 2,
+          "description": "Python의 기본 문법과 제어문"
+        },
+        {
+          "id": "python-functions",
+          "moduleId": "python",
+          "title": "함수와 모듈",
+          "slug": "functions",
+          "order": 3,
+          "description": "함수 정의, 매개변수, 모듈 import"
+        },
+        {
+          "id": "python-data-structures",
+          "moduleId": "python",
+          "title": "자료구조와 파일 입출력",
+          "slug": "data-structures",
+          "order": 4,
+          "description": "리스트, 딕셔너리, 파일 처리"
+        },
+        {
+          "id": "python-classes",
+          "moduleId": "python",
+          "title": "클래스 이해하기",
+          "slug": "classes",
+          "order": 5,
+          "description": "객체 지향 프로그래밍 기초"
+        }
+      ]
+    },
+    {
+      "id": "data-analysis",
+      "title": "Data Analysis",
+      "titleKo": "데이터 분석",
+      "description": "NumPy, Pandas를 활용한 데이터 처리 및 텍스트 분석",
+      "icon": "📊",
+      "order": 2,
+      "chapters": [
+        {
+          "id": "da-numpy",
+          "moduleId": "data-analysis",
+          "title": "Numpy와 행렬",
+          "slug": "numpy",
+          "order": 1,
+          "description": "NumPy 배열과 행렬 연산"
+        },
+        {
+          "id": "da-pandas",
+          "moduleId": "data-analysis",
+          "title": "Pandas 데이터 처리하기",
+          "slug": "pandas",
+          "order": 2,
+          "description": "DataFrame 조작 및 데이터 정제"
+        },
+        {
+          "id": "da-text-preprocessing",
+          "moduleId": "data-analysis",
+          "title": "텍스트 전처리 핵심 기법",
+          "slug": "text-preprocessing",
+          "order": 3,
+          "description": "토큰화, 정규화, 불용어 처리"
+        },
+        {
+          "id": "da-text-statistics",
+          "moduleId": "data-analysis",
+          "title": "텍스트 데이터 변환과 통계 분석",
+          "slug": "text-statistics",
+          "order": 4,
+          "description": "텍스트 벡터화 및 통계 분석"
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "title": "Large Language Models",
+      "titleKo": "대규모 언어모델",
+      "description": "LLM의 기초부터 API 활용, LangChain까지 핵심 개념 학습",
+      "icon": "🤖",
+      "order": 3,
+      "chapters": [
+        {
+          "id": "llm-nlp-embedding",
+          "moduleId": "llm",
+          "title": "자연어 처리와 임베딩",
+          "slug": "nlp-embedding",
+          "order": 1,
+          "description": "LLM 기본 개념, 임베딩, Word2Vec, 토큰화"
+        },
+        {
+          "id": "llm-transformer",
+          "moduleId": "llm",
+          "title": "트랜스포머와 LLM의 탄생",
+          "slug": "transformer",
+          "order": 2,
+          "description": "Transformer 구조, Self-Attention, BERT와 GPT"
+        },
+        {
+          "id": "llm-evolution",
+          "moduleId": "llm",
+          "title": "LLM의 발전 과정",
+          "slug": "llm-evolution",
+          "order": 3,
+          "description": "GPT 시리즈, SFT, RLHF, MoE 기법"
+        },
+        {
+          "id": "llm-ecosystem",
+          "moduleId": "llm",
+          "title": "LLM 생태계와 주요 모델들",
+          "slug": "llm-ecosystem",
+          "order": 4,
+          "description": "상용/오픈 모델, Llama, Qwen, 양자화"
+        },
+        {
+          "id": "llm-reasoning-multimodal",
+          "moduleId": "llm",
+          "title": "추론과 멀티모달 모델",
+          "slug": "reasoning-multimodal",
+          "order": 5,
+          "description": "Reasoning, sLLM, 멀티모달 LLM, Agent"
+        },
+        {
+          "id": "llm-api",
+          "moduleId": "llm",
+          "title": "LLM API 소개",
+          "slug": "llm-api",
+          "order": 6,
+          "description": "OpenAI API 활용, 주요 매개변수"
+        },
+        {
+          "id": "llm-langchain",
+          "moduleId": "llm",
+          "title": "LangChain으로 LLM 연결하기",
+          "slug": "langchain",
+          "order": 7,
+          "description": "LangChain 프레임워크, Provider 연결"
+        }
+      ]
+    },
+    {
+      "id": "prompt-engineering",
+      "title": "Prompt Engineering",
+      "titleKo": "프롬프트 엔지니어링",
+      "description": "LangChain을 활용한 고급 프롬프트 기법과 AI 에이전트 개발",
+      "icon": "⚡",
+      "order": 4,
+      "chapters": [
+        {
+          "id": "pe-prompt-basics",
+          "moduleId": "prompt-engineering",
+          "title": "프롬프트 엔지니어링 기초",
+          "slug": "prompt-basics",
+          "order": 1,
+          "description": "Context Engineering, 프롬프트 프레임워크, Role-Play, Few-Shot"
+        },
+        {
+          "id": "pe-prompt-advanced",
+          "moduleId": "prompt-engineering",
+          "title": "프롬프트 엔지니어링 심화",
+          "slug": "prompt-advanced",
+          "order": 2,
+          "description": "Chain-of-Thought, Zero-shot CoT, Step-Back Prompting"
+        },
+        {
+          "id": "pe-lcel-structured-output",
+          "moduleId": "prompt-engineering",
+          "title": "LCEL과 구조화된 출력",
+          "slug": "lcel-structured-output",
+          "order": 3,
+          "description": "LangChain Expression Language, Parser, Runnable 활용"
+        },
+        {
+          "id": "pe-langchain-projects",
+          "moduleId": "prompt-engineering",
+          "title": "LangChain 실전 프로젝트",
+          "slug": "langchain-projects",
+          "order": 4,
+          "description": "외부 데이터 처리, Map-Reduce 요약, 문서 처리 파이프라인"
+        },
+        {
+          "id": "pe-tools-function-calling",
+          "moduleId": "prompt-engineering",
+          "title": "Tools와 Function Calling",
+          "slug": "tools-function-calling",
+          "order": 5,
+          "description": "LLM 한계 극복, RAG, Tool Calling 메커니즘, Memory"
+        },
+        {
+          "id": "pe-agents",
+          "moduleId": "prompt-engineering",
+          "title": "LangChain Agents",
+          "slug": "agents",
+          "order": 6,
+          "description": "ReAct Agent, Reflexion, Multi-Agent, LangGraph"
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "title": "RAG",
+      "titleKo": "검색 증강 생성",
+      "description": "Retrieval-Augmented Generation: 검색 기반 AI 시스템 구축",
+      "icon": "🔍",
+      "order": 5,
+      "chapters": [
+        {
+          "id": "rag-concepts",
+          "moduleId": "rag",
+          "title": "RAG 개념과 아키텍처",
+          "slug": "rag-concepts",
+          "order": 1,
+          "description": "RAG의 정의, LLM의 한계, 할루시네이션, Context의 중요성"
+        },
+        {
+          "id": "rag-loader-splitter",
+          "moduleId": "rag",
+          "title": "랭체인의 Loader-Splitter 이해하기",
+          "slug": "loader-splitter",
+          "order": 2,
+          "description": "문서 로딩 및 분할 전략"
+        },
+        {
+          "id": "rag-embeddings",
+          "moduleId": "rag",
+          "title": "임베딩 모델 이해하기",
+          "slug": "embeddings",
+          "order": 3,
+          "description": "텍스트 임베딩과 벡터 저장소"
+        },
+        {
+          "id": "rag-basic",
+          "moduleId": "rag",
+          "title": "LangChain RAG 어플리케이션 만들기",
+          "slug": "basic-rag",
+          "order": 4,
+          "description": "기본 RAG 파이프라인 구축"
+        },
+        {
+          "id": "rag-advanced",
+          "moduleId": "rag",
+          "title": "Advanced RAG",
+          "slug": "advanced-rag",
+          "order": 5,
+          "description": "고급 RAG 기법 (쿼리 확장, 리랭킹)"
+        },
+        {
+          "id": "rag-multimodal",
+          "moduleId": "rag",
+          "title": "Multimodal RAG",
+          "slug": "multimodal-rag",
+          "order": 6,
+          "description": "멀티모달 검색 시스템"
+        },
+        {
+          "id": "rag-evaluation",
+          "moduleId": "rag",
+          "title": "RAG 파이프라인의 성능 평가하기",
+          "slug": "evaluation",
+          "order": 7,
+          "description": "RAG 성능 측정 및 개선"
+        }
+      ]
+    },
+    {
+      "id": "fine-tuning",
+      "title": "Fine-Tuning",
+      "titleKo": "파인튜닝",
+      "description": "LLM 파인튜닝: LoRA, Instruction Tuning, SFT, RL, Reasoning LLM",
+      "icon": "🎯",
+      "order": 6,
+      "chapters": [
+        {
+          "id": "ft-basics",
+          "moduleId": "fine-tuning",
+          "title": "Fine-Tuning의 이해",
+          "slug": "ft-basics",
+          "order": 1,
+          "description": "Fine-Tuning의 정의, Training과의 차이점, 모델 종류, 파이프라인"
+        },
+        {
+          "id": "ft-sft-rl",
+          "moduleId": "fine-tuning",
+          "title": "강화 학습과 SFT",
+          "slug": "sft-rl",
+          "order": 2,
+          "description": "CPT, SFT, Instruction Tuning, RLHF, PPO, DPO 학습 방법론"
+        },
+        {
+          "id": "ft-data-preparation",
+          "moduleId": "fine-tuning",
+          "title": "파인 튜닝 데이터 구축하기",
+          "slug": "data-preparation",
+          "order": 3,
+          "description": "데이터 수집, 증강, 품질 관리, 지식 증류 기법"
+        },
+        {
+          "id": "ft-instruction-tuning",
+          "moduleId": "fine-tuning",
+          "title": "Instruction Tuning 실전",
+          "slug": "instruction-tuning",
+          "order": 4,
+          "description": "Instruction Tuning 개념, 데이터 전략, 실습 가이드"
+        },
+        {
+          "id": "ft-peft-understanding",
+          "moduleId": "fine-tuning",
+          "title": "PEFT와 LoRA의 이해",
+          "slug": "peft-understanding",
+          "order": 5,
+          "description": "Parameter Efficient Fine-Tuning 개념, LoRA 메커니즘, 장단점 분석"
+        },
+        {
+          "id": "ft-peft-practice",
+          "moduleId": "fine-tuning",
+          "title": "PEFT 실전 활용",
+          "slug": "peft-practice",
+          "order": 6,
+          "description": "LoRA, QLoRA 구현 실습, 하이퍼파라미터 튜닝, 실전 시나리오"
+        },
+        {
+          "id": "ft-reasoning-llm",
+          "moduleId": "fine-tuning",
+          "title": "Reasoning LLM과 파인 튜닝",
+          "slug": "reasoning-llm",
+          "order": 7,
+          "description": "RLVR, GRPO, DeepSeek-R1 학습 과정, SFT vs RL 비교"
+        }
+      ]
+    }
+  ]
+}

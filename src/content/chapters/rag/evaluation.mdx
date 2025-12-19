@@ -1,0 +1,543 @@
+---
+title: "RAG 파이프라인의 성능 평가하기"
+description: "검색 품질 평가, 생성 품질 평가, RAG 평가 프레임워크"
+---
+
+# RAG 파이프라인의 성능 평가하기
+
+## 1. RAG 평가의 중요성
+
+### 평가가 필요한 이유
+
+| 이유 | 설명 |
+|------|------|
+| **품질 보장** | 정확하고 신뢰할 수 있는 답변 생성 |
+| **병목 식별** | 검색 vs 생성 문제 구분 |
+| **개선 방향** | 데이터 기반 최적화 |
+| **비교 분석** | 다양한 설정 간 성능 비교 |
+
+### RAG 평가 영역
+
+```
+┌─────────────────────────────────────────────┐
+│                RAG Pipeline                  │
+├─────────────────────────────────────────────┤
+│                                              │
+│  Query → [Retrieval] → Context → [Generation]│
+│              ↓                     ↓         │
+│        검색 품질 평가          생성 품질 평가  │
+│                                              │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## 2. 검색 품질 평가
+
+### Precision (정밀도)
+
+검색 결과 중 **실제로 관련 있는 문서의 비율**
+
+```
+Precision = 관련된 검색 결과 / 전체 검색 결과
+```
+
+```python
+def precision_at_k(retrieved_docs, relevant_docs, k):
+    """상위 k개 문서의 정밀도"""
+    retrieved_set = set(retrieved_docs[:k])
+    relevant_set = set(relevant_docs)
+
+    relevant_retrieved = retrieved_set & relevant_set
+    return len(relevant_retrieved) / k
+
+# 예시
+retrieved = ["doc1", "doc2", "doc3", "doc4", "doc5"]
+relevant = ["doc1", "doc3", "doc6"]
+
+p_at_3 = precision_at_k(retrieved, relevant, k=3)
+# 결과: 2/3 = 0.67 (doc1, doc3이 관련)
+```
+
+### Recall (재현율)
+
+전체 관련 문서 중 **검색된 문서의 비율**
+
+```
+Recall = 검색된 관련 문서 / 전체 관련 문서
+```
+
+```python
+def recall_at_k(retrieved_docs, relevant_docs, k):
+    """상위 k개 문서의 재현율"""
+    retrieved_set = set(retrieved_docs[:k])
+    relevant_set = set(relevant_docs)
+
+    relevant_retrieved = retrieved_set & relevant_set
+    return len(relevant_retrieved) / len(relevant_set)
+
+# 예시
+recall = recall_at_k(retrieved, relevant, k=5)
+# 결과: 2/3 = 0.67 (doc6은 검색되지 않음)
+```
+
+### F1 Score
+
+정밀도와 재현율의 조화 평균
+
+```
+F1 = 2 × (Precision × Recall) / (Precision + Recall)
+```
+
+```python
+def f1_score(precision, recall):
+    """F1 점수 계산"""
+    if precision + recall == 0:
+        return 0
+    return 2 * (precision * recall) / (precision + recall)
+```
+
+### MRR (Mean Reciprocal Rank)
+
+첫 번째 관련 문서의 순위 기반 평가
+
+```
+MRR = (1/N) × Σ(1 / rank_i)
+```
+
+```python
+def mrr(queries_results):
+    """Mean Reciprocal Rank 계산"""
+    reciprocal_ranks = []
+
+    for retrieved, relevant in queries_results:
+        for i, doc in enumerate(retrieved, 1):
+            if doc in relevant:
+                reciprocal_ranks.append(1 / i)
+                break
+        else:
+            reciprocal_ranks.append(0)
+
+    return sum(reciprocal_ranks) / len(reciprocal_ranks)
+
+# 예시
+results = [
+    (["doc2", "doc1", "doc3"], ["doc1"]),  # rank=2, RR=0.5
+    (["doc1", "doc2", "doc3"], ["doc1"]),  # rank=1, RR=1.0
+]
+mrr_score = mrr(results)  # (0.5 + 1.0) / 2 = 0.75
+```
+
+### NDCG (Normalized Discounted Cumulative Gain)
+
+순위와 관련도를 모두 고려
+
+```python
+import numpy as np
+
+def dcg_at_k(relevances, k):
+    """DCG 계산"""
+    relevances = np.array(relevances)[:k]
+    n = len(relevances)
+    if n == 0:
+        return 0
+
+    discounts = np.log2(np.arange(2, n + 2))
+    return np.sum(relevances / discounts)
+
+def ndcg_at_k(retrieved_relevances, ideal_relevances, k):
+    """NDCG 계산"""
+    dcg = dcg_at_k(retrieved_relevances, k)
+    idcg = dcg_at_k(sorted(ideal_relevances, reverse=True), k)
+
+    if idcg == 0:
+        return 0
+    return dcg / idcg
+```
+
+---
+
+## 3. 생성 품질 평가
+
+### Faithfulness (충실성)
+
+생성된 답변이 **검색된 문서에 근거하는지** 평가
+
+```python
+def evaluate_faithfulness(answer, context, llm):
+    """충실성 평가 - 답변이 컨텍스트에 근거하는지"""
+    prompt = f"""다음 답변이 주어진 컨텍스트에 충실한지 평가하세요.
+
+컨텍스트:
+{context}
+
+답변:
+{answer}
+
+평가 기준:
+- 답변의 모든 주장이 컨텍스트에서 확인 가능한가?
+- 컨텍스트에 없는 정보를 추가했는가?
+
+점수 (0-1):"""
+
+    return float(llm.predict(prompt))
+```
+
+### Relevance (관련성)
+
+답변이 **질문에 적절히 대응하는지** 평가
+
+```python
+def evaluate_relevance(question, answer, llm):
+    """관련성 평가 - 답변이 질문에 적절한지"""
+    prompt = f"""다음 답변이 질문에 얼마나 관련 있는지 평가하세요.
+
+질문:
+{question}
+
+답변:
+{answer}
+
+평가 기준:
+- 질문에 직접적으로 답하고 있는가?
+- 질문의 핵심을 다루고 있는가?
+
+점수 (0-1):"""
+
+    return float(llm.predict(prompt))
+```
+
+### Answer Correctness (정확성)
+
+답변이 **사실적으로 정확한지** 평가
+
+```python
+def evaluate_correctness(answer, ground_truth, llm):
+    """정확성 평가 - 정답과 비교"""
+    prompt = f"""생성된 답변과 정답을 비교하여 정확성을 평가하세요.
+
+정답:
+{ground_truth}
+
+생성된 답변:
+{answer}
+
+평가 기준:
+- 핵심 정보가 일치하는가?
+- 잘못된 정보가 포함되어 있는가?
+
+점수 (0-1):"""
+
+    return float(llm.predict(prompt))
+```
+
+### Coherence (일관성)
+
+답변의 **논리적 흐름과 구조** 평가
+
+```python
+def evaluate_coherence(answer, llm):
+    """일관성 평가 - 논리적 흐름"""
+    prompt = f"""다음 답변의 논리적 일관성을 평가하세요.
+
+답변:
+{answer}
+
+평가 기준:
+- 문장 간 논리적 연결이 자연스러운가?
+- 모순되는 내용이 있는가?
+- 구조가 체계적인가?
+
+점수 (0-1):"""
+
+    return float(llm.predict(prompt))
+```
+
+---
+
+## 4. Context 품질 평가
+
+### Context Precision
+
+검색된 문서 중 **답변 생성에 실제로 사용된** 문서 비율
+
+```python
+def context_precision(contexts, answer, llm):
+    """컨텍스트 정밀도 - 실제 사용된 컨텍스트 비율"""
+    useful_count = 0
+
+    for ctx in contexts:
+        prompt = f"""다음 컨텍스트가 답변 생성에 사용되었는지 판단하세요.
+
+컨텍스트:
+{ctx}
+
+답변:
+{answer}
+
+사용됨 (yes/no):"""
+
+        if "yes" in llm.predict(prompt).lower():
+            useful_count += 1
+
+    return useful_count / len(contexts)
+```
+
+### Context Recall
+
+답변에 필요한 정보 중 **검색된 문서에 포함된** 비율
+
+```python
+def context_recall(contexts, ground_truth, llm):
+    """컨텍스트 재현율 - 필요한 정보가 컨텍스트에 있는지"""
+    prompt = f"""정답을 생성하는데 필요한 정보가 컨텍스트에 있는지 평가하세요.
+
+정답:
+{ground_truth}
+
+컨텍스트:
+{chr(10).join(contexts)}
+
+정답의 각 핵심 정보에 대해:
+1. 핵심 정보를 나열하세요
+2. 각 정보가 컨텍스트에 있는지 확인하세요
+
+컨텍스트에 있는 정보 비율 (0-1):"""
+
+    return float(llm.predict(prompt))
+```
+
+---
+
+## 5. RAG 평가 프레임워크
+
+### RAGAS
+
+RAG 시스템 평가를 위한 종합 프레임워크
+
+```python
+# 설치: pip install ragas
+
+from ragas import evaluate
+from ragas.metrics import (
+    faithfulness,
+    answer_relevancy,
+    context_precision,
+    context_recall
+)
+
+# 평가 데이터 준비
+from datasets import Dataset
+
+eval_data = {
+    "question": ["RAG란 무엇인가?"],
+    "answer": ["RAG는 검색 증강 생성 기술입니다..."],
+    "contexts": [["RAG(Retrieval Augmented Generation)은..."]],
+    "ground_truth": ["RAG는 외부 지식을 검색하여..."]
+}
+
+dataset = Dataset.from_dict(eval_data)
+
+# 평가 실행
+results = evaluate(
+    dataset,
+    metrics=[
+        faithfulness,
+        answer_relevancy,
+        context_precision,
+        context_recall
+    ]
+)
+
+print(results)
+```
+
+### RAGAS 메트릭 설명
+
+| 메트릭 | 설명 | 측정 대상 |
+|--------|------|-----------|
+| **Faithfulness** | 답변의 컨텍스트 충실도 | 생성 품질 |
+| **Answer Relevancy** | 질문-답변 관련성 | 생성 품질 |
+| **Context Precision** | 유용한 컨텍스트 비율 | 검색 품질 |
+| **Context Recall** | 필요 정보 포함 여부 | 검색 품질 |
+
+### LangSmith를 활용한 평가
+
+```python
+from langsmith import Client
+from langsmith.evaluation import evaluate
+
+client = Client()
+
+# 평가 데이터셋 생성
+dataset_name = "rag-eval-dataset"
+
+examples = [
+    {
+        "input": {"question": "RAG란?"},
+        "output": {"answer": "RAG는...", "contexts": [...]}
+    }
+]
+
+dataset = client.create_dataset(dataset_name)
+for ex in examples:
+    client.create_example(
+        dataset_id=dataset.id,
+        inputs=ex["input"],
+        outputs=ex["output"]
+    )
+
+# 평가 실행
+def evaluate_rag(inputs, outputs, reference_outputs):
+    # 평가 로직
+    return {"score": 0.8}
+
+results = evaluate(
+    lambda x: rag_chain.invoke(x),
+    data=dataset_name,
+    evaluators=[evaluate_rag]
+)
+```
+
+---
+
+## 6. 자동화된 평가 파이프라인
+
+### 종합 평가 클래스
+
+```python
+class RAGEvaluator:
+    def __init__(self, llm):
+        self.llm = llm
+
+    def evaluate(self, question, answer, contexts, ground_truth=None):
+        """RAG 시스템 종합 평가"""
+        results = {}
+
+        # 1. 검색 품질
+        if ground_truth:
+            results["context_recall"] = self._context_recall(
+                contexts, ground_truth
+            )
+
+        # 2. 생성 품질
+        results["faithfulness"] = self._faithfulness(
+            answer, contexts
+        )
+        results["relevance"] = self._relevance(
+            question, answer
+        )
+
+        if ground_truth:
+            results["correctness"] = self._correctness(
+                answer, ground_truth
+            )
+
+        # 3. 종합 점수
+        results["overall"] = sum(results.values()) / len(results)
+
+        return results
+
+    def _faithfulness(self, answer, contexts):
+        context_str = "\n".join(contexts)
+        prompt = f"""답변이 컨텍스트에 충실한지 0-1 점수로 평가:
+
+컨텍스트: {context_str}
+답변: {answer}
+
+점수 (숫자만):"""
+        return float(self.llm.predict(prompt))
+
+    def _relevance(self, question, answer):
+        prompt = f"""답변이 질문에 관련 있는지 0-1 점수로 평가:
+
+질문: {question}
+답변: {answer}
+
+점수 (숫자만):"""
+        return float(self.llm.predict(prompt))
+
+    def _correctness(self, answer, ground_truth):
+        prompt = f"""답변의 정확성을 0-1 점수로 평가:
+
+정답: {ground_truth}
+생성된 답변: {answer}
+
+점수 (숫자만):"""
+        return float(self.llm.predict(prompt))
+
+    def _context_recall(self, contexts, ground_truth):
+        context_str = "\n".join(contexts)
+        prompt = f"""정답 정보가 컨텍스트에 있는 비율 (0-1):
+
+정답: {ground_truth}
+컨텍스트: {context_str}
+
+점수 (숫자만):"""
+        return float(self.llm.predict(prompt))
+
+# 사용 예시
+evaluator = RAGEvaluator(llm)
+results = evaluator.evaluate(
+    question="RAG란 무엇인가?",
+    answer="RAG는 검색 증강 생성입니다...",
+    contexts=["RAG(Retrieval Augmented Generation)은..."],
+    ground_truth="RAG는 외부 지식을 검색하여 LLM 응답을 강화하는 기술"
+)
+print(results)
+```
+
+---
+
+## 7. 평가 결과 해석 및 개선
+
+### 문제 진단 가이드
+
+| 증상 | 원인 | 해결책 |
+|------|------|--------|
+| 낮은 Context Recall | 검색 실패 | 임베딩 모델 변경, 청킹 최적화 |
+| 낮은 Context Precision | 불필요한 문서 검색 | Reranking 추가, k 값 조정 |
+| 낮은 Faithfulness | 환각 발생 | 프롬프트 개선, 온도 낮추기 |
+| 낮은 Relevance | 질문 이해 실패 | 프롬프트 개선, 모델 변경 |
+
+### 개선 우선순위
+
+```
+1. Context Recall 낮음 → 검색 개선 (임베딩, 청킹)
+         ↓
+2. Context Precision 낮음 → Reranking 추가
+         ↓
+3. Faithfulness 낮음 → 프롬프트 최적화
+         ↓
+4. 전체 최적화 → 하이퍼파라미터 튜닝
+```
+
+---
+
+## 핵심 요약
+
+### 검색 품질 메트릭
+
+| 메트릭 | 수식 | 의미 |
+|--------|------|------|
+| **Precision@k** | 관련 검색 / k | 검색 정확도 |
+| **Recall@k** | 검색된 관련 / 전체 관련 | 검색 완전도 |
+| **MRR** | 1/첫 관련 순위 | 순위 품질 |
+| **NDCG** | DCG/IDCG | 순위+관련도 |
+
+### 생성 품질 메트릭
+
+| 메트릭 | 측정 대상 |
+|--------|-----------|
+| **Faithfulness** | 컨텍스트 충실도 |
+| **Relevance** | 질문 관련성 |
+| **Correctness** | 사실 정확성 |
+| **Coherence** | 논리적 일관성 |
+
+### 평가 도구
+
+| 도구 | 특징 |
+|------|------|
+| **RAGAS** | RAG 특화, 자동 평가 |
+| **LangSmith** | LangChain 통합, 추적 |
+| **Custom** | 도메인 특화 평가 |

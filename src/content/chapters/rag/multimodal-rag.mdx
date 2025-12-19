@@ -1,0 +1,523 @@
+---
+title: "Multimodal RAG"
+description: "멀티모달 RAG 개념, Docling, 이미지 및 표 처리"
+---
+
+# Multimodal RAG
+
+## 1. 멀티모달 RAG 개념
+
+### 정의
+
+텍스트, 이미지, 표, 차트 등 **다양한 형식의 데이터를 통합 처리**하는 RAG 시스템
+
+### 필요성
+
+| 문제 | 해결책 |
+|------|--------|
+| **실제 문서의 다양성** | PDF, 웹페이지는 텍스트+이미지+표 혼합 |
+| **정보 손실** | 텍스트만 추출 시 이미지/표 정보 유실 |
+| **종합적 이해** | 시각 자료와 텍스트의 연계 필요 |
+
+### 기존 RAG vs 멀티모달 RAG
+
+```
+[기존 RAG]
+PDF → 텍스트 추출 → 임베딩 → 검색 → 생성
+        ↓
+   이미지/표 손실
+
+[멀티모달 RAG]
+PDF → 텍스트 추출    → 텍스트 임베딩 →
+    → 이미지 추출    → 이미지 임베딩 → 통합 검색 → 멀티모달 생성
+    → 표 구조 보존   → 표 임베딩     →
+```
+
+---
+
+## 2. 멀티모달 RAG 아키텍처
+
+### 기본 워크플로우
+
+```
+1. 문서 파싱 (Document Parsing)
+   - 텍스트, 이미지, 표 분리
+   - 레이아웃 분석
+         ↓
+2. 모달리티별 처리 (Modality Processing)
+   - 텍스트: 텍스트 임베딩
+   - 이미지: Vision 모델 (CLIP)
+   - 표: 구조화 데이터 변환
+         ↓
+3. 통합 저장 (Unified Storage)
+   - 멀티모달 벡터 스토어
+   - 메타데이터 연결
+         ↓
+4. 통합 검색 (Unified Retrieval)
+   - 크로스모달 검색
+   - 유사도 기반 매칭
+         ↓
+5. 멀티모달 생성 (Multimodal Generation)
+   - GPT-4V, Claude 등
+   - 이미지+텍스트 통합 이해
+```
+
+### 주요 컴포넌트
+
+| 컴포넌트 | 역할 | 도구 |
+|----------|------|------|
+| **Document Parser** | 문서 구조 분석 | Docling, Unstructured |
+| **Vision Encoder** | 이미지 임베딩 | CLIP, BLIP |
+| **Text Encoder** | 텍스트 임베딩 | OpenAI, Sentence-Transformers |
+| **Multimodal LLM** | 통합 이해/생성 | GPT-4V, Claude 3 |
+
+---
+
+## 3. Docling
+
+### 개념
+
+문서의 **레이아웃과 구조를 이해**하여 정보를 추출하는 도구
+
+### 주요 기능
+
+| 기능 | 설명 |
+|------|------|
+| **레이아웃 분석** | 제목, 본문, 표, 이미지 영역 구분 |
+| **구조 보존** | 문서의 계층 구조 유지 |
+| **메타데이터 추출** | 페이지, 섹션, 위치 정보 |
+| **표 추출** | 표 구조를 데이터프레임으로 변환 |
+
+### 설치 및 사용
+
+```python
+# 설치
+# pip install docling
+
+from docling.document_converter import DocumentConverter
+
+# 문서 변환기 생성
+converter = DocumentConverter()
+
+# PDF 문서 파싱
+result = converter.convert("document.pdf")
+
+# 텍스트 추출
+text_content = result.document.export_to_markdown()
+
+# 테이블 추출
+for table in result.document.tables:
+    print(table.to_dataframe())
+```
+
+### Docling의 출력 구조
+
+```python
+{
+    "text_blocks": [
+        {
+            "type": "title",
+            "content": "문서 제목",
+            "page": 1,
+            "bbox": [x1, y1, x2, y2]
+        },
+        {
+            "type": "paragraph",
+            "content": "본문 내용...",
+            "page": 1
+        }
+    ],
+    "tables": [
+        {
+            "page": 2,
+            "data": [["헤더1", "헤더2"], ["값1", "값2"]],
+            "caption": "표 1: 데이터 요약"
+        }
+    ],
+    "images": [
+        {
+            "page": 3,
+            "path": "image_1.png",
+            "caption": "그림 1: 시스템 구조도"
+        }
+    ]
+}
+```
+
+---
+
+## 4. 이미지 처리
+
+### Vision 모델을 이용한 이미지 임베딩
+
+```python
+from langchain.embeddings import OpenCLIPEmbeddings
+
+# CLIP 임베딩 모델
+image_embeddings = OpenCLIPEmbeddings(
+    model_name="ViT-B-32",
+    checkpoint="laion2b_s34b_b79k"
+)
+
+# 이미지 임베딩 생성
+image_vector = image_embeddings.embed_image("chart.png")
+```
+
+### 이미지를 텍스트 설명으로 변환
+
+```python
+from langchain.chat_models import ChatOpenAI
+import base64
+
+def encode_image(image_path):
+    """이미지를 Base64로 인코딩"""
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+def describe_image(image_path, llm):
+    """이미지 설명 생성"""
+    encoded = encode_image(image_path)
+
+    response = llm.invoke([
+        {
+            "type": "text",
+            "text": "이 이미지의 내용을 상세히 설명해주세요."
+        },
+        {
+            "type": "image_url",
+            "image_url": f"data:image/jpeg;base64,{encoded}"
+        }
+    ])
+
+    return response.content
+
+# GPT-4 Vision 사용
+llm = ChatOpenAI(model="gpt-4-vision-preview")
+description = describe_image("chart.png", llm)
+```
+
+### 이미지 + 텍스트 통합 검색
+
+```python
+class MultimodalVectorStore:
+    def __init__(self):
+        self.text_store = Chroma(
+            embedding_function=OpenAIEmbeddings()
+        )
+        self.image_store = Chroma(
+            embedding_function=OpenCLIPEmbeddings()
+        )
+
+    def add_document(self, doc):
+        """문서의 텍스트와 이미지를 각각 저장"""
+        # 텍스트 저장
+        self.text_store.add_documents([doc.text])
+
+        # 이미지 저장 (설명과 함께)
+        for img in doc.images:
+            description = describe_image(img.path)
+            self.image_store.add_texts(
+                texts=[description],
+                metadatas=[{"image_path": img.path}]
+            )
+
+    def search(self, query, k=5):
+        """텍스트와 이미지 모두에서 검색"""
+        text_results = self.text_store.similarity_search(query, k=k)
+        image_results = self.image_store.similarity_search(query, k=k)
+
+        return {
+            "text": text_results,
+            "images": image_results
+        }
+```
+
+---
+
+## 5. 표(Table) 처리
+
+### 표 처리 전략
+
+| 전략 | 방법 | 장점 | 단점 |
+|------|------|------|------|
+| **텍스트 변환** | 표 → 자연어 문장 | 검색 용이 | 구조 손실 |
+| **구조 보존** | JSON/CSV 형식 저장 | 정확한 데이터 | 검색 어려움 |
+| **요약 생성** | LLM으로 표 요약 | 핵심 정보 추출 | 세부 정보 손실 |
+| **하이브리드** | 요약 + 원본 저장 | 검색 + 정확도 | 저장 공간 증가 |
+
+### 표를 텍스트로 변환
+
+```python
+def table_to_text(table_data):
+    """표를 자연어 문장으로 변환"""
+    headers = table_data[0]
+    rows = table_data[1:]
+
+    sentences = []
+    for row in rows:
+        parts = [f"{h}: {v}" for h, v in zip(headers, row)]
+        sentences.append(", ".join(parts))
+
+    return "\n".join(sentences)
+
+# 예시
+table = [
+    ["제품", "가격", "판매량"],
+    ["A", "1000", "500"],
+    ["B", "2000", "300"]
+]
+
+text = table_to_text(table)
+# 결과:
+# 제품: A, 가격: 1000, 판매량: 500
+# 제품: B, 가격: 2000, 판매량: 300
+```
+
+### LLM으로 표 요약
+
+```python
+def summarize_table(table_data, llm):
+    """LLM으로 표의 핵심 내용 요약"""
+    table_str = "\n".join(["\t".join(row) for row in table_data])
+
+    prompt = f"""다음 표의 핵심 내용을 3문장 이내로 요약하세요.
+
+표:
+{table_str}
+
+요약:"""
+
+    return llm.predict(prompt)
+
+# 표 요약을 임베딩하여 검색에 활용
+summary = summarize_table(table_data, llm)
+vectorstore.add_texts([summary], metadatas=[{"table_id": "table_1"}])
+```
+
+### 구조화된 표 저장
+
+```python
+import json
+
+def store_table_structured(table_data, table_id, vectorstore):
+    """표를 구조화하여 저장"""
+
+    # 1. 표 요약 생성 (검색용)
+    summary = summarize_table(table_data, llm)
+
+    # 2. 구조화 데이터 저장 (조회용)
+    structured = {
+        "table_id": table_id,
+        "headers": table_data[0],
+        "rows": table_data[1:],
+        "summary": summary
+    }
+
+    # 3. 벡터 스토어에 요약 저장
+    vectorstore.add_texts(
+        texts=[summary],
+        metadatas=[{"table_data": json.dumps(structured)}]
+    )
+
+    return structured
+```
+
+---
+
+## 6. 멀티모달 RAG 구현
+
+### 전체 파이프라인
+
+```python
+from docling.document_converter import DocumentConverter
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.chat_models import ChatOpenAI
+
+class MultimodalRAG:
+    def __init__(self):
+        self.converter = DocumentConverter()
+        self.embeddings = OpenAIEmbeddings()
+        self.vectorstore = Chroma(embedding_function=self.embeddings)
+        self.llm = ChatOpenAI(model="gpt-4-vision-preview")
+
+    def ingest_document(self, file_path):
+        """문서 수집 및 인덱싱"""
+        # 1. 문서 파싱
+        result = self.converter.convert(file_path)
+
+        # 2. 텍스트 처리
+        for block in result.document.text_blocks:
+            self.vectorstore.add_texts(
+                texts=[block.content],
+                metadatas=[{
+                    "type": "text",
+                    "page": block.page,
+                    "source": file_path
+                }]
+            )
+
+        # 3. 표 처리
+        for i, table in enumerate(result.document.tables):
+            summary = self._summarize_table(table)
+            self.vectorstore.add_texts(
+                texts=[summary],
+                metadatas=[{
+                    "type": "table",
+                    "page": table.page,
+                    "table_data": table.to_json(),
+                    "source": file_path
+                }]
+            )
+
+        # 4. 이미지 처리
+        for img in result.document.images:
+            description = self._describe_image(img.path)
+            self.vectorstore.add_texts(
+                texts=[description],
+                metadatas=[{
+                    "type": "image",
+                    "page": img.page,
+                    "image_path": img.path,
+                    "source": file_path
+                }]
+            )
+
+    def query(self, question):
+        """멀티모달 질의 응답"""
+        # 1. 관련 컨텐츠 검색
+        results = self.vectorstore.similarity_search(question, k=5)
+
+        # 2. 컨텍스트 구성
+        context_parts = []
+        images_to_include = []
+
+        for doc in results:
+            if doc.metadata["type"] == "text":
+                context_parts.append(doc.page_content)
+            elif doc.metadata["type"] == "table":
+                context_parts.append(f"[표 데이터]\n{doc.page_content}")
+            elif doc.metadata["type"] == "image":
+                context_parts.append(f"[이미지 설명]\n{doc.page_content}")
+                images_to_include.append(doc.metadata["image_path"])
+
+        context = "\n\n".join(context_parts)
+
+        # 3. 멀티모달 생성
+        return self._generate_answer(question, context, images_to_include)
+
+    def _summarize_table(self, table):
+        """표 요약"""
+        # 구현
+        pass
+
+    def _describe_image(self, image_path):
+        """이미지 설명 생성"""
+        # 구현
+        pass
+
+    def _generate_answer(self, question, context, images):
+        """최종 답변 생성"""
+        messages = [
+            {"type": "text", "text": f"Context:\n{context}\n\nQuestion: {question}"}
+        ]
+
+        # 이미지 추가
+        for img_path in images:
+            encoded = encode_image(img_path)
+            messages.append({
+                "type": "image_url",
+                "image_url": f"data:image/jpeg;base64,{encoded}"
+            })
+
+        return self.llm.invoke(messages).content
+```
+
+---
+
+## 7. 멀티모달 검색 전략
+
+### 크로스모달 검색
+
+```
+텍스트 질의 → 이미지 검색
+이미지 질의 → 텍스트 검색
+```
+
+```python
+from langchain.embeddings import OpenCLIPEmbeddings
+
+class CrossModalRetriever:
+    def __init__(self):
+        # CLIP은 텍스트와 이미지를 같은 공간에 임베딩
+        self.clip = OpenCLIPEmbeddings()
+        self.vectorstore = Chroma(embedding_function=self.clip)
+
+    def search_images_by_text(self, text_query, k=5):
+        """텍스트로 이미지 검색"""
+        return self.vectorstore.similarity_search(
+            text_query,
+            k=k,
+            filter={"type": "image"}
+        )
+
+    def search_text_by_image(self, image_path, k=5):
+        """이미지로 텍스트 검색"""
+        image_embedding = self.clip.embed_image(image_path)
+        return self.vectorstore.similarity_search_by_vector(
+            image_embedding,
+            k=k,
+            filter={"type": "text"}
+        )
+```
+
+### Late Interaction (ColBERT 스타일)
+
+```python
+def late_interaction_search(query, documents, model):
+    """토큰 레벨 유사도 계산"""
+    query_tokens = model.encode_query(query)
+
+    scores = []
+    for doc in documents:
+        doc_tokens = model.encode_document(doc)
+
+        # 각 쿼리 토큰에 대해 최대 유사도 계산
+        max_sims = []
+        for q_tok in query_tokens:
+            sims = [cosine_sim(q_tok, d_tok) for d_tok in doc_tokens]
+            max_sims.append(max(sims))
+
+        scores.append(sum(max_sims))
+
+    return scores
+```
+
+---
+
+## 핵심 요약
+
+### 멀티모달 RAG 구성 요소
+
+| 구성 요소 | 역할 | 주요 도구 |
+|-----------|------|-----------|
+| **Document Parser** | 문서 구조 분석 | Docling, Unstructured |
+| **Image Encoder** | 이미지 임베딩 | CLIP, BLIP |
+| **Table Processor** | 표 → 텍스트/구조화 | Custom, LLM |
+| **Multimodal LLM** | 통합 이해/생성 | GPT-4V, Claude 3 |
+
+### 모달리티별 처리 전략
+
+| 모달리티 | 처리 방법 |
+|----------|-----------|
+| **텍스트** | 일반 텍스트 임베딩 |
+| **이미지** | Vision 모델 설명 생성 또는 CLIP 임베딩 |
+| **표** | 요약 + 구조화 데이터 병행 저장 |
+| **차트** | 이미지 설명 + 데이터 추출 |
+
+### 실전 적용 팁
+
+1. **단순 시작**: 먼저 텍스트만 처리, 점진적으로 모달리티 추가
+2. **이미지 설명**: Vision LLM으로 이미지를 텍스트로 변환하면 기존 RAG 활용 가능
+3. **표 처리**: 요약과 원본 모두 저장하여 검색과 정확도 확보
+4. **비용 고려**: 멀티모달 LLM 호출 비용이 높으므로 캐싱 활용

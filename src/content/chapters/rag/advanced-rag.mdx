@@ -1,0 +1,556 @@
+---
+title: "Advanced RAG"
+description: "RAG 성능 고도화: HyDE, Query Reformulation, Reranking, Context Optimization"
+---
+
+# Advanced RAG
+
+## 1. RAG Pipeline 최적화 개요
+
+### 기본 파이프라인
+
+```
+Query → Retrieval → Generation
+```
+
+### 고도화 파이프라인
+
+```
+Query → Query Processing → Retrieval → Context Optimization → Generation
+         ↓                    ↓              ↓
+    - Query Expansion    - Hybrid Search   - Reranking
+    - Query Decomposition                  - Compression
+    - HyDE                                 - Reordering
+```
+
+### 최적화 영역
+
+| 영역 | 기법 | 목적 |
+|------|------|------|
+| **Query Processing** | HyDE, Multi-Query, Decomposition | 검색 쿼리 개선 |
+| **Retrieval** | Hybrid Search, Small2Big | 검색 품질 향상 |
+| **Context** | Reranking, Compression | 컨텍스트 최적화 |
+
+---
+
+## 2. Small2Big Chunking
+
+### 개념
+
+작은 청크로 검색하고, 큰 문맥을 제공하는 전략
+
+```
+[검색용 작은 청크] → 검색 → [부모 문서의 큰 문맥 제공]
+```
+
+### 구현
+
+```python
+from langchain.retrievers import ParentDocumentRetriever
+from langchain.storage import InMemoryStore
+
+# 두 종류의 splitter 준비
+child_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=200,  # 작은 청크 (검색용)
+    chunk_overlap=20
+)
+
+parent_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,  # 큰 청크 (컨텍스트용)
+    chunk_overlap=100
+)
+
+# 저장소 설정
+store = InMemoryStore()
+
+# Parent Document Retriever 생성
+retriever = ParentDocumentRetriever(
+    vectorstore=vectorstore,
+    docstore=store,
+    child_splitter=child_splitter,
+    parent_splitter=parent_splitter
+)
+
+# 문서 추가
+retriever.add_documents(documents)
+
+# 검색 (작은 청크로 검색 → 부모 문서 반환)
+docs = retriever.get_relevant_documents("질의")
+```
+
+### 장점
+
+| 장점 | 설명 |
+|------|------|
+| **검색 정확도** | 작은 청크로 정밀한 매칭 |
+| **풍부한 문맥** | 큰 부모 문서로 충분한 정보 |
+| **유연성** | 검색과 생성 최적화 분리 |
+
+<Callout type="info" title="Small2Big 효과">
+작은 청크는 검색 정확도를 높이고, 큰 부모 문서는 LLM에게 충분한 문맥을 제공합니다.
+</Callout>
+
+---
+
+## 3. Contextual Retrieval
+
+### 개념
+
+각 청크에 문서 전체의 맥락 정보를 추가
+
+### Before vs After
+
+```
+[Before - 맥락 없음]
+"매출이 20% 증가했다."
+→ 언제? 어디서? 불명확
+
+[After - 맥락 추가]
+"[2024년 Q3 삼성전자 실적보고서] 매출이 20% 증가했다."
+→ 명확한 맥락 제공
+```
+
+### 구현
+
+```python
+def add_context_to_chunks(chunks, document_summary):
+    """각 청크에 문서 맥락 추가"""
+    contextualized_chunks = []
+
+    for chunk in chunks:
+        # 맥락 정보 추가
+        contextualized_content = f"[{document_summary}]\n{chunk.page_content}"
+
+        new_chunk = Document(
+            page_content=contextualized_content,
+            metadata=chunk.metadata
+        )
+        contextualized_chunks.append(new_chunk)
+
+    return contextualized_chunks
+
+# 사용 예시
+summary = "2024년 AI 기술 동향 보고서"
+chunks_with_context = add_context_to_chunks(chunks, summary)
+```
+
+### LLM을 활용한 자동 맥락 생성
+
+```python
+def generate_chunk_context(chunk, full_document, llm):
+    """LLM으로 청크의 맥락 생성"""
+    prompt = f"""다음 청크가 어떤 문맥에서 나온 것인지 한 문장으로 설명하세요.
+
+전체 문서:
+{full_document[:2000]}
+
+청크:
+{chunk.page_content}
+
+맥락 설명:"""
+
+    context = llm.predict(prompt)
+    return f"[맥락: {context}]\n{chunk.page_content}"
+```
+
+---
+
+## 4. HyDE (Hypothetical Document Embeddings)
+
+### 개념
+
+질의에 대한 가상 답변을 생성하여 검색에 활용
+
+### 프로세스
+
+```
+1. 질의: "RAG의 장점은?"
+         ↓
+2. LLM으로 가상 답변 생성
+   "RAG의 장점은 외부 지식을 활용하여
+    정확한 답변을 생성할 수 있으며..."
+         ↓
+3. 가상 답변을 임베딩하여 검색
+         ↓
+4. 검색된 실제 문서로 최종 답변 생성
+```
+
+### 구현
+
+```python
+from langchain.chains import HypotheticalDocumentEmbedder
+
+# HyDE 임베딩 생성
+hyde_embeddings = HypotheticalDocumentEmbedder.from_llm(
+    llm=ChatOpenAI(temperature=0.5),
+    base_embeddings=OpenAIEmbeddings(),
+    prompt_key="web_search"  # 프롬프트 유형
+)
+
+# 벡터 스토어에 HyDE 임베딩 사용
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=hyde_embeddings
+)
+```
+
+### 수동 구현
+
+```python
+def hyde_search(query, llm, vectorstore, embeddings):
+    """HyDE 검색 구현"""
+
+    # 1. 가상 답변 생성
+    prompt = f"""다음 질문에 대한 가상의 답변을 작성하세요.
+
+질문: {query}
+
+가상 답변:"""
+
+    hypothetical_doc = llm.predict(prompt)
+
+    # 2. 가상 답변으로 검색
+    results = vectorstore.similarity_search(
+        hypothetical_doc,
+        k=5
+    )
+
+    return results
+
+# 사용
+docs = hyde_search("RAG의 장점은?", llm, vectorstore, embeddings)
+```
+
+### HyDE의 장점
+
+| 장점 | 설명 |
+|------|------|
+| **의미 갭 감소** | 질의와 문서 간 의미 차이 해소 |
+| **검색 품질 향상** | 더 관련성 높은 문서 검색 |
+| **Zero-shot 가능** | 학습 데이터 없이 적용 |
+
+---
+
+## 5. Query Reformulation (질의 재구성)
+
+### Query Expansion (질의 확장)
+
+```python
+def expand_query(query, llm):
+    """질의를 확장하여 검색 범위 넓히기"""
+    prompt = f"""다음 질의를 검색에 유용한 여러 형태로 확장하세요.
+동의어, 관련어, 다른 표현을 포함해주세요.
+
+원본 질의: {query}
+
+확장된 질의들 (콤마로 구분):"""
+
+    expanded = llm.predict(prompt)
+    return [q.strip() for q in expanded.split(",")]
+
+# 예시
+# "기계학습" → ["기계학습", "머신러닝", "machine learning", "ML", "자동학습"]
+```
+
+### Query Decomposition (질의 분해)
+
+```python
+def decompose_query(query, llm):
+    """복합 질의를 단순 질의로 분해"""
+    prompt = f"""다음 복합 질의를 여러 개의 단순 질의로 분해하세요.
+
+복합 질의: {query}
+
+단순 질의들 (줄바꿈으로 구분):"""
+
+    decomposed = llm.predict(prompt)
+    return decomposed.strip().split("\n")
+
+# 예시
+# "2024년 AI 시장 규모와 성장률은?"
+# → ["2024년 AI 시장 규모", "AI 시장 성장률"]
+```
+
+### Multi-Query Retriever
+
+```python
+from langchain.retrievers import MultiQueryRetriever
+
+# Multi-Query Retriever 생성
+multi_retriever = MultiQueryRetriever.from_llm(
+    retriever=base_retriever,
+    llm=ChatOpenAI(temperature=0.3)
+)
+
+# 내부적으로:
+# 1. 원본 질의를 여러 관점의 질의로 변환
+# 2. 각 질의로 검색 수행
+# 3. 결과 통합 (중복 제거)
+
+docs = multi_retriever.get_relevant_documents(
+    "딥러닝의 한계점은 무엇인가?"
+)
+```
+
+---
+
+## 6. Context Optimization
+
+### Reranking (재순위화)
+
+초기 검색 결과를 Cross-Encoder로 재정렬
+
+```python
+from sentence_transformers import CrossEncoder
+
+# Cross-Encoder 모델 로드
+reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+def rerank_documents(query, docs, top_k=3):
+    """검색된 문서 재순위화"""
+
+    # 각 문서에 점수 부여
+    pairs = [[query, doc.page_content] for doc in docs]
+    scores = reranker.predict(pairs)
+
+    # 점수 기반 정렬
+    doc_score_pairs = list(zip(docs, scores))
+    doc_score_pairs.sort(key=lambda x: x[1], reverse=True)
+
+    # 상위 k개 반환
+    return [doc for doc, score in doc_score_pairs[:top_k]]
+
+# 사용
+initial_docs = retriever.get_relevant_documents(query)
+reranked_docs = rerank_documents(query, initial_docs, top_k=3)
+```
+
+### LangChain Cohere Reranker
+
+```python
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import CohereRerank
+
+# Cohere Reranker 설정
+compressor = CohereRerank()
+
+# Compression Retriever 생성
+compression_retriever = ContextualCompressionRetriever(
+    base_compressor=compressor,
+    base_retriever=base_retriever
+)
+
+# 검색 (자동으로 재순위화)
+docs = compression_retriever.get_relevant_documents(query)
+```
+
+### Compression (압축)
+
+불필요한 정보를 제거하고 핵심만 추출
+
+```python
+from langchain.retrievers.document_compressors import LLMChainExtractor
+
+# LLM 기반 압축기
+compressor = LLMChainExtractor.from_llm(llm)
+
+compression_retriever = ContextualCompressionRetriever(
+    base_compressor=compressor,
+    base_retriever=base_retriever
+)
+
+# 검색 결과 중 질의와 관련된 부분만 추출
+docs = compression_retriever.get_relevant_documents(query)
+```
+
+---
+
+## 7. Reordering (재정렬)
+
+### Lost in the Middle 문제
+
+LLM이 긴 컨텍스트의 중간 정보를 놓치는 현상
+
+```
+입력: [Doc1, Doc2, Doc3, Doc4, Doc5]
+         ↑              ↑
+      주목 높음      주목 낮음     주목 높음
+```
+
+### 해결: Long Context Reorder
+
+```python
+from langchain.document_transformers import LongContextReorder
+
+# 재정렬기 생성
+reorderer = LongContextReorder()
+
+# 중요한 문서를 처음과 끝에 배치
+def reorder_for_llm(docs):
+    """LLM 주목도를 고려한 재정렬"""
+    reordered = reorderer.transform_documents(docs)
+    return reordered
+
+# 원본: [1위, 2위, 3위, 4위, 5위]
+# 재정렬: [1위, 3위, 5위, 4위, 2위]
+# (중요도 높은 문서가 처음과 끝에 위치)
+```
+
+### 수동 구현
+
+```python
+def reorder_documents(docs):
+    """관련도 높은 문서를 처음과 끝에 배치"""
+    if len(docs) <= 2:
+        return docs
+
+    # 홀수 인덱스는 앞에, 짝수 인덱스는 뒤에
+    reordered = []
+    for i, doc in enumerate(docs):
+        if i % 2 == 0:
+            reordered.append(doc)
+        else:
+            reordered.insert(len(reordered) // 2, doc)
+
+    return reordered
+```
+
+---
+
+## 8. Hybrid Search
+
+### 개념
+
+키워드 검색 + 의미 검색 결합
+
+```
+Query
+  ↓
+┌───────────────────────────┐
+│  Keyword Search (BM25)    │ → 정확한 단어 매칭
+│  Semantic Search (Vector) │ → 의미적 유사성
+└───────────────────────────┘
+  ↓
+결과 통합 (Reciprocal Rank Fusion)
+```
+
+### 구현
+
+```python
+from langchain.retrievers import BM25Retriever, EnsembleRetriever
+
+# BM25 (키워드) Retriever
+bm25_retriever = BM25Retriever.from_documents(chunks)
+bm25_retriever.k = 5
+
+# 벡터 (의미) Retriever
+vector_retriever = vectorstore.as_retriever(
+    search_kwargs={"k": 5}
+)
+
+# 하이브리드 Retriever
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, vector_retriever],
+    weights=[0.3, 0.7]  # 키워드 30%, 의미 70%
+)
+
+# 검색
+docs = ensemble_retriever.get_relevant_documents(query)
+```
+
+---
+
+## 9. 실전 고도화 파이프라인
+
+### 종합 구현 예제
+
+```python
+class AdvancedRAG:
+    def __init__(self, vectorstore, llm):
+        self.vectorstore = vectorstore
+        self.llm = llm
+        self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+    def query(self, question: str) -> str:
+        # 1. Query Expansion
+        expanded_queries = self._expand_query(question)
+
+        # 2. Multi-Query Retrieval
+        all_docs = []
+        for q in expanded_queries:
+            docs = self.vectorstore.similarity_search(q, k=5)
+            all_docs.extend(docs)
+
+        # 3. 중복 제거
+        unique_docs = self._deduplicate(all_docs)
+
+        # 4. Reranking
+        reranked_docs = self._rerank(question, unique_docs, top_k=5)
+
+        # 5. Reordering
+        final_docs = self._reorder(reranked_docs)
+
+        # 6. Generation
+        context = "\n\n".join(d.page_content for d in final_docs)
+        return self._generate(question, context)
+
+    def _expand_query(self, query):
+        # 구현 생략
+        pass
+
+    def _deduplicate(self, docs):
+        seen = set()
+        unique = []
+        for doc in docs:
+            if doc.page_content not in seen:
+                seen.add(doc.page_content)
+                unique.append(doc)
+        return unique
+
+    def _rerank(self, query, docs, top_k):
+        pairs = [[query, doc.page_content] for doc in docs]
+        scores = self.reranker.predict(pairs)
+        ranked = sorted(zip(docs, scores), key=lambda x: x[1], reverse=True)
+        return [doc for doc, _ in ranked[:top_k]]
+
+    def _reorder(self, docs):
+        # Lost in the Middle 해결
+        n = len(docs)
+        reordered = [None] * n
+        for i, doc in enumerate(docs):
+            if i % 2 == 0:
+                reordered[i // 2] = doc
+            else:
+                reordered[n - 1 - i // 2] = doc
+        return reordered
+
+    def _generate(self, question, context):
+        prompt = f"""Context: {context}
+
+Question: {question}
+
+Answer:"""
+        return self.llm.predict(prompt)
+```
+
+---
+
+## 핵심 요약
+
+### RAG 고도화 기법 정리
+
+| 기법 | 목적 | 적용 시점 |
+|------|------|-----------|
+| **Small2Big** | 검색 정확도 + 풍부한 문맥 | 인덱싱 |
+| **Contextual** | 청크 맥락 명확화 | 인덱싱 |
+| **HyDE** | 질의-문서 의미 갭 해소 | 검색 전 |
+| **Multi-Query** | 다양한 관점 검색 | 검색 |
+| **Reranking** | 검색 결과 정제 | 검색 후 |
+| **Reordering** | LLM 주목도 최적화 | 생성 전 |
+| **Hybrid Search** | 키워드 + 의미 검색 | 검색 |
+
+### 적용 우선순위
+
+1. **기본**: Reranking (즉시 효과)
+2. **중급**: Hybrid Search, Multi-Query
+3. **고급**: HyDE, Small2Big, Contextual

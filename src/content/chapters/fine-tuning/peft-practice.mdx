@@ -1,0 +1,348 @@
+---
+title: "PEFT 실전 활용"
+description: "LoRA, QLoRA 구현 실습, 하이퍼파라미터 튜닝, 실전 시나리오"
+---
+
+# PEFT 실전 활용
+
+## 1. PEFT (Parameter Efficient Fine Tuning) 개요
+
+### PEFT란?
+
+**PEFT(Parameter Efficient Fine Tuning)**는 전체 모델 파라미터를 업데이트하는 대신, **일부 파라미터만 효율적으로 조정**하여 특정 태스크에 모델을 적응시키는 기법입니다.
+
+### PEFT의 필요성
+
+| 항목 | Full Fine-Tuning | PEFT |
+|------|-----------------|------|
+| **학습 파라미터** | 모든 파라미터 업데이트 | 소수의 파라미터만 업데이트 |
+| **GPU 메모리** | 매우 많이 필요 (수백GB) | 적게 필요 (수GB~수십GB) |
+| **학습 시간** | 오래 걸림 | 상대적으로 빠름 |
+| **비용** | 매우 높음 | 상대적으로 저렴 |
+| **Catastrophic Forgetting** | 발생 가능성 높음 | 발생 가능성 낮음 |
+
+### PEFT의 주요 장점
+
+- **효율성**: 적은 파라미터만 업데이트하여 GPU 메모리 사용량 감소
+- **경제성**: 학습 비용 절감 (Full Fine-Tuning 대비 1/10 수준)
+- **속도**: 빠른 학습 시간
+- **안정성**: 기존 지식 보존 (Catastrophic Forgetting 방지)
+- **접근성**: 제한된 하드웨어 환경에서도 Fine-Tuning 가능
+
+---
+
+## 2. LoRA 구현
+
+### LoRA의 핵심 개념
+
+**LoRA**는 PEFT의 대표적인 기법으로, **저차원 행렬 분해(Low-Rank Matrix Decomposition)**를 활용합니다.
+
+```
+원본 가중치 행렬: W ∈ R^(d×k)
+
+LoRA 적용:
+W' = W + ΔW
+ΔW = A × B (A는 d×r 행렬, B는 r×k 행렬, r은 min(d,k)보다 훨씬 작음)
+```
+
+### LoRA의 특징
+
+| 특징 | 설명 |
+|------|------|
+| **파라미터 변화량 적음** | 전체 파라미터의 0.1%~1% 수준만 업데이트 |
+| **문제 풀이에 유리** | Instruction 데이터 학습에 적합 |
+| **메모리 효율** | GPU가 매우 부족한 경우에도 적용 가능 |
+| **모듈화** | 베이스 모델은 그대로 두고 LoRA 어댑터만 교체 |
+
+### LoRA 구현 예시 (Hugging Face PEFT)
+
+```python
+from peft import LoraConfig, get_peft_model
+from transformers import AutoModelForCausalLM
+
+# 베이스 모델 로드
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf")
+
+# LoRA 설정
+lora_config = LoraConfig(
+    r=16,                    # 랭크 (Low-Rank의 차원)
+    lora_alpha=32,          # 스케일링 파라미터
+    target_modules=["q_proj", "v_proj"],  # 적용할 모듈
+    lora_dropout=0.05,      # 드롭아웃
+    bias="none",            # 바이어스 학습 여부
+    task_type="CAUSAL_LM"   # 태스크 타입
+)
+
+# PEFT 모델 생성
+peft_model = get_peft_model(model, lora_config)
+peft_model.print_trainable_parameters()
+# 출력 예: trainable params: 4,194,304 || all params: 6,742,609,920 || trainable%: 0.06%
+```
+
+---
+
+## 3. QLoRA (Quantized LoRA)
+
+### QLoRA란?
+
+**QLoRA**는 **양자화(Quantization)**와 **LoRA**를 결합한 기법으로, GPU 메모리를 더욱 절약하면서 Fine-Tuning을 수행합니다.
+
+### QLoRA의 작동 방식
+
+```
+1. 베이스 모델을 4-bit 또는 8-bit로 양자화
+2. 양자화된 모델 위에 LoRA 적용
+3. LoRA 파라미터만 학습 (32-bit 또는 16-bit)
+```
+
+### QLoRA의 장점
+
+- **극도의 메모리 효율**: 65B 파라미터 모델을 단일 GPU(48GB)에서 학습 가능
+- **성능 유지**: Full Fine-Tuning과 유사한 성능
+- **접근성**: 일반 연구자도 대형 모델 Fine-Tuning 가능
+
+### 양자화 수준
+
+| 양자화 레벨 | 메모리 절약 | 성능 |
+|-----------|-----------|------|
+| **4-bit** | 최대 (1/8 수준) | 약간 감소 |
+| **8-bit** | 중간 (1/4 수준) | 거의 유지 |
+| **16-bit (FP16)** | 적음 (1/2 수준) | 완전 유지 |
+
+### QLoRA 구현 예시
+
+```python
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+from peft import LoraConfig, prepare_model_for_kbit_training
+import torch
+
+# 4-bit 양자화 설정
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_use_double_quant=True
+)
+
+# 양자화된 모델 로드
+model = AutoModelForCausalLM.from_pretrained(
+    "meta-llama/Llama-2-7b-hf",
+    quantization_config=bnb_config,
+    device_map="auto"
+)
+
+# k-bit 학습 준비
+model = prepare_model_for_kbit_training(model)
+
+# LoRA 설정 및 적용
+lora_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+    lora_dropout=0.05,
+    bias="none",
+    task_type="CAUSAL_LM"
+)
+
+peft_model = get_peft_model(model, lora_config)
+```
+
+---
+
+## 4. 주요 하이퍼파라미터
+
+### 하이퍼파라미터 설명
+
+| 파라미터 | 설명 | 일반적 값 | 영향 |
+|---------|------|----------|------|
+| **r (rank)** | Low-Rank 차원 | 8, 16, 32, 64 | 높을수록 표현력↑, 메모리↑ |
+| **lora_alpha** | 스케일링 파라미터 | 16, 32, 64 | LoRA 업데이트 가중치 조절 |
+| **lora_dropout** | 드롭아웃 비율 | 0.05, 0.1 | 과적합 방지 |
+| **target_modules** | 적용할 레이어 | q_proj, v_proj, etc. | 많을수록 표현력↑, 메모리↑ |
+
+### LoRA 업데이트 수식
+
+```
+W' = W + (α/r) × A × B
+
+여기서:
+- W: 원본 가중치 (Frozen)
+- A ∈ R^(d×r): 학습 가능 행렬 1
+- B ∈ R^(r×k): 학습 가능 행렬 2
+- α: 스케일링 파라미터 (lora_alpha)
+- r: 랭크
+```
+
+---
+
+## 5. Full Fine-Tuning vs PEFT 비교
+
+### 상세 비교
+
+| 비교 항목 | Full Fine-Tuning | LoRA | QLoRA |
+|----------|-----------------|------|-------|
+| **학습 파라미터** | 100% | 0.1~1% | 0.1~1% |
+| **GPU 메모리** | 매우 높음 (예: 80GB×8) | 중간 (예: 24GB×1) | 낮음 (예: 12GB×1) |
+| **학습 시간** | 수일~수주 | 수시간~수일 | 수시간~수일 |
+| **저장 공간** | 모델 크기 전체 (예: 140GB) | 수MB~수GB | 수MB~수GB |
+| **성능** | 최고 | 거의 동일 | 약간 낮음 |
+| **Catastrophic Forgetting** | 높음 | 낮음 | 낮음 |
+
+### 사용 시나리오
+
+**Full Fine-Tuning이 적합한 경우**:
+- 충분한 GPU 자원이 있을 때
+- 모델 전체를 대폭 변경해야 할 때
+- 최고 성능이 필수적일 때
+
+**LoRA가 적합한 경우**:
+- 제한된 GPU 자원 (예: 단일 GPU 24GB)
+- 빠른 실험이 필요할 때
+- 여러 태스크용 어댑터를 만들 때
+- Instruction Following 능력 향상
+
+**QLoRA가 적합한 경우**:
+- 매우 제한된 GPU 자원 (예: 단일 GPU 12GB)
+- 대형 모델 (30B+)을 Fine-Tuning할 때
+- 연구 환경에서 빠른 프로토타입 제작
+
+---
+
+## 6. 실전 활용 시나리오
+
+### 시나리오 1: Instruction Following 개선
+
+- **방법**: LoRA
+- **설정**: r=16, lora_alpha=32
+- **데이터**: Instruction-Response 쌍 (10K~100K)
+- **학습 시간**: 2~6시간 (A100 1개 기준)
+
+### 시나리오 2: 특정 도메인 적응 (법률, 의료)
+
+- **방법**: RAFT 또는 LoRA
+- **설정**: r=32, lora_alpha=64
+- **데이터**: 도메인 특화 문서 + QA 쌍
+- **학습 시간**: 6~24시간
+
+### 시나리오 3: 제한된 GPU 환경 (단일 RTX 3090)
+
+- **방법**: QLoRA
+- **설정**: 4-bit, r=16
+- **모델**: 최대 30B 파라미터
+- **학습 시간**: 12~48시간
+
+### 시나리오 4: 다중 태스크 학습
+
+- **방법**: 여러 LoRA 어댑터 생성
+- **장점**: 베이스 모델 1개 + 태스크별 어댑터 (수MB)
+- **추론**: 태스크에 따라 어댑터 교체
+
+---
+
+## 7. 성능 최적화 팁
+
+### 하이퍼파라미터 튜닝
+
+```python
+# 실험할 설정들
+rank_options = [8, 16, 32]
+alpha_options = [16, 32, 64]
+
+# Grid Search 또는 베이지안 최적화
+best_config = find_best_config(
+    model=base_model,
+    train_data=train_dataset,
+    val_data=val_dataset,
+    rank_options=rank_options,
+    alpha_options=alpha_options
+)
+```
+
+### 학습 안정화 기법
+
+- **Gradient Clipping**: 그래디언트 폭발 방지
+- **Warmup Steps**: 학습 초기 안정화
+- **Learning Rate Scheduling**: 학습률 조절
+- **Mixed Precision Training**: 메모리 절약 및 속도 향상
+
+### 메모리 최적화
+
+```python
+# Gradient Checkpointing 활성화
+model.gradient_checkpointing_enable()
+
+# Batch Size 조절
+batch_size = 4  # GPU 메모리에 맞게 조정
+gradient_accumulation_steps = 8  # 효과적인 batch size = 32
+```
+
+---
+
+## 8. RAFT (Retrieval Augmented Fine Tuning)
+
+### RAFT 개요
+
+**RAFT**는 **LoRA를 활용한 Style Tuning** 기법으로, 특정 스타일이나 도메인에 모델을 효율적으로 적응시킵니다.
+
+### RAFT의 특징
+
+- **검색 기반 학습**: RAG와 Fine-Tuning의 결합
+- **스타일 학습**: 특정 작성 스타일이나 톤 학습
+- **도메인 적응**: 특정 분야의 전문 용어 및 표현 학습
+
+### RAFT vs RAG
+
+| 구분 | RAG | RAFT |
+|------|-----|------|
+| **접근 방식** | 실시간 검색 + 생성 | Fine-Tuning으로 지식 내재화 |
+| **지식 저장** | 외부 벡터 DB | 모델 파라미터 |
+| **추론 속도** | 검색 시간 필요 | 빠름 (검색 불필요) |
+| **업데이트** | DB 업데이트만 | 재학습 필요 |
+
+---
+
+## 9. 실습 과제
+
+### 기본 과제
+Hugging Face PEFT 라이브러리로 간단한 LoRA Fine-Tuning 수행
+
+### 중급 과제
+QLoRA를 사용하여 7B 모델을 단일 GPU에서 학습
+
+### 고급 과제
+여러 LoRA 어댑터를 만들어 태스크별로 전환하는 시스템 구축
+
+---
+
+## 핵심 요약
+
+### 핵심 용어
+
+| 용어 | 설명 |
+|------|------|
+| **PEFT** | Parameter Efficient Fine Tuning - 효율적 파라미터 조정 |
+| **LoRA** | Low-Rank Adaptation - 저랭크 행렬 분해 기반 Fine-Tuning |
+| **QLoRA** | Quantized LoRA - 양자화 + LoRA |
+| **RAFT** | Retrieval Augmented Fine Tuning - LoRA 기반 스타일 학습 |
+| **Rank (r)** | Low-Rank 분해의 차원 |
+| **Adapter** | 베이스 모델에 추가되는 작은 학습 가능 모듈 |
+
+### 이해도 체크리스트
+
+- [ ] PEFT가 필요한 이유를 설명할 수 있는가?
+- [ ] LoRA의 작동 원리를 이해하는가?
+- [ ] QLoRA가 메모리를 절약하는 방법을 설명할 수 있는가?
+- [ ] Full Fine-Tuning과 PEFT의 장단점을 비교할 수 있는가?
+- [ ] 상황에 따라 적절한 PEFT 기법을 선택할 수 있는가?
+- [ ] LoRA 하이퍼파라미터의 역할을 이해하는가?
+- [ ] RAFT와 RAG의 차이를 설명할 수 있는가?
+
+### 참고 자료
+
+**논문**:
+- LoRA: Low-Rank Adaptation of Large Language Models
+- QLoRA: Efficient Finetuning of Quantized LLMs
+
+**라이브러리**:
+- Hugging Face PEFT: https://github.com/huggingface/peft
+- BitsAndBytes: https://github.com/TimDettmers/bitsandbytes

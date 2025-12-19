@@ -1,0 +1,106 @@
+---
+title: "자료구조와 파일 입출력"
+description: "리스트, 딕셔너리, 파일 처리"
+---
+
+# 자료구조와 파일 입출력
+
+## 1. List Comprehension
+
+반복문의 특이한 형태로, **코드를 간결하게 만드는 방식**입니다.
+
+### 기존 방식 vs List Comprehension
+
+```python
+# 기존 방식 (4줄)
+result = []
+for x in range(10):
+    if x % 2 == 0:
+        result.append(x**2)
+
+# List Comprehension (1줄!)
+result = [x**2 for x in range(10) if x % 2 == 0]
+# 결과: [0, 4, 16, 36, 64]
+```
+
+### 문법 구조
+
+```python
+[표현식 for 변수 in 이터러블 if 조건]
+```
+
+---
+
+## 2. 파일 입출력
+
+### open() 함수와 모드
+
+| 모드 | 설명 |
+|------|------|
+| r | 읽기 (Read) - 기본값 |
+| w | 쓰기 (Write) - 기존 내용 삭제 |
+| a | 추가 (Append) - 기존 내용 뒤에 추가 |
+
+### with 구문 (권장)
+
+```python
+# 읽기
+with open("example.txt", "r", encoding="utf-8") as f:
+    text = f.read()
+
+# 쓰기
+with open("example.txt", "w", encoding="utf-8") as f:
+    f.write("Hello, File!")
+```
+
+---
+
+## 3. JSON 처리
+
+| 함수 | 방향 | 설명 |
+|------|------|------|
+| json.dumps() | dict → str | 딕셔너리를 JSON 문자열로 |
+| json.loads() | str → dict | JSON 문자열을 딕셔너리로 |
+| json.dump() | dict → file | 딕셔너리를 파일로 저장 |
+| json.load() | file → dict | 파일에서 딕셔너리 읽기 |
+
+```python
+import json
+
+data = {"name": "철수", "age": 25}
+json_str = json.dumps(data, ensure_ascii=False, indent=2)
+data = json.loads(json_str)
+```
+
+---
+
+## 4. 예외 처리
+
+```python
+try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")
+except Exception as e:
+    print("오류:", e)
+finally:
+    print("항상 실행")
+```
+
+| 예외 | 발생 상황 |
+|------|----------|
+| ZeroDivisionError | 0으로 나눌 때 |
+| ValueError | 잘못된 값 |
+| KeyError | 없는 키 |
+| FileNotFoundError | 파일 없음 |
+
+---
+
+## 핵심 요약
+
+| 개념 | 핵심 내용 |
+|------|----------|
+| List Comprehension | [표현식 for x in 이터러블 if 조건] |
+| 파일 입출력 | with open() 권장 |
+| JSON | dumps/loads, dump/load |
+| 예외 처리 | try-except-finally |

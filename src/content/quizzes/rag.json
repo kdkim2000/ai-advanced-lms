@@ -1,0 +1,1315 @@
+{
+  "moduleId": "rag",
+  "exam_info": {
+    "title": "RAG 퀴즈",
+    "level": "LV.5",
+    "type": "객관식 문항",
+    "total_questions": 75,
+    "points_per_question": 4,
+    "total_points": 300,
+    "description": "RAG 기본개념, RAG 데이터 전처리, LangChain 등에 대한 이해도를 확인합니다."
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "LLM의 한계점으로 적절하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "지식 차단(Knowledge Cutoff)으로 인한 최신 정보 부재",
+        "2": "할루시네이션으로 인한 허위 정보 생성",
+        "3": "도메인 전문성 부족",
+        "4": "실시간 데이터 접근 불가",
+        "5": "Python 코드 작성 불가능"
+      },
+      "answer": 5,
+      "category": "RAG 기본개념",
+      "explanation": "LLM은 Python 코드 작성이 가능하며, 이는 한계점이 아닙니다. 1-4번은 모두 LLM의 실제 한계점입니다."
+    },
+    {
+      "id": 2,
+      "question": "할루시네이션(Hallucination)에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "LLM이 처리 속도가 느려지는 현상",
+        "2": "LLM이 그럴듯하지만 사실이 아닌 정보를 자신 있게 생성하는 현상",
+        "3": "LLM이 사용자의 질문을 이해하지 못하는 현상",
+        "4": "LLM이 너무 짧은 답변을 생성하는 현상",
+        "5": "LLM의 메모리 사용량이 증가하는 현상"
+      },
+      "answer": 2,
+      "category": "RAG 기본개념",
+      "explanation": "할루시네이션은 LLM이 검증되지 않은 정보를 마치 사실인 것처럼 생성하는 현상입니다."
+    },
+    {
+      "id": 3,
+      "question": "RAG(Retrieval Augmented Generation)의 주요 목적은?",
+      "points": 4,
+      "options": {
+        "1": "LLM의 처리 속도를 향상시키기 위해",
+        "2": "외부 지식 검색을 통해 LLM의 생성 능력을 강화하기 위해",
+        "3": "LLM의 크기를 줄이기 위해",
+        "4": "LLM의 학습 비용을 절감하기 위해",
+        "5": "LLM을 완전히 대체하기 위해"
+      },
+      "answer": 2,
+      "category": "RAG 기본개념",
+      "explanation": "RAG는 외부 데이터베이스에서 관련 정보를 검색하여 LLM에 제공함으로써 생성 능력을 강화합니다."
+    },
+    {
+      "id": 4,
+      "question": "RAG 프로세스의 올바른 순서는?",
+      "points": 4,
+      "options": {
+        "1": "질의 입력 → LLM 전달 → 관련 문서 검색 → 응답 생성",
+        "2": "관련 문서 검색 → 질의 입력 → Context 구성 → 응답 생성",
+        "3": "질의 입력 → 관련 문서 검색 → Context 구성 → LLM 전달 → 응답 생성",
+        "4": "Context 구성 → 질의 입력 → 관련 문서 검색 → 응답 생성",
+        "5": "응답 생성 → 관련 문서 검색 → LLM 전달 → 질의 입력"
+      },
+      "answer": 3,
+      "category": "RAG 기본개념",
+      "explanation": "RAG의 올바른 순서는 질의 입력 → 관련 문서 검색(Retrieval) → Context 구성 → LLM에 전달 → 응답 생성(Generation)입니다."
+    },
+    {
+      "id": 5,
+      "question": "RAG의 장점이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "외부 데이터베이스를 활용한 지식 확장",
+        "2": "검증된 정보 기반의 정확성 향상",
+        "3": "출처 추적 가능한 투명성",
+        "4": "지식 베이스 업데이트의 유연성",
+        "5": "모델 재학습 없이는 새로운 정보 반영 불가"
+      },
+      "answer": 5,
+      "category": "RAG 기본개념",
+      "explanation": "RAG의 주요 장점 중 하나는 모델 재학습 없이도 지식 베이스를 업데이트하여 새로운 정보를 반영할 수 있다는 점입니다."
+    },
+    {
+      "id": 6,
+      "question": "인덱싱(Indexing)에 대한 설명으로 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "문서를 검색 불가능한 형태로 암호화하는 과정",
+        "2": "문서를 검색 가능한 형태로 변환하고 저장하는 과정",
+        "3": "문서를 삭제하고 정리하는 과정",
+        "4": "문서를 번역하는 과정",
+        "5": "문서를 압축하는 과정"
+      },
+      "answer": 2,
+      "category": "RAG 데이터 전처리",
+      "explanation": "인덱싱은 문서를 검색 가능한 형태(벡터 등)로 변환하여 데이터베이스에 저장하는 과정입니다."
+    },
+    {
+      "id": 7,
+      "question": "청킹(Chunking)의 정의로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "문서를 완전히 삭제하는 과정",
+        "2": "문서를 다른 언어로 번역하는 과정",
+        "3": "긴 문서를 작은 단위(chunk)로 분할하는 과정",
+        "4": "문서를 하나로 합치는 과정",
+        "5": "문서의 오류를 수정하는 과정"
+      },
+      "answer": 3,
+      "category": "RAG 데이터 전처리",
+      "explanation": "청킹은 긴 문서를 작은 단위로 분할하여 처리하기 쉽게 만드는 과정입니다."
+    },
+    {
+      "id": 8,
+      "question": "고정 크기 청킹(Fixed-size Chunking)의 단점은?",
+      "points": 4,
+      "options": {
+        "1": "구현이 매우 복잡함",
+        "2": "청크 크기가 불균일함",
+        "3": "문맥이 단절될 가능성이 있음",
+        "4": "처리 속도가 매우 느림",
+        "5": "메모리 사용량이 과도함"
+      },
+      "answer": 3,
+      "category": "RAG 데이터 전처리",
+      "explanation": "고정 크기 청킹은 구현이 간단하고 일관된 크기를 유지하지만, 문장이나 단락 중간에서 분할되어 문맥이 단절될 수 있습니다."
+    },
+    {
+      "id": 9,
+      "question": "의미 기반 청킹(Semantic Chunking)의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "청크 크기가 항상 동일함",
+        "2": "문맥을 보존할 수 있음",
+        "3": "구현이 가장 간단함",
+        "4": "처리 속도가 가장 빠름",
+        "5": "메모리 사용량이 가장 적음"
+      },
+      "answer": 2,
+      "category": "RAG 데이터 전처리",
+      "explanation": "의미 기반 청킹은 문장, 단락, 섹션 단위로 분할하여 문맥을 보존할 수 있습니다."
+    },
+    {
+      "id": 10,
+      "question": "다음 중 LangChain의 Text Splitter가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "CharacterTextSplitter",
+        "2": "RecursiveCharacterTextSplitter",
+        "3": "TokenTextSplitter",
+        "4": "SemanticChunker",
+        "5": "ImageTextSplitter"
+      },
+      "answer": 5,
+      "category": "LangChain",
+      "explanation": "ImageTextSplitter는 LangChain의 표준 Text Splitter가 아닙니다. 1-4번은 실제 LangChain에서 제공하는 Splitter입니다."
+    },
+    {
+      "id": 11,
+      "question": "RecursiveCharacterTextSplitter의 특징으로 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "오직 공백 문자로만 분할함",
+        "2": "계층적으로 여러 구분자를 시도하며 분할함",
+        "3": "토큰 단위로만 분할함",
+        "4": "이미지만 처리할 수 있음",
+        "5": "분할하지 않고 전체 문서를 유지함"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "RecursiveCharacterTextSplitter는 단락, 문장, 단어 등 여러 구분자를 계층적으로 시도하며 분할합니다."
+    },
+    {
+      "id": 12,
+      "question": "청킹 시 chunk_overlap 매개변수의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "청크 간 완전히 독립적으로 만들기 위해",
+        "2": "청크 사이의 문맥 연결성을 유지하기 위해",
+        "3": "청크 크기를 증가시키기 위해",
+        "4": "처리 속도를 높이기 위해",
+        "5": "메모리 사용량을 줄이기 위해"
+      },
+      "answer": 2,
+      "category": "RAG 데이터 전처리",
+      "explanation": "chunk_overlap은 청크 간에 일부 텍스트를 중복시켜 문맥의 연결성을 유지하는 역할을 합니다."
+    },
+    {
+      "id": 13,
+      "question": "LangChain의 PDFLoader는 어떤 용도로 사용되는가?",
+      "points": 4,
+      "options": {
+        "1": "PDF 파일을 생성하기 위해",
+        "2": "PDF 파일을 삭제하기 위해",
+        "3": "PDF 문서를 로딩하고 텍스트를 추출하기 위해",
+        "4": "PDF 파일을 암호화하기 위해",
+        "5": "PDF 파일을 이미지로 변환하기 위해"
+      },
+      "answer": 3,
+      "category": "LangChain",
+      "explanation": "PDFLoader는 PDF 파일에서 텍스트를 추출하여 문서 객체로 로딩하는 역할을 합니다."
+    },
+    {
+      "id": 14,
+      "question": "벡터 데이터베이스(Vector Database)의 주요 목적은?",
+      "points": 4,
+      "options": {
+        "1": "관계형 데이터를 저장하기 위해",
+        "2": "고차원 벡터를 효율적으로 저장하고 검색하기 위해",
+        "3": "이미지 파일을 저장하기 위해",
+        "4": "사용자 인증 정보를 저장하기 위해",
+        "5": "로그 데이터를 저장하기 위해"
+      },
+      "answer": 2,
+      "category": "벡터DB",
+      "explanation": "벡터 데이터베이스는 임베딩 벡터를 효율적으로 저장하고 유사도 검색을 수행하기 위한 전문 데이터베이스입니다."
+    },
+    {
+      "id": 15,
+      "question": "다음 중 벡터 데이터베이스가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "Chroma",
+        "2": "Pinecone",
+        "3": "Faiss",
+        "4": "Weaviate",
+        "5": "PostgreSQL"
+      },
+      "answer": 5,
+      "category": "벡터DB",
+      "explanation": "PostgreSQL은 관계형 데이터베이스이며, 1-4번은 모두 벡터 데이터베이스입니다. (PostgreSQL도 pgvector 확장으로 벡터 검색을 지원하지만, 본질적으로는 관계형 DB입니다)"
+    },
+    {
+      "id": 16,
+      "question": "Chroma 벡터 데이터베이스의 특징으로 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "클라우드 전용 서비스",
+        "2": "경량이며 로컬 개발에 적합함",
+        "3": "오직 상용 라이선스만 제공",
+        "4": "Python을 지원하지 않음",
+        "5": "오직 이미지 벡터만 저장 가능"
+      },
+      "answer": 2,
+      "category": "벡터DB",
+      "explanation": "Chroma는 경량이며 설치가 간편하여 로컬 개발 환경에 적합한 오픈소스 벡터 데이터베이스입니다."
+    },
+    {
+      "id": 17,
+      "question": "Bi-Encoder와 Cross-Encoder의 차이점으로 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Bi-Encoder가 Cross-Encoder보다 정확도가 항상 높음",
+        "2": "Bi-Encoder는 빠른 검색에 적합하고, Cross-Encoder는 재순위화에 적합함",
+        "3": "Cross-Encoder가 Bi-Encoder보다 메모리 사용량이 적음",
+        "4": "Bi-Encoder는 질의와 문서를 함께 인코딩함",
+        "5": "두 방식의 성능은 완전히 동일함"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "Bi-Encoder는 질의와 문서를 독립적으로 인코딩하여 빠른 검색이 가능하고, Cross-Encoder는 함께 인코딩하여 정확도가 높아 재순위화에 사용됩니다."
+    },
+    {
+      "id": 18,
+      "question": "텍스트 임베딩(Text Embedding)의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트를 암호화하기 위해",
+        "2": "텍스트를 고정된 크기의 벡터로 변환하기 위해",
+        "3": "텍스트를 이미지로 변환하기 위해",
+        "4": "텍스트를 삭제하기 위해",
+        "5": "텍스트를 압축하기 위해"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "임베딩은 텍스트를 의미를 담은 고정 크기의 숫자 벡터로 변환하는 과정입니다."
+    },
+    {
+      "id": 19,
+      "question": "OpenAI의 대표적인 임베딩 모델은?",
+      "points": 4,
+      "options": {
+        "1": "gpt-3.5-turbo",
+        "2": "text-embedding-ada-002",
+        "3": "dall-e-3",
+        "4": "whisper-1",
+        "5": "davinci-003"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "text-embedding-ada-002는 OpenAI의 대표적인 텍스트 임베딩 모델입니다."
+    },
+    {
+      "id": 20,
+      "question": "LangChain의 RetrievalQA 체인에서 retriever의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "질의를 생성하는 역할",
+        "2": "벡터 스토어에서 관련 문서를 검색하는 역할",
+        "3": "문서를 삭제하는 역할",
+        "4": "최종 답변을 생성하는 역할",
+        "5": "문서를 암호화하는 역할"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "Retriever는 질의와 관련된 문서를 벡터 스토어에서 검색하여 반환하는 역할을 합니다."
+    },
+    {
+      "id": 21,
+      "question": "vectorstore.as_retriever(search_kwargs={'k': 3})에서 k의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "검색할 데이터베이스의 개수",
+        "2": "반환할 상위 문서의 개수",
+        "3": "청크의 크기",
+        "4": "임베딩의 차원 수",
+        "5": "최대 토큰 수"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "k는 유사도가 높은 상위 k개의 문서를 반환하라는 의미입니다. k=3이면 상위 3개 문서를 검색합니다."
+    },
+    {
+      "id": 22,
+      "question": "Conversational RAG의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "대화 히스토리를 완전히 무시함",
+        "2": "대화 히스토리를 유지하고 문맥 기반 질의를 처리함",
+        "3": "오직 한 번의 질의만 처리 가능",
+        "4": "이미지만 처리 가능",
+        "5": "검색 기능이 없음"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Conversational RAG는 이전 대화 내용을 기억하여 문맥을 고려한 응답을 생성합니다."
+    },
+    {
+      "id": 23,
+      "question": "Multi-Query RAG의 핵심 아이디어는?",
+      "points": 4,
+      "options": {
+        "1": "하나의 질의만 사용함",
+        "2": "질의를 여러 관점으로 변환하여 다양한 검색 결과를 얻음",
+        "3": "검색을 완전히 건너뜀",
+        "4": "오직 이미지 검색만 수행",
+        "5": "답변을 생성하지 않음"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Multi-Query RAG는 하나의 사용자 질의를 여러 관점으로 재구성하여 더 다양하고 포괄적인 검색 결과를 얻습니다."
+    },
+    {
+      "id": 24,
+      "question": "Small2Big Chunking 전략의 핵심은?",
+      "points": 4,
+      "options": {
+        "1": "큰 청크로 검색하고 작은 문맥을 제공함",
+        "2": "작은 청크로 검색하고 큰 문맥을 제공함",
+        "3": "검색과 제공 모두 큰 청크 사용",
+        "4": "검색과 제공 모두 작은 청크 사용",
+        "5": "청킹을 전혀 하지 않음"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Small2Big은 작은 청크로 정확하게 검색한 후, 해당 청크가 속한 큰 문맥(부모 문서)을 제공하는 전략입니다."
+    },
+    {
+      "id": 25,
+      "question": "Contextual Retrieval의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "청크에서 모든 문맥 정보를 제거",
+        "2": "각 청크에 문서 전체의 맥락 정보를 추가하여 검색 정확도 향상",
+        "3": "문서를 번역하는 것",
+        "4": "검색 속도를 느리게 만드는 것",
+        "5": "벡터 데이터베이스를 삭제하는 것"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Contextual Retrieval은 각 청크에 문서의 전반적인 맥락을 추가하여, 청크 단독으로도 의미를 파악할 수 있게 합니다."
+    },
+    {
+      "id": 26,
+      "question": "HyDE(Hypothetical Document Embeddings)의 작동 방식은?",
+      "points": 4,
+      "options": {
+        "1": "질의를 그대로 사용하여 검색",
+        "2": "질의에 대한 가상 답변을 생성하여 검색에 활용",
+        "3": "검색을 완전히 생략",
+        "4": "오직 키워드 검색만 사용",
+        "5": "문서를 삭제함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "HyDE는 LLM을 사용하여 질의에 대한 가상의 답변을 먼저 생성하고, 이를 사용하여 실제 문서를 검색합니다."
+    },
+    {
+      "id": 27,
+      "question": "Query Expansion의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "질의를 더 짧게 만듦",
+        "2": "질의를 삭제함",
+        "3": "질의에 동의어나 관련 용어를 추가하여 검색 범위 확대",
+        "4": "질의를 암호화함",
+        "5": "검색을 비활성화함"
+      },
+      "answer": 3,
+      "category": "고급RAG",
+      "explanation": "Query Expansion은 원래 질의에 동의어, 유사어, 관련 개념을 추가하여 더 포괄적인 검색을 수행합니다."
+    },
+    {
+      "id": 28,
+      "question": "Query Decomposition이란?",
+      "points": 4,
+      "options": {
+        "1": "질의를 완전히 삭제하는 것",
+        "2": "복잡한 질의를 여러 개의 하위 질의로 분해하는 것",
+        "3": "질의를 하나로 합치는 것",
+        "4": "질의를 암호화하는 것",
+        "5": "질의를 번역하는 것"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Query Decomposition은 복잡한 질문을 여러 개의 간단한 하위 질문으로 나누어 각각 답변을 구한 후 통합하는 기법입니다."
+    },
+    {
+      "id": 29,
+      "question": "Reranking(재순위화)의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "검색 결과를 랜덤하게 섞음",
+        "2": "검색 결과를 삭제함",
+        "3": "초기 검색 결과를 더 정교한 모델로 재평가하여 정확도 향상",
+        "4": "검색을 완전히 생략함",
+        "5": "모든 문서를 동일한 순위로 만듦"
+      },
+      "answer": 3,
+      "category": "고급RAG",
+      "explanation": "Reranking은 초기 검색된 문서들을 Cross-Encoder 등 더 정교한 모델로 재평가하여 관련도 순으로 재정렬합니다."
+    },
+    {
+      "id": 30,
+      "question": "Cross-Encoder를 Reranking에 사용하는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "처리 속도가 가장 빠르기 때문",
+        "2": "질의와 문서를 함께 고려하여 높은 정확도를 제공하기 때문",
+        "3": "메모리 사용량이 가장 적기 때문",
+        "4": "구현이 가장 간단하기 때문",
+        "5": "벡터 변환이 필요 없기 때문"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Cross-Encoder는 질의와 문서를 함께 입력받아 관련성을 직접 평가하므로, Bi-Encoder보다 정확도가 높습니다."
+    },
+    {
+      "id": 31,
+      "question": "'Lost in the Middle' 문제란?",
+      "points": 4,
+      "options": {
+        "1": "LLM이 짧은 문맥을 처리하지 못하는 현상",
+        "2": "LLM이 긴 문맥의 중간 부분 정보를 놓치는 현상",
+        "3": "LLM이 첫 부분만 읽는 현상",
+        "4": "LLM이 마지막 부분만 읽는 현상",
+        "5": "LLM이 모든 정보를 완벽하게 처리하는 현상"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Lost in the Middle은 LLM이 긴 컨텍스트의 처음과 끝은 잘 활용하지만, 중간 부분의 정보는 놓치는 경향을 말합니다."
+    },
+    {
+      "id": 32,
+      "question": "Lost in the Middle 문제의 해결 방법은?",
+      "points": 4,
+      "options": {
+        "1": "문서를 가능한 많이 제공",
+        "2": "중요한 문서를 처음과 끝에 배치하는 재정렬",
+        "3": "문서를 완전히 삭제",
+        "4": "모든 문서를 중간에 배치",
+        "5": "검색을 비활성화"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "중요한 문서를 컨텍스트의 처음과 끝에 배치하여 LLM이 더 잘 활용하도록 재정렬합니다."
+    },
+    {
+      "id": 33,
+      "question": "멀티모달 RAG(Multimodal RAG)란?",
+      "points": 4,
+      "options": {
+        "1": "오직 텍스트만 처리하는 RAG",
+        "2": "텍스트, 이미지, 표 등 다양한 형식의 데이터를 처리하는 RAG",
+        "3": "오직 이미지만 처리하는 RAG",
+        "4": "오직 오디오만 처리하는 RAG",
+        "5": "아무것도 처리하지 않는 RAG"
+      },
+      "answer": 2,
+      "category": "멀티모달RAG",
+      "explanation": "멀티모달 RAG는 텍스트뿐만 아니라 이미지, 표, 차트 등 다양한 형식의 정보를 통합하여 처리합니다."
+    },
+    {
+      "id": 34,
+      "question": "Docling의 주요 역할은?",
+      "points": 4,
+      "options": {
+        "1": "문서를 삭제하는 것",
+        "2": "문서의 레이아웃과 구조를 분석하여 정보 추출",
+        "3": "문서를 암호화하는 것",
+        "4": "문서를 압축하는 것",
+        "5": "문서를 번역하는 것"
+      },
+      "answer": 2,
+      "category": "멀티모달RAG",
+      "explanation": "Docling은 문서의 레이아웃을 분석하여 제목, 본문, 표, 이미지 등을 구분하고 구조화된 정보를 추출합니다."
+    },
+    {
+      "id": 35,
+      "question": "CLIP 모델의 용도는?",
+      "points": 4,
+      "options": {
+        "1": "오직 텍스트 임베딩",
+        "2": "오직 오디오 임베딩",
+        "3": "이미지와 텍스트를 동일한 공간에 임베딩",
+        "4": "오직 비디오 임베딩",
+        "5": "3D 모델 임베딩"
+      },
+      "answer": 3,
+      "category": "멀티모달RAG",
+      "explanation": "CLIP은 이미지와 텍스트를 동일한 벡터 공간에 임베딩하여 멀티모달 검색을 가능하게 합니다."
+    },
+    {
+      "id": 36,
+      "question": "표(Table) 데이터를 RAG에서 처리하는 방법이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "표를 자연어 텍스트로 변환",
+        "2": "표를 JSON이나 CSV 형식으로 구조화하여 저장",
+        "3": "LLM으로 표의 내용을 요약",
+        "4": "표를 완전히 무시하고 삭제",
+        "5": "표의 메타데이터를 포함하여 저장"
+      },
+      "answer": 4,
+      "category": "멀티모달RAG",
+      "explanation": "표는 중요한 정보를 담고 있으므로 삭제하지 않고, 적절한 방법으로 변환하거나 구조화하여 활용해야 합니다."
+    },
+    {
+      "id": 37,
+      "question": "RAG 시스템에서 Precision(정밀도)의 정의는?",
+      "points": 4,
+      "options": {
+        "1": "전체 관련 문서 중 검색된 문서의 비율",
+        "2": "검색된 문서 중 실제 관련된 문서의 비율",
+        "3": "검색 속도",
+        "4": "임베딩 차원 수",
+        "5": "청크 크기"
+      },
+      "answer": 2,
+      "category": "RAG평가",
+      "explanation": "Precision = 검색된 문서 중 관련 문서 수 / 전체 검색된 문서 수"
+    },
+    {
+      "id": 38,
+      "question": "RAG 시스템에서 Recall(재현율)의 정의는?",
+      "points": 4,
+      "options": {
+        "1": "검색된 문서 중 관련 문서의 비율",
+        "2": "전체 관련 문서 중 검색된 관련 문서의 비율",
+        "3": "검색 속도",
+        "4": "임베딩 품질",
+        "5": "청크 개수"
+      },
+      "answer": 2,
+      "category": "RAG평가",
+      "explanation": "Recall = 검색된 관련 문서 수 / 전체 관련 문서 수"
+    },
+    {
+      "id": 39,
+      "question": "Faithfulness(충실성) 평가 지표는 무엇을 측정하는가?",
+      "points": 4,
+      "options": {
+        "1": "검색 속도",
+        "2": "생성된 답변이 검색된 문서에 근거하는지 여부",
+        "3": "임베딩 차원 수",
+        "4": "청크 크기",
+        "5": "토큰 수"
+      },
+      "answer": 2,
+      "category": "RAG평가",
+      "explanation": "Faithfulness는 생성된 답변이 실제 검색된 문서의 내용에 충실한지, 즉 할루시네이션 없이 근거를 가지고 있는지를 평가합니다."
+    },
+    {
+      "id": 40,
+      "question": "RAG 시스템 설계 시 권장되는 청크 크기는?",
+      "points": 4,
+      "options": {
+        "1": "10-50 토큰",
+        "2": "50-100 토큰",
+        "3": "500-1000 토큰",
+        "4": "5000-10000 토큰",
+        "5": "50000 토큰 이상"
+      },
+      "answer": 3,
+      "category": "RAG설계",
+      "explanation": "일반적으로 500-1000 토큰이 문맥을 충분히 유지하면서도 노이즈를 최소화하는 적절한 크기입니다."
+    },
+    {
+      "id": 41,
+      "question": "RAG 시스템에서 검색할 문서 개수(k)의 권장 범위는?",
+      "points": 4,
+      "options": {
+        "1": "1개",
+        "2": "3-5개",
+        "3": "50-100개",
+        "4": "500-1000개",
+        "5": "가능한 모든 문서"
+      },
+      "answer": 2,
+      "category": "RAG설계",
+      "explanation": "일반적으로 3-5개의 문서가 충분한 정보를 제공하면서도 관련 없는 노이즈를 최소화합니다."
+    },
+    {
+      "id": 42,
+      "question": "다음 중 LangChain의 구성 요소가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "Document Loaders",
+        "2": "Text Splitters",
+        "3": "Embeddings",
+        "4": "Vector Stores",
+        "5": "Database Managers"
+      },
+      "answer": 5,
+      "category": "LangChain",
+      "explanation": "Database Managers는 LangChain의 핵심 구성 요소가 아닙니다. 1-4번은 모두 LangChain의 주요 컴포넌트입니다."
+    },
+    {
+      "id": 43,
+      "question": "LangChain의 Chains의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "문서를 삭제하는 것",
+        "2": "여러 컴포넌트를 연결하여 워크플로우를 구성하는 것",
+        "3": "데이터를 암호화하는 것",
+        "4": "사용자 인증을 처리하는 것",
+        "5": "파일을 압축하는 것"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "Chains는 LangChain의 여러 컴포넌트(LLM, Retriever 등)를 연결하여 복잡한 워크플로우를 구성합니다."
+    },
+    {
+      "id": 44,
+      "question": "LangChain에서 return_source_documents=True의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "답변만 반환",
+        "2": "답변과 함께 검색된 원본 문서도 반환",
+        "3": "문서만 반환하고 답변은 생성하지 않음",
+        "4": "아무것도 반환하지 않음",
+        "5": "오류를 발생시킴"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "return_source_documents=True는 생성된 답변과 함께 검색에 사용된 원본 문서들도 함께 반환하여 출처를 확인할 수 있게 합니다."
+    },
+    {
+      "id": 45,
+      "question": "Tool Calling / Function Calling의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "LLM의 크기를 줄이는 것",
+        "2": "LLM이 외부 API나 도구를 호출할 수 있도록 하는 것",
+        "3": "LLM을 삭제하는 것",
+        "4": "LLM을 암호화하는 것",
+        "5": "LLM의 속도를 느리게 하는 것"
+      },
+      "answer": 2,
+      "category": "Agent",
+      "explanation": "Tool Calling은 LLM이 필요할 때 외부 도구나 API(검색 엔진, 계산기, 데이터베이스 등)를 호출하여 기능을 확장합니다."
+    },
+    {
+      "id": 46,
+      "question": "Agent의 핵심 특징은?",
+      "points": 4,
+      "options": {
+        "1": "미리 정해진 순서대로만 작업 수행",
+        "2": "상황에 따라 동적으로 도구를 선택하고 사용",
+        "3": "사용자 입력을 받지 않음",
+        "4": "오직 텍스트 생성만 가능",
+        "5": "외부 도구를 전혀 사용하지 못함"
+      },
+      "answer": 2,
+      "category": "Agent",
+      "explanation": "Agent는 주어진 목표를 달성하기 위해 상황을 판단하고 적절한 도구를 선택하여 동적으로 작업을 수행합니다."
+    },
+    {
+      "id": 47,
+      "question": "LangGraph의 주요 용도는?",
+      "points": 4,
+      "options": {
+        "1": "이미지를 생성하는 것",
+        "2": "복잡한 다단계 워크플로우를 그래프 형태로 구성하는 것",
+        "3": "문서를 삭제하는 것",
+        "4": "데이터를 암호화하는 것",
+        "5": "사용자 인증을 처리하는 것"
+      },
+      "answer": 2,
+      "category": "Agent",
+      "explanation": "LangGraph는 노드와 엣지로 구성된 그래프를 통해 복잡한 에이전트 워크플로우를 정의하고 실행합니다."
+    },
+    {
+      "id": 48,
+      "question": "Agentic RAG란?",
+      "points": 4,
+      "options": {
+        "1": "검색 기능이 없는 RAG",
+        "2": "Agent가 동적으로 검색 전략을 결정하는 RAG",
+        "3": "오직 고정된 검색만 가능한 RAG",
+        "4": "이미지만 처리하는 RAG",
+        "5": "문서를 삭제하는 RAG"
+      },
+      "answer": 2,
+      "category": "Agent",
+      "explanation": "Agentic RAG는 Agent가 상황에 따라 검색 방법, 도구 선택, 후처리 등을 동적으로 결정하여 더 지능적으로 작동합니다."
+    },
+    {
+      "id": 49,
+      "question": "Self-Query Retriever의 기능은?",
+      "points": 4,
+      "options": {
+        "1": "랜덤하게 문서 선택",
+        "2": "메타데이터를 기반으로 필터링하여 검색",
+        "3": "모든 문서를 반환",
+        "4": "검색을 수행하지 않음",
+        "5": "문서를 삭제함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Self-Query Retriever는 자연어 질의에서 메타데이터 필터 조건을 자동으로 추출하여 구조화된 검색을 수행합니다."
+    },
+    {
+      "id": 50,
+      "question": "RAG에서 Context Window의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "화면 크기",
+        "2": "LLM이 한 번에 처리할 수 있는 최대 토큰 수",
+        "3": "검색 속도",
+        "4": "임베딩 차원",
+        "5": "청크 개수"
+      },
+      "answer": 2,
+      "category": "RAG 기본개념",
+      "explanation": "Context Window는 LLM이 입력으로 받아 한 번에 처리할 수 있는 최대 토큰 길이를 의미합니다."
+    },
+    {
+      "id": 51,
+      "question": "Semantic Search의 핵심 기술은?",
+      "points": 4,
+      "options": {
+        "1": "정확한 키워드 매칭",
+        "2": "임베딩 벡터 간 유사도 계산",
+        "3": "문서 크기 비교",
+        "4": "파일 이름 검색",
+        "5": "날짜 정렬"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "Semantic Search는 텍스트를 임베딩 벡터로 변환하고, 벡터 간의 유사도(코사인 유사도 등)를 계산하여 의미적으로 유사한 문서를 찾습니다."
+    },
+    {
+      "id": 52,
+      "question": "Hybrid Search란?",
+      "points": 4,
+      "options": {
+        "1": "오직 키워드 검색만 사용",
+        "2": "오직 의미 검색만 사용",
+        "3": "키워드 검색과 의미 검색을 결합",
+        "4": "검색을 전혀 하지 않음",
+        "5": "이미지 검색만 수행"
+      },
+      "answer": 3,
+      "category": "고급RAG",
+      "explanation": "Hybrid Search는 키워드 기반 검색(BM25 등)과 임베딩 기반 의미 검색을 결합하여 각각의 장점을 활용합니다."
+    },
+    {
+      "id": 53,
+      "question": "BM25 알고리즘은 어떤 검색 방식인가?",
+      "points": 4,
+      "options": {
+        "1": "의미 기반 벡터 검색",
+        "2": "키워드 기반 확률적 검색",
+        "3": "이미지 검색",
+        "4": "오디오 검색",
+        "5": "비디오 검색"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "BM25는 TF-IDF를 개선한 키워드 기반의 확률적 정보 검색 알고리즘입니다."
+    },
+    {
+      "id": 54,
+      "question": "RAG에서 Metadata의 활용 방법은?",
+      "points": 4,
+      "options": {
+        "1": "메타데이터는 전혀 사용하지 않음",
+        "2": "날짜, 출처, 카테고리 등으로 필터링하여 검색 정확도 향상",
+        "3": "메타데이터를 삭제함",
+        "4": "메타데이터를 암호화함",
+        "5": "메타데이터를 무시함"
+      },
+      "answer": 2,
+      "category": "RAG 데이터 전처리",
+      "explanation": "메타데이터(문서 날짜, 저자, 카테고리 등)를 활용하여 검색 범위를 제한하거나 필터링하여 더 정확한 결과를 얻을 수 있습니다."
+    },
+    {
+      "id": 55,
+      "question": "Document Compression의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "문서 크기를 물리적으로 줄임",
+        "2": "검색된 문서에서 불필요한 정보를 제거하고 핵심만 추출",
+        "3": "문서를 삭제함",
+        "4": "문서를 암호화함",
+        "5": "문서를 번역함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Context Compression은 검색된 문서에서 질의와 관련 없는 부분을 제거하여 LLM에 더 집중된 정보를 제공합니다."
+    },
+    {
+      "id": 56,
+      "question": "Maximal Marginal Relevance (MMR)의 목적은?",
+      "points": 4,
+      "options": {
+        "1": "검색 결과의 다양성과 관련성의 균형을 맞춤",
+        "2": "가장 유사한 문서만 선택",
+        "3": "모든 문서를 동일하게 취급",
+        "4": "검색을 수행하지 않음",
+        "5": "문서를 삭제함"
+      },
+      "answer": 1,
+      "category": "고급RAG",
+      "explanation": "MMR은 질의와의 관련성이 높으면서도 서로 다른 정보를 담고 있는 다양한 문서를 선택하여 정보의 중복을 줄입니다."
+    },
+    {
+      "id": 57,
+      "question": "Parent Document Retriever의 작동 방식은?",
+      "points": 4,
+      "options": {
+        "1": "작은 청크로 검색하고, 해당 청크의 부모 문서를 반환",
+        "2": "큰 문서로만 검색",
+        "3": "검색을 전혀 하지 않음",
+        "4": "모든 문서를 반환",
+        "5": "문서를 삭제함"
+      },
+      "answer": 1,
+      "category": "고급RAG",
+      "explanation": "Parent Document Retriever는 작은 청크로 정확하게 검색한 후, 해당 청크가 속한 더 큰 부모 문서나 섹션을 반환하여 충분한 문맥을 제공합니다."
+    },
+    {
+      "id": 58,
+      "question": "Ensemble Retriever의 개념은?",
+      "points": 4,
+      "options": {
+        "1": "하나의 검색 방법만 사용",
+        "2": "여러 검색 방법을 결합하여 사용",
+        "3": "검색을 하지 않음",
+        "4": "오직 이미지 검색만 수행",
+        "5": "문서를 삭제함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Ensemble Retriever는 여러 검색 방법(BM25, 벡터 검색 등)의 결과를 결합하여 더 강건한 검색을 수행합니다."
+    },
+    {
+      "id": 59,
+      "question": "Reciprocal Rank Fusion (RRF)의 용도는?",
+      "points": 4,
+      "options": {
+        "1": "문서를 삭제하는 것",
+        "2": "여러 검색 결과 리스트를 통합하는 것",
+        "3": "문서를 번역하는 것",
+        "4": "이미지를 생성하는 것",
+        "5": "검색을 비활성화하는 것"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "RRF는 여러 검색 방법에서 나온 결과를 순위 기반으로 통합하는 기법입니다."
+    },
+    {
+      "id": 60,
+      "question": "Streaming Response의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "전체 응답이 완성될 때까지 대기해야 함",
+        "2": "생성되는 즉시 토큰 단위로 응답을 받아볼 수 있음",
+        "3": "응답을 받을 수 없음",
+        "4": "느린 응답 속도",
+        "5": "높은 메모리 사용량"
+      },
+      "answer": 2,
+      "category": "LLM",
+      "explanation": "Streaming은 LLM이 텍스트를 생성하는 대로 실시간으로 받아볼 수 있어 사용자 경험이 향상됩니다."
+    },
+    {
+      "id": 61,
+      "question": "LangChain Expression Language (LCEL)의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "복잡하고 사용이 어려움",
+        "2": "체인을 선언적으로 구성할 수 있는 간결한 문법",
+        "3": "Python을 지원하지 않음",
+        "4": "오직 텍스트 처리만 가능",
+        "5": "더 이상 사용되지 않음"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "LCEL은 파이프 연산자(|)를 사용하여 체인을 직관적이고 간결하게 구성할 수 있는 LangChain의 표현 언어입니다."
+    },
+    {
+      "id": 62,
+      "question": "벡터 검색에서 코사인 유사도(Cosine Similarity)는 무엇을 측정하는가?",
+      "points": 4,
+      "options": {
+        "1": "벡터의 길이",
+        "2": "두 벡터 사이의 각도를 통한 방향 유사도",
+        "3": "벡터의 차원 수",
+        "4": "벡터의 생성 시간",
+        "5": "벡터의 크기"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "코사인 유사도는 두 벡터 사이의 각도를 측정하여 방향이 얼마나 유사한지(의미가 얼마나 비슷한지)를 나타냅니다."
+    },
+    {
+      "id": 63,
+      "question": "유클리드 거리(Euclidean Distance)를 벡터 검색에 사용할 때의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "두 벡터의 방향 유사도",
+        "2": "두 벡터 사이의 직선 거리",
+        "3": "벡터의 차원 수",
+        "4": "벡터의 평균값",
+        "5": "벡터의 중앙값"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "유클리드 거리는 두 벡터를 공간상의 점으로 보고 직선 거리를 계산합니다. 거리가 가까울수록 유사합니다."
+    },
+    {
+      "id": 64,
+      "question": "임베딩 차원(Dimension)을 줄이는 기법은?",
+      "points": 4,
+      "options": {
+        "1": "Dimensionality Reduction (PCA, t-SNE 등)",
+        "2": "Dimensionality Expansion",
+        "3": "Dimensionality Deletion",
+        "4": "Dimensionality Encryption",
+        "5": "Dimensionality Translation"
+      },
+      "answer": 1,
+      "category": "임베딩",
+      "explanation": "PCA, t-SNE, UMAP 등의 차원 축소 기법을 사용하여 고차원 임베딩을 저차원으로 변환할 수 있습니다."
+    },
+    {
+      "id": 65,
+      "question": "Fine-tuning된 임베딩 모델의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "범용 성능이 향상됨",
+        "2": "특정 도메인이나 작업에 최적화됨",
+        "3": "모든 언어를 지원함",
+        "4": "크기가 작아짐",
+        "5": "무료로 사용 가능"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "임베딩 모델을 특정 도메인의 데이터로 Fine-tuning하면 해당 도메인에서의 검색 성능이 향상됩니다."
+    },
+    {
+      "id": 66,
+      "question": "Zero-shot RAG란?",
+      "points": 4,
+      "options": {
+        "1": "사전 학습 없이 바로 RAG 적용",
+        "2": "검색 결과가 0개",
+        "3": "답변을 생성하지 않음",
+        "4": "오직 학습 데이터만 사용",
+        "5": "문서를 삭제함"
+      },
+      "answer": 1,
+      "category": "RAG 기본개념",
+      "explanation": "Zero-shot RAG는 별도의 fine-tuning 없이 사전 학습된 모델을 바로 RAG 시스템에 적용하는 것을 의미합니다."
+    },
+    {
+      "id": 67,
+      "question": "GraphRAG의 핵심 아이디어는?",
+      "points": 4,
+      "options": {
+        "1": "그래프를 사용하지 않음",
+        "2": "지식을 그래프 구조로 표현하여 관계 기반 검색",
+        "3": "오직 텍스트만 사용",
+        "4": "이미지만 처리",
+        "5": "검색을 수행하지 않음"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "GraphRAG는 문서의 엔티티와 관계를 그래프로 구조화하여 더 복잡한 관계 기반 질의에 답할 수 있습니다."
+    },
+    {
+      "id": 68,
+      "question": "Corrective RAG (CRAG)의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "검색 결과를 평가하고 필요시 재검색하거나 웹 검색 수행",
+        "2": "검색 결과를 무조건 수용",
+        "3": "검색을 전혀 하지 않음",
+        "4": "오직 로컬 문서만 검색",
+        "5": "문서를 삭제함"
+      },
+      "answer": 1,
+      "category": "고급RAG",
+      "explanation": "Corrective RAG는 검색 결과의 품질을 평가하고, 부족하면 다른 전략(재검색, 웹 검색 등)을 사용하여 보완합니다."
+    },
+    {
+      "id": 69,
+      "question": "Self-RAG의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "외부 검색을 전혀 사용하지 않음",
+        "2": "모델이 스스로 검색 필요성을 판단하고 자체 검증",
+        "3": "항상 검색을 수행",
+        "4": "사용자가 모든 것을 결정",
+        "5": "검색 결과를 무시함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Self-RAG는 LLM이 검색이 필요한지 스스로 판단하고, 생성한 답변을 자체적으로 검증하는 기법입니다."
+    },
+    {
+      "id": 70,
+      "question": "Iterative Refinement의 개념은?",
+      "points": 4,
+      "options": {
+        "1": "한 번만 답변 생성",
+        "2": "초기 답변을 생성하고 반복적으로 개선",
+        "3": "답변을 생성하지 않음",
+        "4": "검색만 수행",
+        "5": "문서를 삭제함"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "Iterative Refinement는 초기 답변을 생성한 후, 추가 검색이나 평가를 통해 답변을 점진적으로 개선하는 방법입니다."
+    },
+    {
+      "id": 71,
+      "question": "Dense Passage Retrieval (DPR)은 어떤 방식인가?",
+      "points": 4,
+      "options": {
+        "1": "키워드 기반 검색",
+        "2": "밀집 벡터 표현을 사용한 의미 기반 검색",
+        "3": "이미지 검색",
+        "4": "오디오 검색",
+        "5": "검색을 하지 않음"
+      },
+      "answer": 2,
+      "category": "고급RAG",
+      "explanation": "DPR은 질의와 문서를 밀집 벡터(dense vector)로 인코딩하여 의미 기반 검색을 수행하는 방법입니다."
+    },
+    {
+      "id": 72,
+      "question": "Prompt Caching의 이점은?",
+      "points": 4,
+      "options": {
+        "1": "항상 새로 계산해야 함",
+        "2": "반복되는 프롬프트 부분을 캐싱하여 비용과 지연 시간 절감",
+        "3": "더 높은 비용",
+        "4": "느린 응답",
+        "5": "캐싱 불가능"
+      },
+      "answer": 2,
+      "category": "LLM",
+      "explanation": "Prompt Caching은 시스템 프롬프트나 문서 등 반복되는 부분을 캐싱하여 API 비용과 응답 시간을 줄입니다."
+    },
+    {
+      "id": 73,
+      "question": "Token Limits 문제를 해결하는 방법이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "문서 요약하여 크기 줄이기",
+        "2": "청킹하여 나누어 처리",
+        "3": "더 큰 context window를 가진 모델 사용",
+        "4": "모든 문서를 하나의 프롬프트에 강제로 넣기",
+        "5": "Map-Reduce 방식 사용"
+      },
+      "answer": 4,
+      "category": "RAG설계",
+      "explanation": "토큰 제한을 초과하는 문서를 강제로 넣으면 오류가 발생합니다. 요약, 청킹, 큰 모델 사용 등이 적절한 해결책입니다."
+    },
+    {
+      "id": 74,
+      "question": "LangSmith의 주요 용도는?",
+      "points": 4,
+      "options": {
+        "1": "이미지 생성",
+        "2": "LangChain 애플리케이션의 디버깅, 모니터링, 평가",
+        "3": "데이터베이스 관리",
+        "4": "웹 호스팅",
+        "5": "비디오 편집"
+      },
+      "answer": 2,
+      "category": "LangChain",
+      "explanation": "LangSmith는 LangChain 기반 애플리케이션을 개발할 때 디버깅, 추적, 모니터링, 평가를 지원하는 플랫폼입니다."
+    },
+    {
+      "id": 75,
+      "question": "Production RAG 시스템 구축 시 고려사항이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "확장성(Scalability)",
+        "2": "모니터링 및 로깅",
+        "3": "보안 및 권한 관리",
+        "4": "오류 처리 및 복구",
+        "5": "개발 편의성만 고려"
+      },
+      "answer": 5,
+      "category": "RAG설계",
+      "explanation": "Production 환경에서는 개발 편의성뿐만 아니라 확장성, 모니터링, 보안, 오류 처리 등 운영 관점의 다양한 요소를 고려해야 합니다."
+    }
+  ],
+  "answer_key": {
+    "1": 5,
+    "2": 2,
+    "3": 2,
+    "4": 3,
+    "5": 5,
+    "6": 2,
+    "7": 3,
+    "8": 3,
+    "9": 2,
+    "10": 5,
+    "11": 2,
+    "12": 2,
+    "13": 3,
+    "14": 2,
+    "15": 5,
+    "16": 2,
+    "17": 2,
+    "18": 2,
+    "19": 2,
+    "20": 2,
+    "21": 2,
+    "22": 2,
+    "23": 2,
+    "24": 2,
+    "25": 2,
+    "26": 2,
+    "27": 3,
+    "28": 2,
+    "29": 3,
+    "30": 2,
+    "31": 2,
+    "32": 2,
+    "33": 2,
+    "34": 2,
+    "35": 3,
+    "36": 4,
+    "37": 2,
+    "38": 2,
+    "39": 2,
+    "40": 3,
+    "41": 2,
+    "42": 5,
+    "43": 2,
+    "44": 2,
+    "45": 2,
+    "46": 2,
+    "47": 2,
+    "48": 2,
+    "49": 2,
+    "50": 2,
+    "51": 2,
+    "52": 3,
+    "53": 2,
+    "54": 2,
+    "55": 2,
+    "56": 1,
+    "57": 1,
+    "58": 2,
+    "59": 2,
+    "60": 2,
+    "61": 2,
+    "62": 2,
+    "63": 2,
+    "64": 1,
+    "65": 2,
+    "66": 1,
+    "67": 2,
+    "68": 1,
+    "69": 2,
+    "70": 2,
+    "71": 2,
+    "72": 2,
+    "73": 4,
+    "74": 2,
+    "75": 5
+  },
+  "category_summary": {
+    "RAG 기본개념": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      50,
+      66
+    ],
+    "RAG 데이터 전처리": [
+      6,
+      7,
+      8,
+      9,
+      12,
+      54
+    ],
+    "LangChain": [
+      10,
+      11,
+      13,
+      20,
+      21,
+      42,
+      43,
+      44,
+      61,
+      74
+    ],
+    "벡터DB": [
+      14,
+      15,
+      16
+    ],
+    "임베딩": [
+      17,
+      18,
+      19,
+      51,
+      62,
+      63,
+      64,
+      65
+    ],
+    "고급RAG": [
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      49,
+      52,
+      53,
+      55,
+      56,
+      57,
+      58,
+      59,
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "멀티모달RAG": [
+      33,
+      34,
+      35,
+      36
+    ],
+    "RAG평가": [
+      37,
+      38,
+      39
+    ],
+    "RAG설계": [
+      40,
+      41,
+      73,
+      75
+    ],
+    "Agent": [
+      45,
+      46,
+      47,
+      48
+    ],
+    "LLM": [
+      60,
+      72
+    ]
+  }
+}

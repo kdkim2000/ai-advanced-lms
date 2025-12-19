@@ -1,0 +1,475 @@
+---
+title: "LangChain RAG 어플리케이션 만들기"
+description: "LangChain 컴포넌트, 기본 RAG 파이프라인, 고급 RAG 패턴"
+---
+
+# LangChain RAG 어플리케이션 만들기
+
+## 1. LangChain 기본 구조
+
+### 주요 컴포넌트
+
+| 컴포넌트 | 역할 |
+|----------|------|
+| **Document Loaders** | 다양한 형식의 문서 로딩 |
+| **Text Splitters** | 문서를 청크로 분할 |
+| **Embeddings** | 텍스트를 벡터로 변환 |
+| **Vector Stores** | 벡터 저장 및 검색 |
+| **Retrievers** | 유사 문서 검색 |
+| **Chains** | 워크플로우 구성 |
+
+### 컴포넌트 간 관계
+
+```
+Document Loaders
+      ↓
+Text Splitters (Chunks)
+      ↓
+Embeddings (Vectors)
+      ↓
+Vector Stores (Storage)
+      ↓
+Retrievers (Search)
+      ↓
+Chains (Workflow)
+```
+
+---
+
+## 2. 기본 RAG 파이프라인 구축
+
+### 전체 코드 예시
+
+```python
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+from langchain.llms import OpenAI
+
+# 1. 문서 로딩
+loader = TextLoader("data.txt")
+documents = loader.load()
+
+# 2. 청킹
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200
+)
+chunks = text_splitter.split_documents(documents)
+
+# 3. 임베딩 & 벡터 스토어
+embeddings = OpenAIEmbeddings()
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embeddings
+)
+
+# 4. Retriever 생성
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k": 3}  # 상위 3개 문서 검색
+)
+
+# 5. RAG 체인 구성
+qa_chain = RetrievalQA.from_chain_type(
+    llm=OpenAI(),
+    retriever=retriever,
+    return_source_documents=True
+)
+
+# 6. 질의 실행
+query = "RAG란 무엇인가?"
+result = qa_chain({"query": query})
+
+print(result["result"])
+print(result["source_documents"])
+```
+
+### 단계별 설명
+
+#### Step 1: 문서 로딩
+
+```python
+from langchain.document_loaders import TextLoader
+
+loader = TextLoader("data.txt", encoding="utf-8")
+documents = loader.load()
+
+# 결과: Document 객체 리스트
+# [Document(page_content="...", metadata={"source": "data.txt"})]
+```
+
+#### Step 2: 청킹
+
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,      # 청크 최대 크기
+    chunk_overlap=200,    # 청크 간 중복
+    separators=["\n\n", "\n", ".", " "]
+)
+
+chunks = text_splitter.split_documents(documents)
+print(f"총 {len(chunks)}개의 청크 생성")
+```
+
+#### Step 3: 임베딩 & 저장
+
+```python
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+
+embeddings = OpenAIEmbeddings()
+
+# 벡터 스토어 생성 및 저장
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embeddings,
+    persist_directory="./chroma_db"  # 로컬 저장
+)
+
+# 영구 저장
+vectorstore.persist()
+```
+
+#### Step 4: Retriever 설정
+
+```python
+# 기본 설정
+retriever = vectorstore.as_retriever(
+    search_kwargs={"k": 5}  # 상위 5개
+)
+
+# 고급 설정
+retriever = vectorstore.as_retriever(
+    search_type="mmr",  # Maximum Marginal Relevance
+    search_kwargs={
+        "k": 5,
+        "fetch_k": 20,
+        "lambda_mult": 0.5
+    }
+)
+```
+
+#### Step 5: Chain 구성
+
+```python
+from langchain.chains import RetrievalQA
+
+qa_chain = RetrievalQA.from_chain_type(
+    llm=OpenAI(temperature=0),
+    chain_type="stuff",  # 모든 문서를 하나로 결합
+    retriever=retriever,
+    return_source_documents=True
+)
+```
+
+---
+
+## 3. Chain Types
+
+### stuff (기본)
+
+```
+[Doc1] + [Doc2] + [Doc3] → 하나의 프롬프트 → LLM
+```
+
+**특징**:
+- 모든 문서를 하나로 결합
+- 간단하고 빠름
+- 토큰 제한 주의
+
+### map_reduce
+
+```
+[Doc1] → LLM → [Summary1]
+[Doc2] → LLM → [Summary2]  → 최종 결합 → LLM → 최종 답변
+[Doc3] → LLM → [Summary3]
+```
+
+**특징**:
+- 대량 문서 처리 가능
+- 병렬 처리 가능
+- 비용 증가
+
+### refine
+
+```
+[Doc1] → LLM → [Answer1]
+[Answer1] + [Doc2] → LLM → [Answer2]
+[Answer2] + [Doc3] → LLM → [최종 답변]
+```
+
+**특징**:
+- 점진적 개선
+- 문맥 유지
+- 순차 처리로 느림
+
+### map_rerank
+
+```
+[Doc1] → LLM → [Answer1, Score1]
+[Doc2] → LLM → [Answer2, Score2]  → 최고 점수 선택
+[Doc3] → LLM → [Answer3, Score3]
+```
+
+**특징**:
+- 각 문서별 답변 생성
+- 점수 기반 선택
+- 최적 답변 선택
+
+---
+
+## 4. LCEL 기반 RAG 구현
+
+### LangChain Expression Language (LCEL)
+
+```python
+from langchain.schema.runnable import RunnablePassthrough
+from langchain.schema.output_parser import StrOutputParser
+from langchain.prompts import ChatPromptTemplate
+
+# 프롬프트 템플릿
+template = """다음 컨텍스트를 기반으로 질문에 답변하세요.
+
+Context: {context}
+
+Question: {question}
+
+Answer:"""
+
+prompt = ChatPromptTemplate.from_template(template)
+
+# LCEL 체인 구성
+rag_chain = (
+    {
+        "context": retriever | format_docs,
+        "question": RunnablePassthrough()
+    }
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+# 실행
+answer = rag_chain.invoke("RAG란 무엇인가?")
+```
+
+### 문서 포맷팅 함수
+
+```python
+def format_docs(docs):
+    """검색된 문서를 문자열로 변환"""
+    return "\n\n".join(doc.page_content for doc in docs)
+```
+
+---
+
+## 5. 고급 RAG 패턴
+
+### Conversational RAG
+
+대화 히스토리를 유지하는 RAG
+
+```python
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationalRetrievalChain
+
+# 메모리 설정
+memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    return_messages=True
+)
+
+# 대화형 RAG 체인
+conv_chain = ConversationalRetrievalChain.from_llm(
+    llm=OpenAI(),
+    retriever=retriever,
+    memory=memory
+)
+
+# 대화 실행
+result1 = conv_chain({"question": "RAG란 무엇인가?"})
+result2 = conv_chain({"question": "그것의 장점은?"})  # 이전 문맥 참조
+```
+
+### Multi-Query RAG
+
+하나의 질문을 여러 관점으로 변환
+
+```python
+from langchain.retrievers import MultiQueryRetriever
+
+# Multi-Query Retriever 생성
+multi_retriever = MultiQueryRetriever.from_llm(
+    retriever=base_retriever,
+    llm=llm
+)
+
+# 검색 실행
+# 내부적으로 여러 쿼리 생성 → 각각 검색 → 결과 통합
+docs = multi_retriever.get_relevant_documents(
+    "기계학습의 종류는?"
+)
+```
+
+<Callout type="info" title="Multi-Query 동작 원리">
+원본 질의를 LLM이 여러 관점의 질의로 변환합니다.
+예: "기계학습의 종류" → ["지도학습과 비지도학습", "딥러닝 알고리즘", "ML 분류 방법"]
+</Callout>
+
+### Self-Query Retriever
+
+메타데이터 기반 자동 필터링
+
+```python
+from langchain.retrievers import SelfQueryRetriever
+from langchain.chains.query_constructor.base import AttributeInfo
+
+# 메타데이터 정의
+metadata_field_info = [
+    AttributeInfo(
+        name="author",
+        description="문서 저자",
+        type="string"
+    ),
+    AttributeInfo(
+        name="year",
+        description="출판 연도",
+        type="integer"
+    ),
+]
+
+# Self-Query Retriever 생성
+self_query_retriever = SelfQueryRetriever.from_llm(
+    llm=llm,
+    vectorstore=vectorstore,
+    document_contents="기술 문서",
+    metadata_field_info=metadata_field_info
+)
+
+# 검색 (자동으로 필터 생성)
+docs = self_query_retriever.get_relevant_documents(
+    "2024년에 작성된 AI 관련 문서"
+)
+```
+
+---
+
+## 6. 실전 구현 예제
+
+### 완전한 RAG 시스템
+
+```python
+from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema.runnable import RunnablePassthrough
+from langchain.schema.output_parser import StrOutputParser
+
+class RAGSystem:
+    def __init__(self, docs_path: str):
+        self.embeddings = OpenAIEmbeddings()
+        self.llm = ChatOpenAI(model="gpt-4", temperature=0)
+        self.vectorstore = None
+        self.load_documents(docs_path)
+
+    def load_documents(self, path: str):
+        """문서 로딩 및 인덱싱"""
+        # 디렉토리 내 모든 txt 파일 로딩
+        loader = DirectoryLoader(
+            path,
+            glob="**/*.txt",
+            loader_cls=TextLoader
+        )
+        documents = loader.load()
+
+        # 청킹
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=500,
+            chunk_overlap=100
+        )
+        chunks = splitter.split_documents(documents)
+
+        # 벡터 스토어 생성
+        self.vectorstore = Chroma.from_documents(
+            documents=chunks,
+            embedding=self.embeddings,
+            persist_directory="./rag_db"
+        )
+
+    def query(self, question: str) -> str:
+        """질의 실행"""
+        retriever = self.vectorstore.as_retriever(
+            search_kwargs={"k": 3}
+        )
+
+        template = """다음 컨텍스트를 참고하여 질문에 답변하세요.
+컨텍스트에 없는 내용은 "정보가 없습니다"라고 답하세요.
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+
+        prompt = ChatPromptTemplate.from_template(template)
+
+        chain = (
+            {
+                "context": retriever | self._format_docs,
+                "question": RunnablePassthrough()
+            }
+            | prompt
+            | self.llm
+            | StrOutputParser()
+        )
+
+        return chain.invoke(question)
+
+    def _format_docs(self, docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+# 사용 예시
+rag = RAGSystem("./documents")
+answer = rag.query("회사의 연차 정책은?")
+print(answer)
+```
+
+---
+
+## 핵심 요약
+
+### RAG 파이프라인 필수 단계
+
+```
+1. Document Loading  (문서 로딩)
+2. Chunking          (청킹/분할)
+3. Embedding         (임베딩)
+4. Vector Storage    (벡터 저장)
+5. Retrieval         (검색)
+6. Generation        (생성)
+```
+
+### Chain Type 선택 가이드
+
+| 상황 | 권장 Chain Type |
+|------|-----------------|
+| 소량 문서, 빠른 응답 | stuff |
+| 대량 문서, 요약 필요 | map_reduce |
+| 정확도 중요 | refine |
+| 최적 답변 선택 | map_rerank |
+
+### 고급 패턴 적용
+
+| 패턴 | 사용 시점 |
+|------|-----------|
+| Conversational RAG | 대화형 챗봇 |
+| Multi-Query | 복잡한 질문 |
+| Self-Query | 메타데이터 필터링 필요 |

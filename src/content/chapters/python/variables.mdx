@@ -1,0 +1,319 @@
+---
+title: "변수, 자료형, 조건문, 반복문"
+description: "Python의 기본 문법과 제어문"
+---
+
+# 변수, 자료형, 조건문, 반복문
+
+## 1. 변수(Variable)란?
+
+변수는 **데이터를 저장하는 메모리 공간**입니다. 데이터를 담는 상자 혹은 그릇이라고 생각할 수 있습니다.
+
+### Java/C vs Python 비교
+
+```java
+// Java/C 언어 - 정적 타이핑
+int x = 1;  // 타입을 명시해야 함
+```
+
+```python
+# Python - 동적 타이핑
+x = 'Python'  # 타입 명시 불필요
+```
+
+---
+
+## 2. Python의 동적 타이핑 (Dynamic Typing)
+
+Python의 변수는 **실행 시점에 타입이 결정**됩니다.
+
+### 동적 타이핑의 특징
+
+- `var`, `let`, `const` 등의 키워드 **불필요**
+- **타입 변경 가능** - 같은 변수에 다른 타입의 값 할당 가능
+
+```python
+x = 10       # int
+x = "Hello"  # str로 변경 가능
+x = [1, 2]   # list로 변경 가능
+```
+
+---
+
+## 3. PEP8: 변수 명명 규칙
+
+PEP8은 Python의 공식 스타일 가이드입니다.
+
+| 규칙 | 좋은 예 | 나쁜 예 |
+|------|---------|---------|
+| 의미 있는 이름 사용 | `user_name` | `a`, `b` |
+| 예약어 사용 금지 | `my_def` | `def`, `if` |
+| 특수문자는 언더바(_)만 | `user_name` | `user-name` |
+| 상수는 대문자 | `MAX_RETRY = 3` | `maxRetry = 3` |
+
+---
+
+## 4. Python의 기본 자료형
+
+### 숫자형 (Numeric Types)
+
+| 타입 | 설명 | 예시 | 특징 |
+|------|------|------|------|
+| **int** | 정수형 | `1234` | 메모리 제한 없는 큰 수 표현 가능 |
+| **float** | 실수형 | `0.568` | 부동소수점 방식 (정밀도 한계 존재) |
+
+```python
+# int 용도: 카운터, 인덱스, ID 값
+count = 100
+index = 0
+
+# float 용도: 비율, 측정값, 과학 계산
+ratio = 0.75
+temperature = 36.5
+```
+
+### 문자열 (String)
+
+```python
+# 용도: 텍스트 데이터, 로그 메시지
+name = "홍길동"
+message = 'Hello, World!'
+```
+
+<Callout type="info" title="문자열은 불변(immutable)">
+문자열은 한 번 생성되면 내부 값을 변경할 수 없습니다.
+</Callout>
+
+### 불리언과 None
+
+| 타입 | 설명 | 값 | 용도 |
+|------|------|-----|------|
+| **bool** | 불리언 | `True`, `False` | 플래그, 조건 판단 |
+| **None** | 널 타입 | `None` | 초기값, 실패 표시 |
+
+```python
+# bool - 내부적으로 True=1, False=0
+is_active = True
+has_permission = False
+
+# None - 값이 없음을 나타냄
+result = None  # 초기값으로 사용
+```
+
+---
+
+## 5. 컬렉션 자료형
+
+### List (리스트)
+
+```python
+# 대괄호[]로 감싸기, 순서 있음, 값 변경 가능
+my_list = [1, 'a', '', 'B']
+my_list[0] = 100  # 값 변경 가능
+```
+
+**특징**: 다양한 타입의 원소를 담을 수 있음, **가변(mutable)**
+
+### Tuple (튜플)
+
+```python
+# 소괄호()로 감싸기, 순서 있음, 값 변경 불가
+my_tuple = (23, 92)
+# my_tuple[0] = 100  # 오류! 값 변경 불가
+```
+
+**특징**: **불변(immutable)** - 데이터 보호가 필요할 때 사용
+
+### Dictionary (딕셔너리)
+
+```python
+# 중괄호{}로 감싸기, 키:값 구조
+person = {'name': '서두석', 'age': 27}
+print(person['name'])  # '서두석'
+```
+
+**특징**: **키(key)로 값(value)을 찾는 구조**, 키는 고유해야 함
+
+---
+
+## 6. 타입 확인과 형변환
+
+### 타입 확인
+
+```python
+x = 100
+
+# type() - 변수의 타입 확인
+print(type(x))  # <class 'int'>
+
+# isinstance() - 특정 타입인지 확인
+print(isinstance(x, int))  # True
+```
+
+### 형변환 (Casting)
+
+```python
+# 문자열 → 정수
+num = int("123")      # 123
+
+# 정수 → 문자열
+text = str(100)       # '100'
+
+# 문자열 → 실수
+pi = float("3.14")    # 3.14
+
+# 리스트 → 튜플
+my_tuple = tuple([1, 2, 3])  # (1, 2, 3)
+```
+
+---
+
+## 7. 조건문 (Conditional)
+
+조건문은 **True/False로 처리되는 조건식**을 이용해 프로그램 진행의 분기를 저장합니다.
+
+### if-elif-else 구조
+
+```python
+score = 85
+
+if score >= 90:
+    grade = 'A'
+elif score >= 80:
+    grade = 'B'
+elif score >= 70:
+    grade = 'C'
+else:
+    grade = 'F'
+
+print(grade)  # 'B'
+```
+
+### 논리 연산자
+
+| 연산자 | 설명 | 예시 |
+|--------|------|------|
+| **and** | 모든 조건이 참 | `x > 0 and x < 10` |
+| **or** | 하나라도 참 | `x < 0 or x > 10` |
+| **not** | 조건 반전 | `not is_empty` |
+
+```python
+age = 25
+has_license = True
+
+# and: 모든 조건이 참이어야 참
+if age >= 18 and has_license:
+    print("운전 가능")
+```
+
+---
+
+## 8. Truthy vs Falsy
+
+Python에서는 불리언이 아닌 값도 조건문에서 True/False로 평가됩니다.
+
+### Falsy 값들 (거짓으로 평가)
+
+| 값 | 설명 |
+|----|------|
+| `None` | 널 값 |
+| `False` | 불리언 거짓 |
+| `0`, `0.0` | 숫자 0 |
+| `""`, `''` | 빈 문자열 |
+| `[]`, `()`, `{}` | 빈 컨테이너 |
+
+```python
+# Falsy 예시
+if []:
+    print("실행 안 됨")  # 빈 리스트는 Falsy
+
+# Truthy 예시
+if [0]:
+    print("실행됨")  # 요소가 있으면 Truthy
+```
+
+---
+
+## 9. For 반복문
+
+특정 시퀀스를 순회하며, 같은 코드 작업을 반복하는 구문입니다.
+
+### 유용한 함수들
+
+| 함수 | 설명 | 예시 |
+|------|------|------|
+| **range()** | 숫자 시퀀스 만들기 | `range(5)` → 0,1,2,3,4 |
+| **enumerate()** | 인덱스와 값 동시 순회 | `enumerate(list)` |
+| **zip()** | 여러 시퀀스 동시 순회 | `zip(list1, list2)` |
+
+```python
+# range() 사용
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4
+
+# enumerate() 사용
+fruits = ['apple', 'banana', 'cherry']
+for idx, fruit in enumerate(fruits):
+    print(f"{idx}: {fruit}")
+
+# zip() 사용
+names = ['Alice', 'Bob']
+scores = [90, 85]
+for name, score in zip(names, scores):
+    print(f"{name}: {score}")
+```
+
+---
+
+## 10. While 반복문
+
+조건이 **True인 동안** 작업을 반복하는 구문입니다.
+
+```python
+count = 0
+while count < 5:
+    print(count)
+    count += 1  # 조건 변경 로직 (없으면 무한루프!)
+```
+
+<Callout type="warning" title="무한루프 주의">
+while문에서 조건을 변경하는 로직이 없으면 무한루프에 빠집니다.
+</Callout>
+
+---
+
+## 11. 반복 제어 키워드
+
+| 키워드 | 설명 | 용도 |
+|--------|------|------|
+| **break** | 반복문 즉시 종료 | 특정 조건에서 루프 탈출 |
+| **continue** | 다음 반복으로 건너뛰기 | 특정 조건 스킵 |
+| **pass** | 아무 동작 안 함 | 자리 표시 (placeholder) |
+
+```python
+# break 예시
+for i in range(10):
+    if i == 5:
+        break  # i가 5면 종료
+    print(i)  # 0, 1, 2, 3, 4
+
+# continue 예시
+for i in range(5):
+    if i == 2:
+        continue  # i가 2면 건너뜀
+    print(i)  # 0, 1, 3, 4
+```
+
+---
+
+## 핵심 요약
+
+| 개념 | 핵심 내용 |
+|------|----------|
+| 동적 타이핑 | 실행 시점에 타입 결정, 타입 변경 가능 |
+| 변수 명명 | snake_case, 상수는 UPPER_CASE |
+| 자료형 | List `[]`, Tuple `()`, Dict `{}` |
+| Falsy 값 | None, False, 0, "", [], {}, () |
+| 조건문 | if, elif, else |
+| 반복문 | for, while |
+| 제어 | break, continue, pass |

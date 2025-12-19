@@ -1,0 +1,256 @@
+---
+title: "함수와 모듈"
+description: "함수 정의, 매개변수, 모듈 import"
+---
+
+# 함수와 모듈
+
+## 1. 함수(Function)란?
+
+함수는 **특정 코드나 기능을 반복 사용하기 위해 입력 → 처리 → 출력을 반환하는 코드 블록**입니다.
+
+### 효율적인 코드 설계 원칙: DRY
+
+> **DRY (Don't Repeat Yourself)**: 같은 코드 반복 피하기
+
+```python
+# Bad: 같은 로직 반복
+user_input1 = input1.strip().lower().replace(" ", "")
+user_input2 = input2.strip().lower().replace(" ", "")
+
+# Good: 함수로 추상화
+def normalize_text(text):
+    return text.strip().lower().replace(" ", "")
+
+user_input1 = normalize_text(input1)
+user_input2 = normalize_text(input2)
+```
+
+---
+
+## 2. 함수의 구성 요소
+
+```python
+def function_name(parameter1, parameter2):  # 시그니처
+    """함수 설명 (docstring)"""             # 문서화
+    # 함수 본문
+    result = parameter1 + parameter2        # 로직
+    return result                           # 반환
+```
+
+| 구성 요소 | 설명 |
+|----------|------|
+| **def** | 함수 정의 키워드 |
+| **함수명** | 함수의 이름 (snake_case 권장) |
+| **매개변수** | 함수에 전달되는 입력값 |
+| **docstring** | 삼중 따옴표로 작성하는 문서화 |
+| **return** | 결과를 반환 (없으면 None 반환) |
+
+---
+
+## 3. 매개변수의 종류
+
+### 기본 함수
+
+```python
+def greet(name, age):
+    return f"{name}님은 {age}살입니다"
+
+greet("김철수", 25)  # "김철수님은 25살입니다"
+```
+
+### 키워드 매개변수 (순서 무관)
+
+```python
+greet(age=25, name="김철수")  # 순서 바꿔도 OK
+```
+
+### 기본값 매개변수
+
+```python
+def connect(host="localhost", port=3306):
+    print(f"Connecting to {host}:{port}")
+
+connect()            # 기본값 사용
+connect(port=8080)   # 일부만 지정
+```
+
+### 가변 매개변수
+
+```python
+def log(*args, **kwargs):
+    # *args: 위치 인자 튜플
+    # **kwargs: 키워드 인자 딕셔너리
+    print(args)    # (1, 2, 3)
+    print(kwargs)  # {'name': 'test'}
+
+log(1, 2, 3, name='test')
+```
+
+<Callout type="info" title="*args vs **kwargs">
+`*args`는 여러 개의 위치 인자를 튜플로 받고, `**kwargs`는 여러 개의 키워드 인자를 딕셔너리로 받습니다.
+</Callout>
+
+---
+
+## 4. 반환값
+
+### 단일 값 반환
+
+```python
+def add(a, b):
+    return a + b
+
+result = add(3, 5)  # 8
+```
+
+### 여러 값 반환 (튜플)
+
+```python
+def get_stats(numbers):
+    return min(numbers), max(numbers), sum(numbers)
+
+minimum, maximum, total = get_stats([1, 2, 3, 4, 5])
+print(minimum)  # 1
+print(maximum)  # 5
+print(total)    # 15
+```
+
+---
+
+## 5. 모듈 (Module)
+
+Python에서 **py 파일 하나는 모듈**을 의미합니다.
+
+### 모듈 사용하기
+
+```python
+# math_utils.py (모듈 파일)
+def add(a, b):
+    return a + b
+
+def multiply(a, b):
+    return a * b
+```
+
+```python
+# main.py
+import math_utils
+print(math_utils.add(2, 3))  # 5
+
+# 또는 특정 함수만 가져오기
+from math_utils import add
+print(add(2, 3))  # 5
+
+# 별칭 사용
+import math_utils as mu
+print(mu.add(2, 3))  # 5
+```
+
+---
+
+## 6. 패키지와 라이브러리
+
+### 패키지 (Package)
+
+**하나의 폴더에 여러 모듈을 묶어서 저장하는 형식**
+
+```
+my_package/
+    __init__.py
+    math_utils.py
+    string_utils.py
+```
+
+```python
+from my_package import math_utils
+from my_package.math_utils import add
+```
+
+### 라이브러리 (Library)
+
+**모듈과 패키지를 모두 포함하는 재사용 가능한 코드 묶음**
+
+| 구분 | 예시 |
+|------|------|
+| 기본 라이브러리 | `os`, `sys`, `json`, `math` |
+| 외부 라이브러리 | `numpy`, `pandas`, `transformers` |
+
+```bash
+# 외부 라이브러리 설치
+pip install numpy
+pip install pandas
+```
+
+```python
+import numpy as np
+import pandas as pd
+```
+
+---
+
+## 7. 자주 사용하는 기본 라이브러리
+
+### os - 운영체제 기능
+
+```python
+import os
+
+os.getcwd()           # 현재 디렉토리
+os.listdir('.')       # 디렉토리 내용
+os.path.exists('f')   # 파일/폴더 존재 확인
+```
+
+### json - JSON 처리
+
+```python
+import json
+
+# 딕셔너리 → JSON 문자열
+data = {"name": "철수", "age": 25}
+json_str = json.dumps(data, ensure_ascii=False)
+
+# JSON 문자열 → 딕셔너리
+data = json.loads(json_str)
+```
+
+### datetime - 날짜/시간
+
+```python
+from datetime import datetime
+
+now = datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
+```
+
+---
+
+## 실습: 유틸리티 함수 만들기
+
+```python
+def validate_email(email):
+    """이메일 유효성 검사"""
+    return "@" in email and "." in email
+
+def calculate_average(*numbers):
+    """평균 계산 (가변 인자)"""
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
+
+# 테스트
+print(validate_email("test@example.com"))  # True
+print(calculate_average(10, 20, 30))       # 20.0
+```
+
+---
+
+## 핵심 요약
+
+| 개념 | 핵심 내용 |
+|------|----------|
+| 함수 | def, return, DRY 원칙 |
+| 매개변수 | 기본값, *args, **kwargs |
+| 모듈 | .py 파일, import |
+| 패키지 | 폴더 + __init__.py |
+| 라이브러리 | 기본(os, json) + 외부(pip install) |

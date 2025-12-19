@@ -1,0 +1,242 @@
+---
+title: "클래스 이해하기"
+description: "객체 지향 프로그래밍 기초"
+---
+
+# 클래스 이해하기
+
+## 1. 클래스 (Class)란?
+
+클래스는 **객체지향 프로그래밍(OOP)의 기본 단위**입니다.
+
+### 클래스의 구성
+
+```
+┌─────────────────────────┐
+│         Class           │
+├────────────┬────────────┤
+│   데이터   │    기능    │
+│   (속성)   │  (메서드)  │
+└────────────┴────────────┘
+```
+
+---
+
+## 2. 클래스 정의와 인스턴스 생성
+
+```python
+class Person:
+    def __init__(self, name):  # 생성자
+        self.name = name       # 인스턴스 변수
+
+    def greet(self):           # 메서드
+        return f"안녕하세요. 저는 {self.name}입니다."
+
+# 인스턴스 생성
+p = Person("철수")
+print(p.greet())  # "안녕하세요. 저는 철수입니다."
+```
+
+### 구성 요소
+
+| 요소 | 설명 |
+|------|------|
+| **class** | 클래스 정의 키워드 |
+| **__init__** | 생성자 (초기화 메서드) |
+| **self** | 인스턴스 자신을 참조 |
+| **인스턴스 변수** | self.변수명으로 정의 |
+| **메서드** | 클래스 내부 함수 |
+
+---
+
+## 3. 클래스 변수 vs 인스턴스 변수
+
+| 구분 | 클래스 변수 | 인스턴스 변수 |
+|------|------------|--------------|
+| **공유 범위** | 모든 인스턴스가 공유 | 각 객체마다 독립 |
+| **접근 방법** | 클래스명.변수 | self.변수 |
+| **정의 위치** | 클래스 바로 아래 | __init__ 내부 |
+
+```python
+class Counter:
+    total = 0  # 클래스 변수 (모든 인스턴스 공유)
+
+    def __init__(self):
+        self.count = 0  # 인스턴스 변수 (각자 독립)
+        Counter.total += 1
+
+c1 = Counter()
+c2 = Counter()
+print(Counter.total)  # 2 (공유)
+print(c1.count)       # 0 (독립)
+print(c2.count)       # 0 (독립)
+```
+
+---
+
+## 4. 클래스 상속 (Inheritance)
+
+**기존 Class(부모)를 확장해 새로운 Class(자식)를 정의**합니다.
+
+### 상속의 장점
+
+- **코드 재사용성** 향상
+- 기능 확장 용이
+
+```python
+# 부모 클래스 (Parent Class)
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self):
+        return f"{self.name}가 먹고 있습니다."
+
+# 자식 클래스 (Child Class) - 재사용 + 기능 확장
+class Dog(Animal):
+    def bark(self):
+        return f"{self.name}: 멍멍!"
+
+class Cat(Animal):
+    def meow(self):
+        return f"{self.name}: 야옹~"
+
+# 사용
+dog = Dog("바둑이")
+print(dog.eat())   # Animal의 메서드 사용
+print(dog.bark())  # Dog의 메서드 사용
+```
+
+---
+
+## 5. 오버라이딩 (Overriding)
+
+**부모 메서드를 자식이 재정의**하는 것입니다.
+
+```python
+class Parent:
+    def greet(self):
+        return "부모 인사"
+
+class Child(Parent):
+    def greet(self):  # 오버라이딩
+        return "자식 인사"
+
+c = Child()
+print(c.greet())  # "자식 인사"
+```
+
+---
+
+## 6. super()
+
+**부모 클래스의 메서드를 호출**할 때 사용합니다.
+
+```python
+class Parent:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        return "부모 인사"
+
+class Child(Parent):
+    def __init__(self, name, age):
+        super().__init__(name)  # 부모 생성자 호출
+        self.age = age
+
+    def greet(self):
+        # 부모 메서드 호출 + 확장
+        return super().greet() + " + 자식 인사"
+
+c = Child("철수", 10)
+print(c.name)     # "철수"
+print(c.greet())  # "부모 인사 + 자식 인사"
+```
+
+---
+
+## 7. 실전 예시: 사용자 관리
+
+```python
+class User:
+    """기본 사용자 클래스"""
+    user_count = 0
+
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+        self.is_active = True
+        User.user_count += 1
+
+    def deactivate(self):
+        self.is_active = False
+        return f"{self.username} 계정이 비활성화되었습니다."
+
+    def __str__(self):
+        status = "활성" if self.is_active else "비활성"
+        return f"User({self.username}, {status})"
+
+
+class AdminUser(User):
+    """관리자 사용자 클래스"""
+    def __init__(self, username, email, admin_level=1):
+        super().__init__(username, email)
+        self.admin_level = admin_level
+
+    def delete_user(self, user):
+        user.deactivate()
+        return f"관리자가 {user.username}을(를) 삭제했습니다."
+
+
+# 사용
+user1 = User("alice", "alice@test.com")
+admin = AdminUser("admin", "admin@test.com", admin_level=5)
+
+print(user1)                    # User(alice, 활성)
+print(admin.delete_user(user1)) # 관리자가 alice을(를) 삭제했습니다.
+print(User.user_count)          # 2
+```
+
+---
+
+## 8. 특수 메서드 (Magic Methods)
+
+| 메서드 | 설명 | 호출 시점 |
+|--------|------|----------|
+| **__init__** | 생성자 | 객체 생성 시 |
+| **__str__** | 문자열 표현 | print(), str() |
+| **__repr__** | 개발자용 표현 | repr() |
+| **__len__** | 길이 | len() |
+| **__eq__** | 동등 비교 | == |
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"Point({self.x}, {self.y})"
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+p1 = Point(1, 2)
+p2 = Point(1, 2)
+print(p1)        # Point(1, 2)
+print(p1 == p2)  # True
+```
+
+---
+
+## 핵심 요약
+
+| 개념 | 핵심 내용 |
+|------|----------|
+| 클래스 | class, __init__, self |
+| 변수 | 클래스 변수 (공유), 인스턴스 변수 (독립) |
+| 상속 | class Child(Parent) |
+| 오버라이딩 | 부모 메서드 재정의 |
+| super() | 부모 클래스 메서드 호출 |
+| 특수 메서드 | __init__, __str__, __eq__ 등 |

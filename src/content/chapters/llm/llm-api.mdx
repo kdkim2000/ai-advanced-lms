@@ -1,0 +1,327 @@
+---
+title: "LLM API 소개"
+description: "OpenAI API 활용, 상용/오픈 모델 호출 방법, 주요 매개변수"
+---
+
+# LLM API 소개
+
+## 1. LLM 프로그래밍을 위한 모델 호출
+
+### 상용 LLM API 활용
+
+대형 기술 기업들이 제공하는 API를 통해 LLM을 활용할 수 있습니다.
+
+**주요 제공업체**:
+- **OpenAI**: GPT 시리즈 (GPT-4, GPT-3.5 등)
+- **Anthropic**: Claude 시리즈
+- **Google**: Gemini, PaLM 등
+
+**특징**:
+- 고품질의 사전 학습된 모델 제공
+- 간편한 API 인터페이스
+- 종량제 과금 시스템
+- 지속적인 모델 업데이트
+
+### 자체 API를 통한 호출
+
+자체적으로 구축한 API 엔드포인트를 통해 모델을 호출하는 방식
+
+**장점**:
+- 데이터 보안 및 프라이버시 강화
+- 커스터마이징 가능
+- 비용 통제 가능
+
+### 클라우드 플랫폼 활용
+
+| 플랫폼 | 서비스 |
+|--------|--------|
+| **AWS** | Amazon Bedrock, SageMaker |
+| **Azure** | Azure OpenAI Service |
+
+**특징**: 기존 클라우드 인프라와 통합 용이, 엔터프라이즈급 보안
+
+---
+
+## 2. 오픈 모델 사용
+
+### 주요 오픈소스 LLM
+
+| 모델 | 개발사 |
+|------|--------|
+| **Gemma** | Google |
+| **LLaMA** | Meta |
+| **Mistral** | Mistral AI |
+| **Qwen** | Alibaba |
+
+### Transformers 라이브러리 직접 호출
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model = AutoModelForCausalLM.from_pretrained("model-name")
+tokenizer = AutoTokenizer.from_pretrained("model-name")
+```
+
+**특징**:
+- 로컬 환경에서 실행 가능
+- 모델 구조에 대한 완전한 제어
+- GPU 메모리 관리 필요
+
+### Ollama
+
+**로컬에서 LLM을 쉽게 실행할 수 있는 도구**
+
+- 간단한 명령어로 모델 실행
+- 다양한 오픈소스 모델 지원
+- 로컬 환경 최적화
+
+### vLLM
+
+**고성능 LLM 추론을 위한 라이브러리**
+
+- PagedAttention 알고리즘으로 메모리 효율 향상
+- 높은 처리량(throughput)
+- 프로덕션 환경에 적합
+
+### 클라우드 API 서비스
+
+| 서비스 | 특징 |
+|--------|------|
+| **Groq** | 초고속 응답 속도, LPU 사용 |
+| **Cerebras** | 대규모 모델 처리, 빠른 응답 |
+| **OpenRouter** | 여러 LLM API 통합 |
+
+---
+
+## 3. Python을 이용한 LLM 프로그래밍
+
+### OpenAI SDK 설치
+
+```bash
+pip install openai
+```
+
+### 기본 사용법
+
+```python
+from openai import OpenAI
+
+client = OpenAI(api_key="your-api-key")
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+### curl을 이용한 API 호출
+
+```bash
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant."
+      }
+    ]
+  }'
+```
+
+---
+
+## 4. OpenAI API Key 관리
+
+### API Key란?
+
+서버와의 통신을 위한 인증 키
+
+**역할**:
+- 사용자 인증
+- 사용량 추적
+- 보안 및 권한 관리
+
+### API Key 생성 및 관리
+
+1. OpenAI 플랫폼 로그인
+2. API Keys 섹션 접근
+3. "Create new secret key" 클릭
+4. Key 이름 설정 및 생성
+5. 생성된 Key 안전하게 보관
+
+<Callout type="warning" title="보안 주의사항">
+- 브라우저나 클라이언트 코드에 노출 금지
+- GitHub 등 공개 저장소에 업로드 금지
+- 환경 변수로 관리 권장
+- 정기적인 Key 교체 권장
+</Callout>
+
+### Billing 등록 및 결제
+
+- **Credit Balance**: 현재 잔액 확인
+- **Auto recharge**: 자동 충전 설정
+- **Usage limits**: 월간 지출 한도 설정
+
+---
+
+## 5. Chat API 주요 매개변수
+
+### model
+
+사용할 모델을 지정
+
+```python
+model="gpt-4o-mini"  # 또는 "gpt-4", "gpt-3.5-turbo" 등
+```
+
+### messages
+
+대화 내역을 리스트 형태로 전달
+
+```python
+messages = [
+    {"role": "system", "content": "당신은 전문 번역가입니다."},
+    {"role": "user", "content": "이 문장을 영어로 번역해주세요."}
+]
+```
+
+**role의 종류**:
+
+| role | 설명 |
+|------|------|
+| **system** | AI의 역할 정의 (시스템 프롬프트) |
+| **user** | 사용자의 입력 |
+| **assistant** | AI의 응답 (대화 이력) |
+
+### temperature
+
+**출력의 창의성을 조절 (0.0 ~ 2.0)**
+
+```python
+temperature=0.2  # 낮은 값: 일관되고 정확한 답변
+temperature=0.7  # 중간 값: 균형잡힌 답변
+temperature=1.5  # 높은 값: 창의적이고 다양한 답변
+```
+
+| 값 | 특징 |
+|-----|------|
+| **0에 가까울수록** | 확률이 높은 토큰 선택 → 정확하고 일관된 결과 |
+| **2에 가까울수록** | 다양한 토큰 선택 → 창의적이지만 예측 불가능 |
+
+### max_tokens
+
+**생성할 최대 토큰 수**
+
+```python
+max_tokens=512  # 출력 최대 토큰 수 조절
+```
+
+---
+
+## 6. 실전 예제
+
+### 예제 1: 기본 대화
+
+```python
+from openai import OpenAI
+
+client = OpenAI(api_key="your-api-key")
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Python으로 Hello World를 출력하는 코드를 알려줘."}
+    ],
+    temperature=0.2,
+    max_tokens=512
+)
+
+print(response.choices[0].message.content)
+```
+
+### 예제 2: 창의적인 결과 생성
+
+```python
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "당신은 창의적인 작가입니다."},
+        {"role": "user", "content": "별에 관한 짧은 시를 써주세요."}
+    ],
+    temperature=1.2,  # 높은 temperature로 창의적인 결과
+    max_tokens=200
+)
+
+print(response.choices[0].message.content)
+```
+
+---
+
+## 7. API 선택 기준
+
+| 구분 | 상용 API | 오픈소스 모델 | 클라우드 플랫폼 |
+|------|----------|---------------|-----------------|
+| **편의성** | 높음 | 중간 | 높음 |
+| **비용** | 종량제 | 인프라 비용 | 중간 |
+| **커스터마이징** | 낮음 | 매우 높음 | 높음 |
+| **보안** | 외부 전송 | 로컬 가능 | 엔터프라이즈급 |
+| **성능** | 최신 모델 | 다양 | 안정적 |
+
+---
+
+## 8. 비용 최적화 전략
+
+### 적절한 모델 선택
+
+| 작업 | 추천 모델 |
+|------|-----------|
+| 간단한 작업 | gpt-3.5-turbo |
+| 복잡한 작업 | gpt-4 |
+
+### 토큰 사용 최적화
+
+- 불필요한 컨텍스트 제거
+- max_tokens 적절히 설정
+- 대화 이력 관리
+
+### 캐싱 활용
+
+- 동일한 질문은 캐싱하여 재사용
+- 자주 사용하는 응답 미리 저장
+
+---
+
+## 핵심 요약
+
+### LLM 호출 방식
+
+| 방식 | 특징 |
+|------|------|
+| **상용 API** | 편리함, 종량제, 최신 모델 |
+| **오픈 모델** | 커스터마이징, 프라이버시, GPU 필요 |
+| **클라우드** | 엔터프라이즈급 보안, 통합 용이 |
+
+### 주요 매개변수
+
+| 매개변수 | 설명 |
+|----------|------|
+| **model** | 사용할 모델 지정 |
+| **messages** | 대화 내역 (system, user, assistant) |
+| **temperature** | 창의성 조절 (0~2) |
+| **max_tokens** | 최대 출력 토큰 수 |
+
+### 보안 주의사항
+
+- API Key 노출 금지
+- 환경 변수로 관리
+- 사용량 모니터링
+- 예산 한도 설정

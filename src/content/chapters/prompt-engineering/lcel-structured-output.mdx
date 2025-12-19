@@ -1,0 +1,261 @@
+---
+title: "LCEL과 구조화된 출력"
+description: "LangChain Expression Language, Parser, Runnable 활용"
+---
+
+# LCEL과 구조화된 출력
+
+## 1. LangChain 기본 개념
+
+### LangChain이란?
+
+| 항목 | 설명 |
+|------|------|
+| **정의** | LLM의 구성 요소들을 연결하고 실행하기 위한 프레임워크 |
+| **핵심 개념** | Chain이라는 구조로 LLM의 구성 요소들을 연결 |
+| **표준 언어** | LCEL (LangChain Expression Language) |
+
+### LangChain의 기본 구조
+
+```
+Prompt Template → LLM → Parser → 결과
+```
+
+**구성 요소**:
+
+| 구성 요소 | 역할 |
+|-----------|------|
+| **Prompt Template** | 입력 데이터를 프롬프트 형식으로 포맷팅 |
+| **LLM** | 대규모 언어 모델 |
+| **Parser** | LLM 출력을 원하는 형식으로 변환 |
+| **결과** | 최종 처리된 출력 |
+
+---
+
+## 2. LCEL (LangChain Expression Language)
+
+### 기존 방식 vs Chain 방식
+
+| 방식 | 코드 |
+|------|------|
+| **기존 방식** | `prompt.format() → llm.invoke()` |
+| **Chain 방식** | `chain = prompt \| llm` |
+
+### 파이프 연산자 (`|`)
+
+- 구성 요소를 연결하여 Chain 구성
+- 함수(Chain)화하여 실행
+
+### 가장 기본적인 Chain
+
+```python
+# 구성
+chain = prompt | llm
+
+# 실행
+chain.invoke({"변수": "값"})
+```
+
+**흐름:**
+```
+입력 변수 → Prompt → LLM → 결과
+```
+
+---
+
+## 3. LCEL 2단계: 프롬프트 | LLM | Parser
+
+### Parser의 역할
+
+| 항목 | 설명 |
+|------|------|
+| **목적** | LLM 뒤에 연결하여 출력 형식을 변환 |
+| **핵심 기능** | 구조화된 출력 생성 |
+| **활용** | Agent, Tool과 함께 다룰 때 필수 |
+
+### 주요 Parser 종류
+
+| Parser | 출력 형식 | 용도 |
+|--------|-----------|------|
+| **StrOutputParser** | 문자열 | 일반적인 텍스트 출력 |
+| **JsonOutputParser** | JSON | 구조화된 데이터 형식 |
+| **PydanticOutputParser** | Pydantic 클래스 | 타입이 정의된 구조화 데이터 |
+
+### 구조화된 출력의 중요성
+
+<Callout type="info" title="구조화된 출력">
+LLM 사용 시 구조화된 출력 생성이 핵심입니다. Agent, Tool과 함께 다룰 때 더욱 중요하며, 일관된 데이터 형식을 보장합니다.
+</Callout>
+
+---
+
+## 4. 다양한 LangChain Runnables
+
+### Runnables의 구성
+
+```
+Prompt → LLM → Parser → Tool → ...
+```
+
+- **공통점**: Runnable Sequence로 연결하여 LangChain의 Chain 구성
+- **실행 방식**: `invoke()`로 실행 가능
+
+### 특수 Runnable들
+
+| Runnable | 기능 |
+|----------|------|
+| **RunnablePassthrough()** | 직전 Runnable의 출력을 그대로 전달 |
+| **RunnableParallel()** | 1개 이상의 Runnable을 실행하고 결과를 Dict로 저장 |
+| **.assign()** | Runnable 값을 전달하고, 그 결과를 기존 변수와 결합 |
+
+### RunnablePassthrough
+
+```python
+from langchain_core.runnables import RunnablePassthrough
+
+chain = RunnablePassthrough() | prompt | llm
+```
+
+- 데이터 흐름 유지에 사용
+
+### RunnableParallel
+
+```python
+from langchain_core.runnables import RunnableParallel
+
+parallel_chain = RunnableParallel(
+    task1=chain1,
+    task2=chain2
+)
+```
+
+- 병렬 처리 및 결과 수집
+
+### .assign()
+
+```python
+chain = (
+    RunnablePassthrough()
+    .assign(context=retriever)
+    | prompt
+    | llm
+)
+```
+
+- 데이터 병합 및 확장
+
+---
+
+## 5. 실전 활용 패턴
+
+### 기본 Chain 패턴
+
+```python
+# 기본 구조
+chain = prompt | llm
+
+# 실행
+result = chain.invoke({"변수": "값"})
+```
+
+### Parser 포함 패턴
+
+```python
+from langchain_core.output_parsers import StrOutputParser
+
+# Parser 추가
+chain = prompt | llm | StrOutputParser()
+
+# 실행
+result = chain.invoke({"변수": "값"})
+```
+
+### 복합 Pipeline 패턴
+
+```python
+from langchain_core.runnables import RunnableParallel
+
+# 복잡한 구조
+chain = (
+    RunnableParallel(
+        context=retriever,
+        question=RunnablePassthrough()
+    )
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+# 실행
+result = chain.invoke("질문")
+```
+
+---
+
+## 6. with_structured_output()
+
+### 개념
+
+`with_structured_output()`은 LLM 출력을 Pydantic 모델로 구조화하는 메서드입니다.
+
+### 사용 예시
+
+```python
+from pydantic import BaseModel, Field
+
+class ResponseSchema(BaseModel):
+    answer: str = Field(description="답변")
+    confidence: float = Field(description="신뢰도")
+
+# 구조화된 출력 설정
+structured_llm = llm.with_structured_output(ResponseSchema)
+
+# 실행
+result = structured_llm.invoke("질문")
+# result.answer, result.confidence로 접근 가능
+```
+
+### 장점
+
+| 장점 | 설명 |
+|------|------|
+| **타입 안전성** | Pydantic 모델로 타입 검증 |
+| **일관성** | 항상 동일한 구조의 출력 |
+| **편의성** | 파싱 없이 바로 객체로 사용 |
+
+---
+
+## 핵심 요약
+
+### LCEL 핵심 개념
+
+| 용어 | 설명 |
+|------|------|
+| **LCEL** | LangChain Expression Language, LangChain의 표준 문법 |
+| **Chain** | 구성 요소들을 연결한 실행 단위 |
+| **Runnable** | invoke()로 실행 가능한 모든 구성 요소 |
+| **Parser** | LLM 출력을 특정 형식으로 변환하는 도구 |
+| **Structured Output** | 구조화된 형식의 출력 (JSON, Pydantic 등) |
+
+### 주요 연산자
+
+| 연산자 | 기능 |
+|--------|------|
+| `\|` (파이프) | Runnable들을 순차적으로 연결 |
+| `.invoke()` | Chain 실행 |
+| `.assign()` | 결과를 기존 변수와 결합 |
+
+### 핵심 포인트
+
+1. **LCEL을 이용한 Chain 구성**: 파이프 연산자로 간결한 체인 생성
+2. **Parser와 with_structured_output()을 이용한 구조화 출력**: 일관된 데이터 형식 보장
+3. **특수 Runnable을 이용한 Pipeline 구성**: RunnablePassthrough, RunnableParallel, .assign()
+
+### LCEL의 장점
+
+| 장점 | 설명 |
+|------|------|
+| **간결성** | 파이프 연산자로 직관적인 체인 구성 |
+| **모듈성** | 각 구성 요소를 독립적으로 관리 |
+| **재사용성** | Runnable을 재사용 가능 |
+| **확장성** | 새로운 구성 요소 추가 용이 |

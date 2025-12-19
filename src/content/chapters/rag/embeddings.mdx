@@ -1,0 +1,315 @@
+---
+title: "임베딩 모델 이해하기"
+description: "텍스트 임베딩, Bi-Encoder vs Cross-Encoder, 벡터 데이터베이스"
+---
+
+# 임베딩 모델 이해하기
+
+## 1. 텍스트 임베딩 개념
+
+### 정의
+
+텍스트를 **고정된 크기의 수치 벡터**로 변환하는 과정
+
+### 임베딩의 목적
+
+| 목적 | 설명 |
+|------|------|
+| **의미 표현** | 텍스트의 의미를 수치로 인코딩 |
+| **유사도 계산** | 벡터 간 거리로 의미 유사도 측정 |
+| **검색 가능** | 벡터 공간에서 효율적 검색 |
+
+### 임베딩 예시
+
+```python
+# 텍스트 → 벡터 변환
+"인공지능" → [0.12, -0.34, 0.56, ..., 0.78]  # 1536차원
+
+# 유사한 의미는 가까운 벡터
+"AI"       → [0.11, -0.33, 0.55, ..., 0.77]  # 비슷한 값
+"자동차"    → [0.89, 0.12, -0.45, ..., 0.23]  # 다른 값
+```
+
+---
+
+## 2. Bi-Encoder vs Cross-Encoder
+
+### Bi-Encoder (이중 인코더)
+
+```
+Query → Encoder → Query Vector
+                       ↓
+                   유사도 계산 (코사인 유사도)
+                       ↓
+Document → Encoder → Doc Vector
+```
+
+**특징**:
+- Query와 Document를 **독립적으로** 인코딩
+- 미리 문서 벡터를 계산해 저장 가능
+- **빠른 검색** 가능 (대규모 데이터에 적합)
+
+**사용 시점**: 초기 검색 (Retrieval)
+
+### Cross-Encoder (교차 인코더)
+
+```
+Query + Document → Joint Encoder → Relevance Score
+```
+
+**특징**:
+- Query와 Document를 **함께** 인코딩
+- 더 정확한 관련성 점수 계산
+- **느린 속도** (실시간 계산 필요)
+
+**사용 시점**: 재순위화 (Re-ranking)
+
+### 비교 표
+
+| 항목 | Bi-Encoder | Cross-Encoder |
+|------|------------|---------------|
+| **속도** | 빠름 | 느림 |
+| **정확도** | 상대적 낮음 | 높음 |
+| **사전 계산** | 가능 | 불가능 |
+| **용도** | 초기 검색 | 재순위화 |
+| **확장성** | 우수 | 제한적 |
+
+<Callout type="info" title="Two-Stage Retrieval">
+실제 RAG 시스템에서는 Bi-Encoder로 빠르게 후보를 선별한 후, Cross-Encoder로 재순위화하는 2단계 방식을 많이 사용합니다.
+</Callout>
+
+---
+
+## 3. 주요 임베딩 모델
+
+### OpenAI Embeddings
+
+```python
+from langchain.embeddings import OpenAIEmbeddings
+
+embeddings = OpenAIEmbeddings(
+    model="text-embedding-ada-002"  # 1536차원
+)
+
+# 텍스트 임베딩
+vector = embeddings.embed_query("RAG란 무엇인가?")
+print(f"벡터 차원: {len(vector)}")  # 1536
+```
+
+| 모델 | 차원 | 특징 |
+|------|------|------|
+| text-embedding-ada-002 | 1536 | 범용, 고품질 |
+| text-embedding-3-small | 1536 | 비용 효율적 |
+| text-embedding-3-large | 3072 | 최고 성능 |
+
+### HuggingFace Embeddings
+
+```python
+from langchain.embeddings import HuggingFaceEmbeddings
+
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
+
+vector = embeddings.embed_query("RAG란 무엇인가?")
+```
+
+| 모델 | 차원 | 특징 |
+|------|------|------|
+| all-MiniLM-L6-v2 | 384 | 빠르고 경량 |
+| all-mpnet-base-v2 | 768 | 균형 잡힌 성능 |
+| multilingual-e5-large | 1024 | 다국어 지원 |
+
+### 한국어 특화 모델
+
+| 모델 | 설명 |
+|------|------|
+| ko-sroberta-multitask | 한국어 문장 임베딩 |
+| KoSimCSE | 한국어 유사도 특화 |
+| multilingual-e5-large | 다국어 (한국어 포함) |
+
+---
+
+## 4. 벡터 데이터베이스 (Vector Database)
+
+### 정의
+
+고차원 벡터를 **효율적으로 저장하고 검색**하는 특수 데이터베이스
+
+### 주요 벡터 DB 비교
+
+| 벡터 DB | 특징 | 적합한 상황 |
+|---------|------|-------------|
+| **Chroma** | 경량, 로컬 개발 | 프로토타입, 소규모 |
+| **Pinecone** | 클라우드, 관리형 | 프로덕션, 확장성 |
+| **Faiss** | 대규모 최적화 | 수억 건 이상 |
+| **Weaviate** | GraphQL, 멀티모달 | 복잡한 쿼리 |
+| **Milvus** | 분산 처리 | 대규모 분산 환경 |
+
+### Chroma 사용 예시
+
+```python
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+
+# 임베딩 모델 설정
+embeddings = OpenAIEmbeddings()
+
+# 벡터 스토어 생성
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embeddings,
+    persist_directory="./chroma_db"  # 로컬 저장
+)
+
+# 유사도 검색
+results = vectorstore.similarity_search(
+    query="RAG란?",
+    k=3  # 상위 3개
+)
+```
+
+### Faiss 사용 예시
+
+```python
+from langchain.vectorstores import FAISS
+
+# 벡터 스토어 생성
+vectorstore = FAISS.from_documents(
+    documents=chunks,
+    embedding=embeddings
+)
+
+# 저장
+vectorstore.save_local("./faiss_index")
+
+# 로드
+vectorstore = FAISS.load_local(
+    "./faiss_index",
+    embeddings
+)
+```
+
+---
+
+## 5. 유사도 검색 방법
+
+### 코사인 유사도
+
+```python
+# 두 벡터 간 각도의 코사인 값
+# 1에 가까울수록 유사
+
+import numpy as np
+
+def cosine_similarity(v1, v2):
+    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+```
+
+### 유클리드 거리
+
+```python
+# 두 벡터 간 직선 거리
+# 0에 가까울수록 유사
+
+def euclidean_distance(v1, v2):
+    return np.linalg.norm(v1 - v2)
+```
+
+### LangChain 검색 옵션
+
+```python
+# 기본 유사도 검색
+docs = vectorstore.similarity_search(query, k=5)
+
+# 점수와 함께 검색
+docs_with_score = vectorstore.similarity_search_with_score(query, k=5)
+for doc, score in docs_with_score:
+    print(f"Score: {score:.4f}")
+    print(doc.page_content[:100])
+
+# MMR (Maximum Marginal Relevance) 검색
+# 유사도와 다양성 균형
+docs = vectorstore.max_marginal_relevance_search(
+    query,
+    k=5,
+    fetch_k=20,    # 후보 문서 수
+    lambda_mult=0.5  # 다양성 가중치
+)
+```
+
+---
+
+## 6. Retriever 설정
+
+### 기본 Retriever
+
+```python
+# 벡터 스토어에서 Retriever 생성
+retriever = vectorstore.as_retriever(
+    search_type="similarity",  # 검색 유형
+    search_kwargs={"k": 5}      # 검색 개수
+)
+
+# 검색 실행
+docs = retriever.get_relevant_documents("RAG란?")
+```
+
+### 검색 유형 옵션
+
+| search_type | 설명 |
+|-------------|------|
+| similarity | 단순 유사도 검색 |
+| mmr | 다양성 고려 검색 |
+| similarity_score_threshold | 점수 임계값 기반 |
+
+```python
+# MMR 검색 설정
+retriever = vectorstore.as_retriever(
+    search_type="mmr",
+    search_kwargs={
+        "k": 5,
+        "fetch_k": 20,
+        "lambda_mult": 0.5
+    }
+)
+
+# 점수 임계값 검색
+retriever = vectorstore.as_retriever(
+    search_type="similarity_score_threshold",
+    search_kwargs={
+        "score_threshold": 0.8  # 80% 이상만
+    }
+)
+```
+
+---
+
+## 핵심 요약
+
+### 임베딩 모델 선택 가이드
+
+| 상황 | 권장 모델 |
+|------|-----------|
+| 영어 콘텐츠 | OpenAI text-embedding-3-small |
+| 한국어 콘텐츠 | multilingual-e5-large |
+| 비용 절감 | sentence-transformers |
+| 최고 품질 | OpenAI text-embedding-3-large |
+
+### 벡터 DB 선택 가이드
+
+| 상황 | 권장 DB |
+|------|---------|
+| 로컬 개발/테스트 | Chroma |
+| 프로덕션 (관리형) | Pinecone |
+| 대규모 데이터 | Faiss, Milvus |
+
+### 핵심 개념 정리
+
+| 개념 | 설명 |
+|------|------|
+| **임베딩** | 텍스트 → 고차원 벡터 변환 |
+| **Bi-Encoder** | 빠른 검색용 (독립 인코딩) |
+| **Cross-Encoder** | 정확한 재순위용 (공동 인코딩) |
+| **벡터 DB** | 벡터 저장 및 유사도 검색 |
+| **코사인 유사도** | 벡터 간 유사성 측정 |

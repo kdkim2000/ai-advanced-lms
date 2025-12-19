@@ -1,0 +1,298 @@
+---
+title: "LangChain으로 LLM 연결하기"
+description: "LangChain 프레임워크, Provider 연결, invoke() 메서드"
+---
+
+# LangChain으로 LLM 연결하기
+
+## 1. OpenAI API 활용의 한계점
+
+### 기존 방식의 문제점
+
+```python
+# 기존 방식의 예시
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=messages,
+    temperature=0.2,
+    max_tokens=512
+)
+```
+
+| 문제점 | 설명 |
+|--------|------|
+| **Model 변경 시** | GPT 모델 변경할 때마다 코드 수정 필요 |
+| **Provider 변경 시** | OpenAI → 다른 Provider로 변경 시 대규모 코드 수정 |
+| **일관성 부족** | 각 Provider마다 다른 API 사용 방식 |
+
+---
+
+## 2. LangChain이란?
+
+### 정의
+
+- **LLM 어플리케이션 개발 프레임워크**
+- 다양한 도구와 추상화(Abstraction)를 지원하는 통합 라이브러리
+- ML이나 AI에 대한 배경 지식이 적어도 LLM 기반 어플리케이션 구성 가능
+
+### 핵심 특징
+
+| 특징 | 설명 |
+|------|------|
+| **체계적 구조** | 재사용 가능한 컴포넌트 제공 |
+| **추상화** | 복잡한 내부 구현을 숨기고 간단한 인터페이스 제공 |
+| **모델 호환성** | Open·Closed 모델 모두 활용 가능 |
+| **풍부한 문서** | 자세한 공식 문서 및 다양한 예제 코드 |
+
+<Callout type="info" title="추상화(Abstraction)의 의미">
+ML이나 AI에 대한 배경 지식이 적어도 LLM 기반의 어플리케이션을 구성할 수 있습니다.
+</Callout>
+
+---
+
+## 3. LangChain의 장점
+
+### 통일된 인터페이스
+
+- 모든 LLM Provider에 대해 **일관된 사용 방법**
+- 코드 재사용성 증대
+- 유지보수 용이
+
+### Provider 변경의 용이성
+
+- OpenAI와 오픈 모델을 포함한 대부분의 모델에서 **동일한 인터페이스**로 사용
+- 코드가 API SDK에 비해 간결
+
+### 장단점 비교
+
+| 구분 | 장점 | 단점 |
+|------|------|------|
+| **LangChain** | 통일된 인터페이스, 간결한 코드 | 약간 느림, 기능 구현 제약 |
+| **OpenAI API** | 최신 기능 직접 사용 | Provider 변경 시 코드 수정 필요 |
+
+---
+
+## 4. LangChain + LLM Provider
+
+### Provider별 라이브러리
+
+**별도의 라이브러리로 빠른 업데이트 지원**
+
+| 라이브러리 | Provider |
+|------------|----------|
+| **langchain-openai** | OpenAI 모델 연결 |
+| **langchain-anthropic** | Anthropic (Claude) 연결 |
+| **langchain-google-genai** | Google Gemini 연결 |
+| **langchain-huggingface** | HuggingFace 모델 연결 |
+
+### HuggingFace 연동
+
+- **langchain-huggingface** 라이브러리
+- https://huggingface.co 에서 모델 선택
+- 모델 주소로 바로 연결 가능
+- 대량의 오픈소스 모델 지원
+
+---
+
+## 5. ChatOpenAI in LangChain
+
+### 기본 사용법
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model='gpt-4o-mini',
+    temperature=0.5,
+    max_tokens=1024
+)
+```
+
+### 주요 파라미터
+
+| 파라미터 | 설명 |
+|----------|------|
+| **model** | 사용할 GPT 모델 (예: 'gpt-4o-mini') |
+| **temperature** | 출력의 창의성/무작위성 조절 (0~2) |
+| **max_tokens** | 출력 최대 토큰 수 제한 |
+
+### temperature 값의 의미
+
+| 값 | 특징 |
+|-----|------|
+| **0에 가까울수록** | 정확한 답변 |
+| **2에 가까울수록** | 창의적 답변 |
+
+---
+
+## 6. invoke() 메서드
+
+### 기본 사용법
+
+```python
+question = '''전 세계적으로 흥행한 영화에 나오는 유명한 명대사를 하나 알려주세요.
+대사가 나온 배경과 의미도 설명해 주세요.'''
+
+llm.invoke(question)
+```
+
+### invoke() 메서드 특징
+
+- 대부분의 LangChain 구성요소는 **invoke()로 실행**
+- 통일된 실행 인터페이스 제공
+- 간결하고 직관적인 사용법
+
+<Callout type="info" title="핵심 포인트">
+LangChain에서는 거의 모든 컴포넌트가 invoke() 메서드로 실행됩니다.
+</Callout>
+
+---
+
+## 7. LangChain-Gemini 연결
+
+### Google AI Studio 연결
+
+1. https://aistudio.google.com 접속
+2. API 키 발급
+3. 환경 변수 설정
+
+### LangChain-google-genAI 라이브러리 활용
+
+```python
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+llm = ChatGoogleGenerativeAI(
+    model="gemini-pro",
+    temperature=0.5
+)
+
+response = llm.invoke("안녕하세요!")
+print(response.content)
+```
+
+---
+
+## 8. Ollama
+
+### Ollama 소개
+
+**로컬에서 LLM을 쉽게 실행할 수 있는 도구**
+
+- URL: https://ollama.com/
+- **GGUF 양자화 포맷** 전용 라이브러리
+- **Llama.cpp** 기반으로 CPU 추론도 가능
+
+### 주요 특징
+
+| 특징 | 설명 |
+|------|------|
+| **오픈소스** | 로컬 LLM 실행 도구 |
+| **다양한 모델** | 다양한 오픈소스 모델 지원 |
+| **로컬 실행** | GPU 없이도 CPU로 추론 가능 |
+
+### LangChain에서 Ollama 사용
+
+```python
+from langchain_ollama import ChatOllama
+
+llm = ChatOllama(
+    model="llama3.2",
+    temperature=0.5
+)
+
+response = llm.invoke("Python이 무엇인가요?")
+print(response.content)
+```
+
+---
+
+## 9. 실습: 다양한 Provider로 체인 만들기
+
+### ChatOpenAI 예제
+
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model='gpt-4o-mini', temperature=0.5)
+response = llm.invoke("파이썬의 장점을 설명해주세요.")
+print(response.content)
+```
+
+### ChatGoogleGenerativeAI 예제
+
+```python
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+llm = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.5)
+response = llm.invoke("파이썬의 장점을 설명해주세요.")
+print(response.content)
+```
+
+### ChatOllama 예제
+
+```python
+from langchain_ollama import ChatOllama
+
+llm = ChatOllama(model="llama3.2", temperature=0.5)
+response = llm.invoke("파이썬의 장점을 설명해주세요.")
+print(response.content)
+```
+
+<Callout type="info" title="동일한 인터페이스">
+Provider만 변경하면 다른 모델을 사용할 수 있습니다. 코드 재사용성이 극대화됩니다.
+</Callout>
+
+---
+
+## 10. LangChain VS OpenAI API 비교
+
+### OpenAI API
+
+**장점**:
+- 개별 API만으로도 어플리케이션 구현 가능
+- 최신 기능 직접 사용
+
+**단점**:
+- Model, Provider 변경 시 코드 수정 필요
+
+### LangChain 사용 시
+
+**장점**:
+- 대부분의 모델에서 동일한 인터페이스
+- 코드가 API SDK에 비해 간결
+- OpenAI 내부 기능 대부분 사용 가능
+
+**단점**:
+- 약간 느림
+- 원하는 기능 구현에 제약 있음
+
+---
+
+## 핵심 요약
+
+### LangChain 핵심 개념
+
+| 개념 | 설명 |
+|------|------|
+| **추상화** | 복잡한 구현을 숨기고 간단한 인터페이스 제공 |
+| **통일된 인터페이스** | 모든 Provider에 대해 일관된 사용법 |
+| **invoke()** | LangChain의 통일된 실행 메서드 |
+| **확장성** | 새로운 Provider 추가 용이 |
+
+### Provider별 라이브러리
+
+| Provider | 라이브러리 |
+|----------|-----------|
+| OpenAI | langchain-openai |
+| Anthropic | langchain-anthropic |
+| Google | langchain-google-genai |
+| HuggingFace | langchain-huggingface |
+| Ollama | langchain-ollama |
+
+### 필수 학습 내용
+
+1. **ChatOpenAI** 객체 생성 및 사용
+2. **temperature, max_tokens** 파라미터 설정
+3. **invoke()** 메서드로 질문 실행
+4. Google Gemini, Ollama 연결 방법
+5. OpenAI API vs LangChain 장단점 비교

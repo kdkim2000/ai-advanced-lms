@@ -1,0 +1,5666 @@
+{
+  "moduleId": "llm",
+  "exam_info": {
+    "title": "대규모 언어모델 퀴즈",
+    "level": "LV.3",
+    "type": "객관식 문항",
+    "total_questions": 324,
+    "points_per_question": 4,
+    "total_points": 1296,
+    "description": "LLM 기본 개념, 임베딩, Word2Vec 등에 대한 이해도를 확인합니다."
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "LLM(Large Language Model)을 구성하는 핵심 모델 구조는 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "CNN (Convolutional Neural Network)",
+        "2": "RNN (Recurrent Neural Network)",
+        "3": "Transformer",
+        "4": "LSTM (Long Short-Term Memory)",
+        "5": "GAN (Generative Adversarial Network)"
+      },
+      "answer": 3,
+      "category": "LLM 기본 개념",
+      "explanation": "LLM을 구성하는 핵심 모델은 Transformer 구조입니다. 현재 대부분의 LLM이 Transformer 기반으로 구축되어 있습니다."
+    },
+    {
+      "id": 2,
+      "question": "임베딩(Embedding)의 정의로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "데이터를 압축하는 기술",
+        "2": "자연어 의미를 컴퓨터가 이해할 수 있도록 벡터로 변환하는 과정",
+        "3": "이미지를 텍스트로 변환하는 기술",
+        "4": "음성을 문자로 변환하는 기술",
+        "5": "데이터베이스에 데이터를 저장하는 방법"
+      },
+      "answer": 2,
+      "category": "임베딩",
+      "explanation": "임베딩은 자연어 의미를 컴퓨터가 이해할 수 있도록 벡터로 변환하는 과정입니다. 언어뿐 아니라 그래프, 그림, 사운드 등 추상적 데이터도 벡터로 변환할 수 있습니다."
+    },
+    {
+      "id": 3,
+      "question": "Word2Vec의 핵심 원리로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "단어의 철자를 분석하여 벡터화",
+        "2": "단어의 길이를 기준으로 벡터화",
+        "3": "유사한 단어를 벡터 공간에서 가깝게 배치",
+        "4": "알파벳 순서대로 벡터 할당",
+        "5": "단어의 발음을 기준으로 벡터화"
+      },
+      "answer": 3,
+      "category": "Word2Vec",
+      "explanation": "Word2Vec은 유사 단어를 벡터 공간에서 가깝게 배치하는 방법으로, 단어를 수백~수천 차원의 벡터로 변환합니다. 예: '서울-코리아' 벡터 연산으로 '베를린' 도출 가능."
+    },
+    {
+      "id": 4,
+      "question": "Word2Vec(Word Embedding)의 한계점으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도가 너무 빠름",
+        "2": "동음이의어 처리 불가 - 하나의 벡터에 하나의 단어만 할당",
+        "3": "모든 언어를 완벽하게 처리 가능",
+        "4": "메모리 사용량이 너무 적음",
+        "5": "맥락 정보를 완벽하게 활용 가능"
+      },
+      "answer": 2,
+      "category": "Word2Vec",
+      "explanation": "Word2Vec의 주요 한계점은 동음이의어 처리 불가(하나의 벡터에 하나의 단어만 할당), 오타 처리 불가(King→KNG 인식 불가), 확장성 문제(단어 수 증가 시 벡터화 어려움)입니다."
+    },
+    {
+      "id": 5,
+      "question": "맥락(Context)의 중요성을 설명하는 예시로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "데이터의 저장 용량",
+        "2": "'I go to schol'에서 'schol'이 오타임을 주변 단어(I, to, go)를 통해 'school'로 유추",
+        "3": "파일의 확장자 정보",
+        "4": "이미지의 해상도",
+        "5": "데이터베이스의 인덱스"
+      },
+      "answer": 2,
+      "category": "맥락(Context)",
+      "explanation": "맥락은 주변 정보를 활용해 의미를 파악하는 것입니다. 'schol'이라는 오타도 주변 맥락(I, to, go)을 통해 'school'임을 유추할 수 있습니다. 자연어 학습에서는 세부 구성 분석 및 주변 맥락과 함께 고려가 필수적입니다."
+    },
+    {
+      "id": 6,
+      "question": "토큰(Token)의 정의로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "문장의 맨 앞 글자",
+        "2": "단어나 텍스트를 더 잘게 나누는 단위 (단어보다 작고 글자보다 큼)",
+        "3": "문장의 마지막 글자",
+        "4": "문장 부호만을 의미",
+        "5": "공백 문자"
+      },
+      "answer": 2,
+      "category": "토큰(Token)",
+      "explanation": "토큰은 단어나 텍스트 뭉음을 더 잘게 나누는 단위로, 단어보다 작고 글자 하나보다는 큰 처리 단위입니다. 예: 'Tokenization' = 'Token' + 'ization' (2개 토큰)"
+    },
+    {
+      "id": 7,
+      "question": "트랜스포머(Transformer)가 개발된 연도와 논문 제목은?",
+      "points": 4,
+      "options": {
+        "1": "2015년, Deep Learning for NLP",
+        "2": "2017년, Attention is All You Need",
+        "3": "2018년, BERT: Pre-training of Deep Bidirectional Transformers",
+        "4": "2016년, Neural Machine Translation",
+        "5": "2019년, GPT-2: Language Models are Unsupervised Multitask Learners"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "트랜스포머는 2017년 구글에서 개발되었으며, 'Attention is All You Need'라는 논문을 통해 소개되었습니다. 약 19만 번 인용된 기념비적 논문입니다."
+    },
+    {
+      "id": 8,
+      "question": "트랜스포머가 이전 모델(RNN 등)의 한계를 극복한 핵심 강점은?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도가 빠름",
+        "2": "GPU를 사용할 수 있음",
+        "3": "긴 문장도 내용을 보존 가능 (긴 Context 처리 강점)",
+        "4": "영어만 처리 가능",
+        "5": "메모리 사용량이 적음"
+      },
+      "answer": 3,
+      "category": "Transformer",
+      "explanation": "기존 모델(RNN 등)은 문장이 길면 내용을 잊어버리는 한계가 있었으나, 트랜스포머는 긴 문장도 내용을 보존할 수 있어 긴 Context 처리에 강점이 있습니다."
+    },
+    {
+      "id": 9,
+      "question": "트랜스포머의 주요 구성 요소로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "인코더(Encoder)와 디코더(Decoder)",
+        "2": "입력층과 출력층만 존재",
+        "3": "컨볼루션 레이어와 풀링 레이어",
+        "4": "LSTM 셀과 GRU 셀",
+        "5": "활성화 함수만 존재"
+      },
+      "answer": 1,
+      "category": "Transformer",
+      "explanation": "트랜스포머는 인코더(입력 문장을 받아 의미를 벡터로 계산)와 디코더(인코더 결과를 받아 출력 문장 생성)로 구성됩니다. 인코더는 BERT로, 디코더는 GPT로 발전했습니다."
+    },
+    {
+      "id": 10,
+      "question": "토큰화에서 언어별 압축률 비교로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "한국어가 영어보다 압축률이 높다",
+        "2": "영어 압축률 4:1~5:1, 한국어 압축률 2:1~1.8:1로 영어가 더 효율적",
+        "3": "모든 언어가 동일한 압축률을 가진다",
+        "4": "한국어는 토큰화가 불가능하다",
+        "5": "압축률은 의미가 없다"
+      },
+      "answer": 2,
+      "category": "토큰화(Tokenization)",
+      "explanation": "영어는 토큰 압축률이 4:1~5:1로 높은 반면, 한국어는 2:1~1.8:1 수준으로 낮습니다. 따라서 프롬프트는 영어로 쓰는 것이 더 유리합니다(영어 토큰화가 효율적이어서 같은 Context 길이에서 더 많은 맥락 처리 가능)."
+    },
+    {
+      "id": 11,
+      "question": "Transformer가 RNN 대비 가지는 가장 큰 장점은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 수가 적다",
+        "2": "병렬 처리가 가능하여 학습 속도가 빠르다",
+        "3": "단순한 구조로 구현이 쉽다",
+        "4": "메모리 사용량이 적다",
+        "5": "사전 학습이 필요 없다"
+      },
+      "answer": 2,
+      "category": "Transformer 기본",
+      "explanation": "Transformer는 RNN과 달리 모든 토큰을 병렬적으로 처리할 수 있어 학습 속도가 매우 빠릅니다. RNN은 순차적으로 처리해야 하므로 문장 길이만큼 순차 처리가 필요합니다."
+    },
+    {
+      "id": 12,
+      "question": "Transformer의 기본 구조를 올바르게 설명한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder만으로 구성된다",
+        "2": "Decoder만으로 구성된다",
+        "3": "Encoder와 Decoder로 구성된다",
+        "4": "RNN과 CNN을 결합한 구조이다",
+        "5": "LSTM과 동일한 구조이다"
+      },
+      "answer": 3,
+      "category": "Transformer 기본",
+      "explanation": "원래의 Transformer는 Encoder(입력 처리)와 Decoder(출력 생성)로 구성됩니다. 이후 BERT는 Encoder만, GPT는 Decoder만 사용하는 변형 모델입니다."
+    },
+    {
+      "id": 13,
+      "question": "Transformer에서 문장을 처리하는 첫 번째 단계는?",
+      "points": 4,
+      "options": {
+        "1": "Self-Attention 계산",
+        "2": "토큰화 및 임베딩",
+        "3": "FFNN 통과",
+        "4": "Softmax 적용",
+        "5": "Decoder 입력"
+      },
+      "answer": 2,
+      "category": "Transformer 기본",
+      "explanation": "Transformer는 문장을 토큰으로 쪼개고(토큰화), 각 토큰을 벡터로 변환(임베딩)하는 것부터 시작합니다."
+    },
+    {
+      "id": 14,
+      "question": "RNN의 장기 의존성 문제를 Transformer가 해결할 수 있는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "순차적 처리를 더 효율적으로 수행한다",
+        "2": "각 토큰을 병렬적으로 처리하여 모든 위치의 정보를 동시에 고려한다",
+        "3": "더 많은 메모리를 사용한다",
+        "4": "문장을 더 작은 단위로 나눈다",
+        "5": "역전파가 더 효율적이다"
+      },
+      "answer": 2,
+      "category": "Transformer 기본",
+      "explanation": "Transformer는 Self-Attention을 통해 모든 토큰 간의 관계를 병렬적으로 계산하므로, 문장이 길어져도 앞부분의 정보를 손실하지 않습니다."
+    },
+    {
+      "id": 15,
+      "question": "Transformer에서 '토큰별 벡터 계산'이라는 표현의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "각 단어를 순차적으로 처리한다",
+        "2": "각 토큰을 개별적으로 처리하여 문맥 정보가 없다",
+        "3": "각 토큰을 다른 토큰들과의 관계를 고려하여 벡터로 표현한다",
+        "4": "토큰을 숫자로만 변환한다",
+        "5": "토큰의 개수만큼 벡터를 생성한다"
+      },
+      "answer": 3,
+      "category": "Transformer 기본",
+      "explanation": "Transformer는 각 토큰을 문장 내 다른 모든 토큰들과의 관계(Self-Attention)를 고려하여 맥락이 반영된 벡터로 표현합니다."
+    },
+    {
+      "id": 16,
+      "question": "Encoder의 주요 역할은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "출력 문장을 생성한다",
+        "2": "입력 문장의 의미를 효과적으로 파악한다",
+        "3": "토큰을 정렬한다",
+        "4": "문장을 번역한다",
+        "5": "다음 단어를 예측한다"
+      },
+      "answer": 2,
+      "category": "Encoder",
+      "explanation": "Encoder는 입력 문장의 각 토큰에 대해 문맥 정보를 고려한 의미 벡터를 생성하여, 문장의 의미를 효과적으로 파악하는 역할을 합니다."
+    },
+    {
+      "id": 17,
+      "question": "원래 Transformer 논문에서 Encoder는 몇 개의 Layer로 구성되는가?",
+      "points": 4,
+      "options": {
+        "1": "2개",
+        "2": "4개",
+        "3": "6개",
+        "4": "8개",
+        "5": "12개"
+      },
+      "answer": 3,
+      "category": "Encoder",
+      "explanation": "원래 Transformer 논문('Attention is All You Need')에서는 Encoder를 6개 Layer로 쌓아서 사용했습니다."
+    },
+    {
+      "id": 18,
+      "question": "Encoder Layer의 구성 요소를 순서대로 나열한 것은?",
+      "points": 4,
+      "options": {
+        "1": "FFNN → Self-Attention → Add & Norm",
+        "2": "Self-Attention → Add & Norm → FFNN → Add & Norm",
+        "3": "Add & Norm → Self-Attention → FFNN",
+        "4": "Self-Attention → FFNN → Softmax",
+        "5": "Embedding → Self-Attention → Output"
+      },
+      "answer": 2,
+      "category": "Encoder",
+      "explanation": "Encoder Layer는 Multi-Head Self-Attention → Add & Norm → Feed-Forward Neural Network → Add & Norm의 순서로 구성됩니다."
+    },
+    {
+      "id": 19,
+      "question": "Encoder를 6개 연속으로 쌓는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "처리 속도를 빠르게 하기 위해",
+        "2": "메모리 사용량을 줄이기 위해",
+        "3": "파라미터 수를 늘리고 복잡한 의미를 이해하기 위해",
+        "4": "병렬 처리를 가능하게 하기 위해",
+        "5": "Over-fitting을 방지하기 위해"
+      },
+      "answer": 3,
+      "category": "Encoder",
+      "explanation": "Encoder를 여러 개 쌓으면 각 Layer가 점점 더 추상적이고 복잡한 의미를 학습할 수 있어, 파라미터 수가 늘어나고 문장의 깊은 의미를 이해할 수 있습니다."
+    },
+    {
+      "id": 20,
+      "question": "Encoder의 최종 출력은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "다음 단어의 확률 분포",
+        "2": "입력 문장의 토큰별 맥락 벡터",
+        "3": "번역된 문장",
+        "4": "감정 분류 결과",
+        "5": "문장 요약"
+      },
+      "answer": 2,
+      "category": "Encoder",
+      "explanation": "Encoder의 최종 출력은 입력 문장의 각 토큰에 대한 맥락이 반영된 벡터(토큰별 맥락 벡터)입니다."
+    },
+    {
+      "id": 21,
+      "question": "Encoder에서 Self-Attention이 처리하는 맥락의 방향은?",
+      "points": 4,
+      "options": {
+        "1": "오른쪽에서 왼쪽으로만",
+        "2": "왼쪽에서 오른쪽으로만",
+        "3": "양방향 (모든 토큰 참조)",
+        "4": "이전 토큰만 참조",
+        "5": "다음 토큰만 참조"
+      },
+      "answer": 3,
+      "category": "Encoder",
+      "explanation": "Encoder의 Self-Attention은 양방향으로 동작하여, 각 토큰이 문장 내 모든 다른 토큰들을 참조할 수 있습니다."
+    },
+    {
+      "id": 22,
+      "question": "Encoder에서 'Add & Norm'의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "새로운 Layer를 추가한다",
+        "2": "정규화만 수행한다",
+        "3": "잔차 연결(Residual Connection)과 Layer Normalization을 통해 학습을 안정화한다",
+        "4": "토큰을 추가하고 정렬한다",
+        "5": "Attention 값을 정규화한다"
+      },
+      "answer": 3,
+      "category": "Encoder",
+      "explanation": "Add & Norm은 잔차 연결(입력을 출력에 더함)과 Layer Normalization을 통해 그래디언트 소실 문제를 완화하고 학습을 안정화합니다."
+    },
+    {
+      "id": 23,
+      "question": "Encoder Layer가 여러 개 쌓일 때, 각 Layer 간의 정보 전달 방식은?",
+      "points": 4,
+      "options": {
+        "1": "첫 번째 Layer의 출력만 마지막 Layer에 전달된다",
+        "2": "각 Layer의 출력이 독립적으로 처리된다",
+        "3": "직전 Layer의 출력이 다음 Layer의 입력으로 순차적으로 전달된다",
+        "4": "모든 Layer의 출력을 평균낸다",
+        "5": "무작위로 선택된 Layer의 출력을 사용한다"
+      },
+      "answer": 3,
+      "category": "Encoder",
+      "explanation": "Encoder는 직전 Layer의 출력(토큰별 벡터)을 다음 Layer의 입력으로 사용하며, 이를 통해 점진적으로 더 복잡한 표현을 학습합니다."
+    },
+    {
+      "id": 24,
+      "question": "Decoder의 주요 역할은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "입력 문장의 의미를 파악한다",
+        "2": "출력 문장을 자연스럽게 생성한다",
+        "3": "토큰을 임베딩한다",
+        "4": "문장을 분류한다",
+        "5": "입력 문장을 인코딩한다"
+      },
+      "answer": 2,
+      "category": "Decoder",
+      "explanation": "Decoder는 Encoder의 출력과 이전까지 생성된 출력을 받아서 다음 토큰을 예측하며 출력 문장을 자연스럽게 생성하는 역할을 합니다."
+    },
+    {
+      "id": 25,
+      "question": "Decoder가 생성을 시작할 때 가장 먼저 입력되는 특수 토큰은?",
+      "points": 4,
+      "options": {
+        "1": "<EOS>",
+        "2": "<PAD>",
+        "3": "<UNK>",
+        "4": "<BOS>",
+        "5": "<SEP>"
+      },
+      "answer": 4,
+      "category": "Decoder",
+      "explanation": "Decoder는 생성을 시작할 때 <BOS> (Begin Of Sequence) 토큰을 입력받아 첫 번째 단어를 생성하기 시작합니다."
+    },
+    {
+      "id": 26,
+      "question": "Decoder의 입력으로 사용되는 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder 출력만",
+        "2": "현재까지 생성된 출력 문장만",
+        "3": "Encoder 출력 + 현재까지 생성된 출력 문장",
+        "4": "원본 입력 문장",
+        "5": "무작위 벡터"
+      },
+      "answer": 3,
+      "category": "Decoder",
+      "explanation": "Decoder는 Encoder의 출력(입력 문장의 맥락 정보)과 현재까지 생성된 출력 문장을 모두 입력으로 받아 다음 토큰을 예측합니다."
+    },
+    {
+      "id": 27,
+      "question": "Decoder의 최종 출력은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "완성된 문장",
+        "2": "입력 문장의 임베딩",
+        "3": "다음 토큰의 확률 분포",
+        "4": "문장의 감정",
+        "5": "문장의 주제"
+      },
+      "answer": 3,
+      "category": "Decoder",
+      "explanation": "Decoder의 최종 출력은 Linear Layer와 Softmax를 거쳐 어휘(vocabulary) 내 모든 토큰에 대한 확률 분포이며, 가장 높은 확률의 토큰을 다음 단어로 선택합니다."
+    },
+    {
+      "id": 28,
+      "question": "Decoder에만 존재하고 Encoder에는 없는 Attention Layer는?",
+      "points": 4,
+      "options": {
+        "1": "Self-Attention",
+        "2": "Multi-Head Attention",
+        "3": "Masked Multi-Head Attention",
+        "4": "Encoder-Decoder Attention",
+        "5": "Cross Attention"
+      },
+      "answer": 4,
+      "category": "Decoder",
+      "explanation": "Encoder-Decoder Attention (Cross Attention)은 Decoder에만 존재하며, Decoder가 Encoder의 출력을 참조하여 입력 문장의 정보를 활용하도록 합니다."
+    },
+    {
+      "id": 29,
+      "question": "Decoder Layer의 구성 요소를 순서대로 나열한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Self-Attention → FFNN → Encoder-Decoder Attention",
+        "2": "Masked Self-Attention → Encoder-Decoder Attention → FFNN",
+        "3": "Encoder-Decoder Attention → Masked Self-Attention → FFNN",
+        "4": "FFNN → Masked Self-Attention → Encoder-Decoder Attention",
+        "5": "Masked Self-Attention → FFNN → Encoder-Decoder Attention"
+      },
+      "answer": 2,
+      "category": "Decoder",
+      "explanation": "Decoder Layer는 Masked Multi-Head Self-Attention → Encoder-Decoder Attention → Feed-Forward Neural Network 순서로 구성됩니다 (각 단계마다 Add & Norm 포함)."
+    },
+    {
+      "id": 30,
+      "question": "Decoder에서 Masked Self-Attention을 사용하는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "계산 속도를 높이기 위해",
+        "2": "메모리를 절약하기 위해",
+        "3": "미래의 토큰 정보를 보지 못하도록 막기 위해",
+        "4": "Encoder와 동일한 구조를 만들기 위해",
+        "5": "병렬 처리를 가능하게 하기 위해"
+      },
+      "answer": 3,
+      "category": "Decoder",
+      "explanation": "Decoder는 순차적으로 토큰을 생성하므로, 현재 위치보다 뒤에 있는 토큰(미래 정보)을 참조하지 못하도록 Masking을 적용합니다."
+    },
+    {
+      "id": 31,
+      "question": "Decoder가 '<EOS>' 토큰을 출력하면 어떻게 되는가?",
+      "points": 4,
+      "options": {
+        "1": "새로운 문장 생성을 시작한다",
+        "2": "생성을 중단하고 문장을 완료한다",
+        "3": "Encoder로 돌아간다",
+        "4": "처음부터 다시 생성한다",
+        "5": "오류가 발생한다"
+      },
+      "answer": 2,
+      "category": "Decoder",
+      "explanation": "<EOS> (End Of Sequence) 토큰은 문장의 끝을 나타내며, Decoder가 이를 출력하면 생성 과정이 종료됩니다."
+    },
+    {
+      "id": 32,
+      "question": "Positional Encoding이 필요한 이유는?",
+      "points": 4,
+      "options": {
+        "1": "토큰의 의미를 강화하기 위해",
+        "2": "병렬 처리로 인해 손실된 순서 정보를 추가하기 위해",
+        "3": "계산 속도를 높이기 위해",
+        "4": "차원을 축소하기 위해",
+        "5": "Attention 계산을 단순화하기 위해"
+      },
+      "answer": 2,
+      "category": "Positional Encoding",
+      "explanation": "Transformer는 모든 토큰을 병렬적으로 처리하므로 순서 정보가 없어집니다. Positional Encoding을 통해 각 토큰의 위치 정보를 벡터에 추가합니다."
+    },
+    {
+      "id": 33,
+      "question": "Positional Encoding이 없다면 어떤 문제가 발생하는가?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도가 느려진다",
+        "2": "메모리 사용량이 증가한다",
+        "3": "'나는 학교에 간다'와 '학교에 나는 간다'를 구분할 수 없다",
+        "4": "Attention 계산이 불가능하다",
+        "5": "토큰 임베딩을 할 수 없다"
+      },
+      "answer": 3,
+      "category": "Positional Encoding",
+      "explanation": "순서 정보가 없으면 단어의 순서가 달라도 동일한 문장으로 인식됩니다. Positional Encoding을 통해 토큰의 위치를 구분할 수 있습니다."
+    },
+    {
+      "id": 34,
+      "question": "Positional Encoding은 어디에 적용되는가?",
+      "points": 4,
+      "options": {
+        "1": "Encoder의 출력에만",
+        "2": "Decoder의 출력에만",
+        "3": "Encoder와 Decoder의 입력 임베딩에",
+        "4": "Attention 계산 중",
+        "5": "FFNN 통과 후"
+      },
+      "answer": 3,
+      "category": "Positional Encoding",
+      "explanation": "Positional Encoding은 Encoder와 Decoder 모두의 입력 단계에서, 토큰 임베딩 벡터에 위치 정보 벡터를 더하는 방식으로 적용됩니다."
+    },
+    {
+      "id": 35,
+      "question": "RoPE(Rotary Position Embedding)는 Positional Encoding의 어떤 방법인가?",
+      "points": 4,
+      "options": {
+        "1": "단순 덧셈 방식",
+        "2": "곱셈 방식",
+        "3": "회전 변환(Rotation)을 사용하는 방식",
+        "4": "학습 가능한 파라미터 방식",
+        "5": "무작위 값 추가 방식"
+      },
+      "answer": 3,
+      "category": "Positional Encoding",
+      "explanation": "RoPE는 각 벡터의 임베딩을 회전 변환하여 위치 정보를 인코딩하는 최신 기법으로, 상대적 위치 정보를 효과적으로 표현할 수 있습니다."
+    },
+    {
+      "id": 36,
+      "question": "Self-Attention이 해결하려는 핵심 질문은?",
+      "points": 4,
+      "options": {
+        "1": "다음 단어는 무엇인가?",
+        "2": "이 문장에서 이 단어는 어떤 의미인가?",
+        "3": "이 문장은 긍정적인가?",
+        "4": "이 문장의 주제는 무엇인가?",
+        "5": "이 단어는 몇 번째 위치인가?"
+      },
+      "answer": 2,
+      "category": "Self-Attention",
+      "explanation": "Self-Attention은 각 단어가 문장 내 다른 단어들과의 관계를 통해 문맥에 따른 의미를 파악하는 메커니즘입니다."
+    },
+    {
+      "id": 37,
+      "question": "Self-Attention에서 Query, Key, Value의 역할을 올바르게 설명한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Query: 답변, Key: 질문, Value: 참조",
+        "2": "Query: 질문, Key: 참조 대상, Value: 실제 의미 정보",
+        "3": "Query: 입력, Key: 출력, Value: 변환",
+        "4": "Query: 위치, Key: 단어, Value: 문장",
+        "5": "Query: 토큰, Key: 임베딩, Value: 인코딩"
+      },
+      "answer": 2,
+      "category": "Self-Attention",
+      "explanation": "Query는 현재 토큰의 질문(무엇을 찾는가), Key는 참조할 다른 토큰들, Value는 실제로 가져올 의미 정보를 나타냅니다."
+    },
+    {
+      "id": 38,
+      "question": "Self-Attention의 계산 공식은?",
+      "points": 4,
+      "options": {
+        "1": "Attention(Q, K, V) = Q + K + V",
+        "2": "Attention(Q, K, V) = softmax(Q × K) × V",
+        "3": "Attention(Q, K, V) = softmax(QK^T / √d_k) × V",
+        "4": "Attention(Q, K, V) = Q × V / K",
+        "5": "Attention(Q, K, V) = (Q + K) × V"
+      },
+      "answer": 3,
+      "category": "Self-Attention",
+      "explanation": "Self-Attention은 Query와 Key의 내적을 √d_k로 스케일링한 후 softmax를 적용하여 가중치를 구하고, 이를 Value에 곱하여 계산합니다."
+    },
+    {
+      "id": 39,
+      "question": "Self-Attention에서 √d_k로 나누는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "계산 속도를 높이기 위해",
+        "2": "차원이 커질 때 내적 값이 너무 커지는 것을 방지하기 위해",
+        "3": "음수 값을 없애기 위해",
+        "4": "메모리를 절약하기 위해",
+        "5": "병렬 처리를 가능하게 하기 위해"
+      },
+      "answer": 2,
+      "category": "Self-Attention",
+      "explanation": "차원이 클수록 Query와 Key의 내적 값이 커져 softmax의 그래디언트가 매우 작아지는 문제를 방지하기 위해 √d_k로 스케일링합니다."
+    },
+    {
+      "id": 40,
+      "question": "'나는 밥을 먹었다'라는 문장에서 '밥을' 토큰의 Self-Attention은 어떤 토큰들을 참조하는가?",
+      "points": 4,
+      "options": {
+        "1": "'밥을'만 참조",
+        "2": "'나는', '밥을'만 참조",
+        "3": "'밥을', '먹었다'만 참조",
+        "4": "'나는', '밥을', '먹었다' 모두 참조",
+        "5": "참조하지 않음"
+      },
+      "answer": 4,
+      "category": "Self-Attention",
+      "explanation": "Self-Attention은 각 토큰이 문장 내 모든 토큰(자기 자신 포함)과의 관계를 계산하여 맥락을 파악합니다."
+    },
+    {
+      "id": 41,
+      "question": "Self-Attention의 출력은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "다음 단어의 확률",
+        "2": "문장의 분류 결과",
+        "3": "맥락을 반영한 토큰별 의미 벡터",
+        "4": "단어의 위치 정보",
+        "5": "문장의 요약"
+      },
+      "answer": 3,
+      "category": "Self-Attention",
+      "explanation": "Self-Attention은 각 토큰에 대해 문장 내 다른 토큰들과의 관계를 고려한 맥락 정보가 반영된 벡터를 출력합니다."
+    },
+    {
+      "id": 42,
+      "question": "Self-Attention에서 softmax를 적용하는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "음수를 제거하기 위해",
+        "2": "Attention 가중치를 확률 분포로 만들기 위해",
+        "3": "계산을 단순화하기 위해",
+        "4": "차원을 축소하기 위해",
+        "5": "비선형성을 추가하기 위해"
+      },
+      "answer": 2,
+      "category": "Self-Attention",
+      "explanation": "softmax는 Query와 Key의 유사도 점수를 0과 1 사이의 확률 분포로 변환하여, 각 토큰이 얼마나 중요한지를 나타내는 가중치로 만듭니다."
+    },
+    {
+      "id": 43,
+      "question": "Self-Attention의 가장 큰 장점은?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 수가 적다",
+        "2": "순차 처리가 가능하다",
+        "3": "병렬적으로 모든 토큰의 관계를 동시에 계산할 수 있다",
+        "4": "메모리 사용량이 적다",
+        "5": "학습이 필요 없다"
+      },
+      "answer": 3,
+      "category": "Self-Attention",
+      "explanation": "Self-Attention은 모든 토큰 쌍에 대한 관계를 병렬적으로 동시에 계산할 수 있어, RNN처럼 순차적으로 처리할 필요가 없습니다."
+    },
+    {
+      "id": 44,
+      "question": "Multi-Head Attention에서 'Multi-Head'의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "여러 개의 Encoder를 사용한다",
+        "2": "여러 개의 Decoder를 사용한다",
+        "3": "Self-Attention을 여러 개의 다른 관점으로 병렬 수행한다",
+        "4": "여러 문장을 동시에 처리한다",
+        "5": "여러 언어를 동시에 번역한다"
+      },
+      "answer": 3,
+      "category": "Multi-Head Attention",
+      "explanation": "Multi-Head Attention은 하나의 Self-Attention을 여러 개(Head)로 나누어 각기 다른 관점에서 토큰 간 관계를 학습하고, 이를 결합합니다."
+    },
+    {
+      "id": 45,
+      "question": "Multi-Head Attention을 사용하는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "계산 속도를 높이기 위해",
+        "2": "토큰과 토큰의 관계를 여러 가지 맥락(문법, 의미 등)에서 고려하기 위해",
+        "3": "메모리를 절약하기 위해",
+        "4": "차원을 확장하기 위해",
+        "5": "병렬 처리를 불가능하게 하기 위해"
+      },
+      "answer": 2,
+      "category": "Multi-Head Attention",
+      "explanation": "Multi-Head Attention은 각 Head가 문법적 관계, 의미적 유사성, 언어적 특징 등 서로 다른 측면의 관계를 학습하도록 하여 더 풍부한 표현을 만듭니다."
+    },
+    {
+      "id": 46,
+      "question": "256차원 임베딩을 8개의 Head로 나누면 각 Head의 차원은?",
+      "points": 4,
+      "options": {
+        "1": "8",
+        "2": "16",
+        "3": "32",
+        "4": "64",
+        "5": "128"
+      },
+      "answer": 3,
+      "category": "Multi-Head Attention",
+      "explanation": "256차원을 8개의 Head로 나누면 각 Head는 32차원(256 ÷ 8 = 32)을 담당하며, 각 Head의 출력을 다시 합치면 원래의 256차원이 됩니다."
+    },
+    {
+      "id": 47,
+      "question": "Multi-Head Attention에서 각 Head가 학습하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "모두 동일한 패턴",
+        "2": "무작위 패턴",
+        "3": "각기 다른 종류의 관계 (문법, 의미, 언어적 특징 등)",
+        "4": "단어의 철자",
+        "5": "문장의 길이"
+      },
+      "answer": 3,
+      "category": "Multi-Head Attention",
+      "explanation": "각 Head는 학습을 통해 자동으로 서로 다른 종류의 관계(문법적 관계, 의미적 유사성 등)를 포착하도록 특화됩니다."
+    },
+    {
+      "id": 48,
+      "question": "Multi-Head Attention의 최종 출력은 어떻게 만들어지는가?",
+      "points": 4,
+      "options": {
+        "1": "각 Head의 출력 중 하나를 선택한다",
+        "2": "각 Head의 출력을 평균낸다",
+        "3": "각 Head의 출력을 연결(concatenate)하고 선형 변환한다",
+        "4": "각 Head의 출력을 더한다",
+        "5": "가장 높은 값을 가진 Head의 출력만 사용한다"
+      },
+      "answer": 3,
+      "category": "Multi-Head Attention",
+      "explanation": "각 Head의 출력을 연결(concatenate)한 후, 선형 변환(Linear layer)을 통해 원래 차원으로 복원하여 최종 출력을 만듭니다."
+    },
+    {
+      "id": 49,
+      "question": "'N명의 전문가가 읽고 판단'이라는 표현이 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "N개의 Encoder를 사용한다",
+        "2": "N개의 Head가 각기 다른 관점에서 토큰 관계를 분석한다",
+        "3": "N명의 사람이 모델을 평가한다",
+        "4": "N개의 문장을 동시에 처리한다",
+        "5": "N번 반복 학습한다"
+      },
+      "answer": 2,
+      "category": "Multi-Head Attention",
+      "explanation": "Multi-Head Attention에서 각 Head를 '전문가'에 비유한 것으로, 각 Head가 서로 다른 전문성(문법, 의미 등)을 가지고 토큰 관계를 분석합니다."
+    },
+    {
+      "id": 50,
+      "question": "FFNN (Feed-Forward Neural Network)의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "Attention 계산을 수행한다",
+        "2": "비선형성을 추가하여 깊은 관계를 학습한다",
+        "3": "토큰의 순서를 정렬한다",
+        "4": "차원을 축소한다",
+        "5": "출력 확률을 계산한다"
+      },
+      "answer": 2,
+      "category": "FFNN",
+      "explanation": "FFNN은 Self-Attention이 포착한 관계에 비선형 변환을 적용하여 더 복잡하고 깊은 패턴을 학습할 수 있게 합니다."
+    },
+    {
+      "id": 51,
+      "question": "FFNN은 Transformer의 어디에 위치하는가?",
+      "points": 4,
+      "options": {
+        "1": "입력 임베딩 전",
+        "2": "Self-Attention 이전",
+        "3": "Self-Attention 이후",
+        "4": "출력 Softmax 이후",
+        "5": "Positional Encoding 이전"
+      },
+      "answer": 3,
+      "category": "FFNN",
+      "explanation": "FFNN은 각 Encoder/Decoder Layer에서 Self-Attention (및 Add & Norm) 다음에 위치하여 Attention 결과를 더 깊게 처리합니다."
+    },
+    {
+      "id": 52,
+      "question": "FFNN의 일반적인 구조는?",
+      "points": 4,
+      "options": {
+        "1": "단일 선형 층",
+        "2": "두 개의 선형 층과 그 사이의 비선형 활성화 함수",
+        "3": "RNN 구조",
+        "4": "CNN 구조",
+        "5": "Attention 메커니즘"
+      },
+      "answer": 2,
+      "category": "FFNN",
+      "explanation": "FFNN은 보통 두 개의 선형 층으로 구성되며, 첫 번째 층 후에 ReLU 같은 비선형 활성화 함수를 적용합니다."
+    },
+    {
+      "id": 53,
+      "question": "FFNN이 Self-Attention과 결합되어 만드는 효과는?",
+      "points": 4,
+      "options": {
+        "1": "계산 속도만 향상",
+        "2": "단어 간 관계 파악 + 깊은 패턴 학습",
+        "3": "메모리 사용량 감소",
+        "4": "차원 축소",
+        "5": "토큰 정렬"
+      },
+      "answer": 2,
+      "category": "FFNN",
+      "explanation": "Self-Attention이 토큰 간 관계를 파악하고, FFNN이 이를 바탕으로 더 복잡한 비선형 패턴을 학습하여 풍부한 표현을 만듭니다."
+    },
+    {
+      "id": 54,
+      "question": "Masking의 주요 목적은 무엇인가?",
+      "points": 4,
+      "options": {
+        "1": "계산 속도 향상",
+        "2": "미래의 토큰 정보를 보지 못하도록 차단",
+        "3": "메모리 절약",
+        "4": "차원 축소",
+        "5": "병렬 처리 가능"
+      },
+      "answer": 2,
+      "category": "Masking",
+      "explanation": "Masking은 Decoder가 현재 위치보다 뒤에 있는 토큰(미래 정보)을 참조하지 못하도록 막아, 자기회귀적 생성을 가능하게 합니다."
+    },
+    {
+      "id": 55,
+      "question": "Masking이 적용되는 Attention Layer는?",
+      "points": 4,
+      "options": {
+        "1": "Encoder의 Self-Attention",
+        "2": "Decoder의 Self-Attention (Masked Multi-Head Attention)",
+        "3": "Encoder-Decoder Attention",
+        "4": "모든 Attention Layer",
+        "5": "FFNN"
+      },
+      "answer": 2,
+      "category": "Masking",
+      "explanation": "Masking은 Decoder의 Self-Attention에만 적용됩니다. Encoder는 양방향으로 모든 토큰을 참조할 수 있습니다."
+    },
+    {
+      "id": 56,
+      "question": "'I had meal'을 생성할 때 'I' 토큰이 참조할 수 있는 토큰은?",
+      "points": 4,
+      "options": {
+        "1": "I, had, meal 모두",
+        "2": "had, meal만",
+        "3": "<BOS>, I만",
+        "4": "<BOS>만",
+        "5": "아무것도 참조하지 않음"
+      },
+      "answer": 3,
+      "category": "Masking",
+      "explanation": "'I'를 생성할 때는 이미 생성된 '<BOS>'와 현재 토큰 'I'만 참조할 수 있으며, 아직 생성되지 않은 'had', 'meal'은 참조할 수 없습니다."
+    },
+    {
+      "id": 57,
+      "question": "Encoder의 Self-Attention과 Decoder의 Masked Self-Attention의 차이는?",
+      "points": 4,
+      "options": {
+        "1": "Encoder는 단방향, Decoder는 양방향",
+        "2": "Encoder는 양방향, Decoder는 단방향(이전 토큰만)",
+        "3": "동일한 방식으로 동작",
+        "4": "Encoder는 Masking을 사용, Decoder는 사용 안 함",
+        "5": "차이 없음"
+      },
+      "answer": 2,
+      "category": "Masking",
+      "explanation": "Encoder는 양방향으로 모든 토큰을 참조할 수 있지만, Decoder는 Masking을 통해 현재 위치 이전의 토큰만 참조할 수 있습니다."
+    },
+    {
+      "id": 58,
+      "question": "Masking을 사용하지 않으면 어떤 문제가 발생하는가?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도가 느려진다",
+        "2": "메모리가 부족해진다",
+        "3": "모델이 미래 정보를 미리 알게 되어 정확한 학습이 불가능하다",
+        "4": "병렬 처리가 불가능하다",
+        "5": "차원이 증가한다"
+      },
+      "answer": 3,
+      "category": "Masking",
+      "explanation": "Masking 없이 미래 토큰을 참조하면, 모델이 답을 미리 알고 있는 상태로 학습하게 되어 실제 생성 시 제대로 작동하지 않습니다."
+    },
+    {
+      "id": 59,
+      "question": "Decoder에서 'meal' 토큰을 생성할 때 참조하는 이전 출력은?",
+      "points": 4,
+      "options": {
+        "1": "<BOS>만",
+        "2": "I만",
+        "3": "had만",
+        "4": "<BOS>, I, had",
+        "5": "참조하지 않음"
+      },
+      "answer": 4,
+      "category": "Masking",
+      "explanation": "'meal'을 생성할 때는 이미 생성된 '<BOS>', 'I', 'had' 모두를 참조할 수 있지만, 아직 생성되지 않은 '<EOS>'는 참조할 수 없습니다."
+    },
+    {
+      "id": 60,
+      "question": "Encoder-Decoder Attention의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "Decoder 내부 토큰 간 관계 계산",
+        "2": "Encoder 출력 정보를 Decoder가 참조하도록 연결",
+        "3": "입력 문장을 출력 문장으로 직접 변환",
+        "4": "Positional Encoding 추가",
+        "5": "다음 토큰 확률 계산"
+      },
+      "answer": 2,
+      "category": "Encoder-Decoder Attention",
+      "explanation": "Encoder-Decoder Attention (Cross Attention)은 Decoder가 Encoder의 출력(입력 문장의 맥락 정보)을 참조하여 번역이나 생성에 활용하도록 합니다."
+    },
+    {
+      "id": 61,
+      "question": "Encoder-Decoder Attention에서 Query, Key, Value는 어디서 오는가?",
+      "points": 4,
+      "options": {
+        "1": "모두 Encoder에서",
+        "2": "모두 Decoder에서",
+        "3": "Query는 Decoder, Key와 Value는 Encoder",
+        "4": "Query는 Encoder, Key와 Value는 Decoder",
+        "5": "무작위로 생성"
+      },
+      "answer": 3,
+      "category": "Encoder-Decoder Attention",
+      "explanation": "Encoder-Decoder Attention에서 Query는 Decoder의 현재 상태에서 나오고, Key와 Value는 Encoder의 출력에서 나옵니다."
+    },
+    {
+      "id": 62,
+      "question": "Encoder-Decoder Attention은 Decoder의 몇 번째 서브 레이어인가?",
+      "points": 4,
+      "options": {
+        "1": "첫 번째 (Masked Self-Attention 이전)",
+        "2": "두 번째 (Masked Self-Attention과 FFNN 사이)",
+        "3": "세 번째 (FFNN 이후)",
+        "4": "네 번째 (출력 직전)",
+        "5": "없음"
+      },
+      "answer": 2,
+      "category": "Encoder-Decoder Attention",
+      "explanation": "Decoder Layer는 (1) Masked Self-Attention → (2) Encoder-Decoder Attention → (3) FFNN 순서로 구성됩니다."
+    },
+    {
+      "id": 63,
+      "question": "Encoder-Decoder Attention이 없다면 어떤 문제가 발생하는가?",
+      "points": 4,
+      "options": {
+        "1": "학습이 불가능하다",
+        "2": "Decoder가 입력 문장의 정보를 전혀 활용할 수 없다",
+        "3": "계산 속도가 느려진다",
+        "4": "메모리가 부족해진다",
+        "5": "Masking이 불가능하다"
+      },
+      "answer": 2,
+      "category": "Encoder-Decoder Attention",
+      "explanation": "Encoder-Decoder Attention이 없으면 Decoder는 이전 출력만으로 생성해야 하며, 원래 입력 문장의 정보를 활용할 수 없게 됩니다. (이는 GPT 같은 Decoder-only 모델의 특징입니다)"
+    },
+    {
+      "id": 64,
+      "question": "GPT 모델에 Encoder-Decoder Attention이 없는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "설계 실수",
+        "2": "계산 속도를 위해",
+        "3": "Encoder 자체가 없어서 (Decoder-only 구조)",
+        "4": "필요 없어서",
+        "5": "메모리 절약을 위해"
+      },
+      "answer": 3,
+      "category": "Encoder-Decoder Attention",
+      "explanation": "GPT는 Decoder만 사용하는 구조이므로 Encoder가 없고, 따라서 Encoder-Decoder Attention도 없습니다."
+    },
+    {
+      "id": 65,
+      "question": "Auto-Regressive 생성 방식의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "자동으로 회귀 분석을 수행한다",
+        "2": "이전 출력을 다음 입력으로 사용하여 순차적으로 생성한다",
+        "3": "모든 토큰을 동시에 생성한다",
+        "4": "입력을 그대로 출력한다",
+        "5": "무작위로 토큰을 선택한다"
+      },
+      "answer": 2,
+      "category": "Auto-Regressive",
+      "explanation": "Auto-Regressive는 이전에 생성된 토큰을 조건으로 하여 다음 토큰을 순차적으로 생성하는 방식입니다."
+    },
+    {
+      "id": 66,
+      "question": "Decoder의 순차적 출력 과정을 올바르게 나타낸 것은?",
+      "points": 4,
+      "options": {
+        "1": "<BOS> → I, had, meal, <EOS> 동시 생성",
+        "2": "<BOS> → I → had → meal → <EOS> 순차 생성",
+        "3": "<EOS> → meal → had → I → <BOS> 역순 생성",
+        "4": "무작위 순서로 생성",
+        "5": "병렬적으로 모든 토큰 생성"
+      },
+      "answer": 2,
+      "category": "Auto-Regressive",
+      "explanation": "Decoder는 <BOS>로 시작하여 한 번에 하나의 토큰을 생성하고, 이를 다음 단계의 입력으로 사용하여 <EOS>가 나올 때까지 순차적으로 생성합니다."
+    },
+    {
+      "id": 67,
+      "question": "'<BOS> I had'가 주어졌을 때 Decoder가 예측하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "전체 문장",
+        "2": "다음 한 개의 토큰 (meal)",
+        "3": "이전 토큰 (had)",
+        "4": "첫 번째 토큰 (I)",
+        "5": "문장의 길이"
+      },
+      "answer": 2,
+      "category": "Auto-Regressive",
+      "explanation": "Decoder는 현재까지 생성된 시퀀스를 입력받아 다음 한 개의 토큰만을 예측합니다. 이 경우 'meal'을 예측합니다."
+    },
+    {
+      "id": 68,
+      "question": "순차적 출력의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "병렬 처리가 가능하다",
+        "2": "이전 문맥을 고려하여 자연스러운 문장을 생성할 수 있다",
+        "3": "계산이 간단하다",
+        "4": "메모리를 절약할 수 있다",
+        "5": "모든 토큰을 동시에 확인할 수 있다"
+      },
+      "answer": 2,
+      "category": "Auto-Regressive",
+      "explanation": "순차적 생성은 이미 생성된 토큰들의 문맥을 고려하여 다음 토큰을 결정하므로, 문법적으로나 의미적으로 자연스러운 문장을 만들 수 있습니다."
+    },
+    {
+      "id": 69,
+      "question": "순차적 출력의 단점은?",
+      "points": 4,
+      "options": {
+        "1": "정확도가 낮다",
+        "2": "문법이 틀린다",
+        "3": "생성 속도가 느리다 (한 번에 하나씩만 생성)",
+        "4": "메모리를 많이 사용한다",
+        "5": "학습이 불가능하다"
+      },
+      "answer": 3,
+      "category": "Auto-Regressive",
+      "explanation": "Auto-Regressive 방식은 한 번에 하나의 토큰만 생성하므로, 긴 문장을 생성할 때 시간이 오래 걸립니다. 이는 병렬 처리가 불가능하기 때문입니다."
+    },
+    {
+      "id": 70,
+      "question": "Decoding 과정에서 '<BOS> I had meal' 다음에 '<EOS>'가 출력되면?",
+      "points": 4,
+      "options": {
+        "1": "오류가 발생한다",
+        "2": "생성을 중단하고 문장을 완료한다",
+        "3": "다시 '<BOS>'부터 시작한다",
+        "4": "계속 토큰을 생성한다",
+        "5": "Encoder로 돌아간다"
+      },
+      "answer": 2,
+      "category": "Auto-Regressive",
+      "explanation": "<EOS> (End Of Sequence) 토큰은 문장의 끝을 나타내는 특수 토큰으로, 이것이 생성되면 Decoder는 생성을 멈추고 문장을 완료합니다."
+    },
+    {
+      "id": 71,
+      "question": "BERT와 GPT의 가장 큰 구조적 차이는?",
+      "points": 4,
+      "options": {
+        "1": "BERT는 RNN, GPT는 Transformer 사용",
+        "2": "BERT는 Encoder만, GPT는 Decoder만 사용",
+        "3": "BERT는 작고, GPT는 크다",
+        "4": "BERT는 영어만, GPT는 다국어 지원",
+        "5": "차이 없음"
+      },
+      "answer": 2,
+      "category": "BERT vs GPT",
+      "explanation": "BERT는 Transformer의 Encoder 구조만 사용하여 문장 의미를 파악하고, GPT는 Decoder 구조만 사용하여 텍스트를 생성합니다."
+    },
+    {
+      "id": 72,
+      "question": "BERT의 주요 용도는?",
+      "points": 4,
+      "options": {
+        "1": "텍스트 생성",
+        "2": "이미지 분류",
+        "3": "문장 의미 파악 (분류, 질의응답 등)",
+        "4": "음성 인식",
+        "5": "비디오 생성"
+      },
+      "answer": 3,
+      "category": "BERT vs GPT",
+      "explanation": "BERT는 양방향 Encoder를 사용하여 문장의 의미를 벡터로 표현하며, 감정 분석, 문서 분류, 질의응답 같은 이해(understanding) 태스크에 사용됩니다."
+    },
+    {
+      "id": 73,
+      "question": "GPT의 주요 용도는?",
+      "points": 4,
+      "options": {
+        "1": "문장 분류",
+        "2": "감정 분석",
+        "3": "텍스트 생성 (대화, 자동완성 등)",
+        "4": "이미지 인식",
+        "5": "번역만 가능"
+      },
+      "answer": 3,
+      "category": "BERT vs GPT",
+      "explanation": "GPT는 Decoder 구조를 사용하여 이전 텍스트를 기반으로 다음 텍스트를 생성하며, 대화형 AI, 자동 완성, 창작 등 생성(generation) 태스크에 사용됩니다."
+    },
+    {
+      "id": 74,
+      "question": "BERT가 '양방향 Transformer'라고 불리는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "입력과 출력이 양방향이다",
+        "2": "Encoder의 Self-Attention이 양방향으로 모든 토큰을 참조한다",
+        "3": "두 개의 Transformer를 사용한다",
+        "4": "순방향과 역방향 두 번 처리한다",
+        "5": "Encoder와 Decoder를 모두 사용한다"
+      },
+      "answer": 2,
+      "category": "BERT vs GPT",
+      "explanation": "BERT는 Encoder의 Self-Attention을 사용하여 각 토큰이 문장의 모든 토큰(양쪽 방향)을 참조할 수 있으므로 '양방향'이라고 합니다."
+    },
+    {
+      "id": 75,
+      "question": "GPT는 문장을 입력받았을 때 무엇을 출력하는가?",
+      "points": 4,
+      "options": {
+        "1": "문장의 의미 벡터",
+        "2": "문장의 감정",
+        "3": "다음 단어 또는 이어지는 텍스트",
+        "4": "문장의 번역",
+        "5": "문장의 요약"
+      },
+      "answer": 3,
+      "category": "BERT vs GPT",
+      "explanation": "GPT는 주어진 문장(프롬프트)을 받아 그 다음에 이어질 가장 적절한 단어나 텍스트를 생성합니다."
+    },
+    {
+      "id": 76,
+      "question": "BERT와 GPT의 학습 방식 차이는?",
+      "points": 4,
+      "options": {
+        "1": "BERT는 지도학습만, GPT는 비지도학습만",
+        "2": "BERT는 마스크 언어 모델링, GPT는 다음 단어 예측",
+        "3": "BERT는 번역, GPT는 분류",
+        "4": "BERT는 강화학습, GPT는 지도학습",
+        "5": "차이 없음"
+      },
+      "answer": 2,
+      "category": "BERT vs GPT",
+      "explanation": "BERT는 문장의 일부를 마스킹하고 복원하는 방식(MLM)으로, GPT는 이전 단어들을 보고 다음 단어를 예측하는 방식으로 사전학습됩니다."
+    },
+    {
+      "id": 77,
+      "question": "GPT에서 Encoder-Decoder Attention이 없는 이유를 올바르게 설명한 것은?",
+      "points": 4,
+      "options": {
+        "1": "계산 효율을 위해 제거했다",
+        "2": "Decoder만 사용하므로 Encoder가 없어서",
+        "3": "필요 없어서",
+        "4": "BERT와 구별하기 위해",
+        "5": "설계 실수"
+      },
+      "answer": 2,
+      "category": "BERT vs GPT",
+      "explanation": "GPT는 Decoder-only 구조로 Encoder가 아예 없으므로, Encoder의 출력을 참조하는 Encoder-Decoder Attention도 존재하지 않습니다."
+    },
+    {
+      "id": 78,
+      "question": "Encoder와 Decoder의 목적 차이를 올바르게 설명한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder는 말을 하는 것, Decoder는 의미를 뽑는 것",
+        "2": "Encoder는 의미를 뽑는 것, Decoder는 말을 하는 것",
+        "3": "둘 다 의미를 뽑는다",
+        "4": "둘 다 말을 한다",
+        "5": "차이 없음"
+      },
+      "answer": 2,
+      "category": "BERT vs GPT",
+      "explanation": "Encoder는 입력 문장의 의미를 파악(이해)하고, Decoder는 그 정보를 바탕으로 자연스러운 문장을 생성(말하기)합니다."
+    },
+    {
+      "id": 79,
+      "question": "Transformer가 번역 태스크에서 뛰어난 성능을 보인 이유는?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 수가 적어서",
+        "2": "Encoder가 의미를 효과적으로 파악하고 Decoder가 자연스럽게 생성해서",
+        "3": "학습 데이터가 많아서만",
+        "4": "RNN보다 간단해서",
+        "5": "우연히"
+      },
+      "answer": 2,
+      "category": "Transformer 성능",
+      "explanation": "Transformer는 Encoder가 입력 문장의 의미를 깊게 이해하고, Decoder가 그 정보를 바탕으로 자연스러운 출력 문장을 생성하여 번역 품질이 매우 높습니다."
+    },
+    {
+      "id": 80,
+      "question": "Transformer가 긴 문맥을 잘 이해하는 이유는?",
+      "points": 4,
+      "options": {
+        "1": "순차적으로 처리하기 때문에",
+        "2": "메모리를 많이 사용하기 때문에",
+        "3": "Self-Attention으로 모든 위치의 정보를 직접 참조하기 때문에",
+        "4": "단어를 더 작게 나누기 때문에",
+        "5": "RNN을 내부적으로 사용하기 때문에"
+      },
+      "answer": 3,
+      "category": "Transformer 성능",
+      "explanation": "Transformer는 Self-Attention을 통해 문장 길이와 무관하게 모든 토큰 간의 관계를 직접 계산하므로, 긴 문장에서도 정보 손실이 거의 없습니다."
+    },
+    {
+      "id": 81,
+      "question": "Transformer 구조에서 Encoder의 주요 역할로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트를 순차적으로 생성한다",
+        "2": "토큰의 깊이가 깊어져도 내용을 잃어버리지 않고 문맥의 의미를 파악한다",
+        "3": "단방향으로만 맥락을 참조한다",
+        "4": "출력 문장을 자연스럽게 생성하는 것에 특화되어 있다",
+        "5": "이미지를 텍스트로 변환한다"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "Encoder는 토큰의 깊이가 깊어져도 내용을 잃어버리지 않으며, 문맥의 의미 파악에 특화되어 있습니다. 양방향 맥락을 참조합니다."
+    },
+    {
+      "id": 82,
+      "question": "Transformer 구조에서 Decoder의 특징으로 옳지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "중요도를 잘 이해한다",
+        "2": "출력 문장을 자연스럽게 생성한다",
+        "3": "텍스트 생성에 특화되어 있다",
+        "4": "양방향 맥락을 모두 참조한다",
+        "5": "단방향 맥락을 참조한다"
+      },
+      "answer": 4,
+      "category": "Transformer",
+      "explanation": "Decoder는 단방향 맥락을 참조하며, 텍스트 생성에 특화되어 있습니다. 양방향 맥락 참조는 Encoder의 특징입니다."
+    },
+    {
+      "id": 83,
+      "question": "BERT 모델에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Decoder 구조를 활용하여 텍스트를 생성한다",
+        "2": "Encoder 구조를 활용하여 문장 의미를 파악하고 벡터를 출력한다",
+        "3": "단방향 맥락만 참조한다",
+        "4": "Next Token Prediction 방식으로 학습한다",
+        "5": "텍스트 생성에 특화되어 있다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "BERT는 Encoder 구조를 활용하여 빈칸을 만드는 다음을 예측하거나 문장들의 관계를 예측하여 벡터를 출력합니다."
+    },
+    {
+      "id": 84,
+      "question": "GPT 모델에 대한 설명으로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder 구조를 활용하여 문장을 이해한다",
+        "2": "양방향 맥락을 참조한다",
+        "3": "Decoder 구조를 활용하여 텍스트를 생성한다",
+        "4": "빈칸 예측 문제를 목적으로 학습한다",
+        "5": "문장 관계 예측에 특화되어 있다"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT는 Decoder 구조를 활용하여 다음 단어를 예측하며 텍스트를 생성합니다."
+    },
+    {
+      "id": 85,
+      "question": "개/고양이 분류나 리뷰 분류 같은 전통적인 딥러닝 모델의 문제점으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도가 너무 느리다",
+        "2": "특정 Task만을 목적으로 학습하여 범용성이 떨어진다",
+        "3": "메모리 사용량이 과도하게 많다",
+        "4": "정확도가 낮다",
+        "5": "데이터가 적게 필요하다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "전통적인 딥러닝 모델은 '이미지 분류'나 '리뷰 분류' 같은 단일 Task만을 목적으로 학습하여 다른 Task에 활용하기 어렵다는 문제가 있습니다."
+    },
+    {
+      "id": 86,
+      "question": "GPT-1 (GPT) 모델에 대한 설명으로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "파라미터가 약 175억 개이다",
+        "2": "Fine-tuning 없이 다양한 Task를 수행할 수 있다",
+        "3": "파라미터가 1억 개인 Transformer Decoder 모델이다",
+        "4": "In-Context Learning 능력을 갖추고 있다",
+        "5": "웹 텍스트를 대량으로 학습했다"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT-1은 파라미터가 1억 개(0.1B)인 Transformer Decoder 모델이며, 특정 도메인에 적용하기 위해서는 후처리(Fine-tuning)가 필요합니다."
+    },
+    {
+      "id": 87,
+      "question": "GPT-2 모델의 개선사항으로 옳지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델의 크기를 1.5B로 늘렸다",
+        "2": "웹 텍스트를 가져와 학습시켰다",
+        "3": "긴 글 뒤에 TL;DR을 붙이면 요약을 만든다",
+        "4": "In-Context Learning 능력을 최초로 발견했다",
+        "5": "간단한 요약, 번역 등의 작업을 언어로 전달할 수 있다"
+      },
+      "answer": 4,
+      "category": "LLM 기초",
+      "explanation": "In-Context Learning 능력은 GPT-3에서 발견되었습니다. GPT-2는 모델 크기 증가와 웹 텍스트 학습을 통해 TL;DR 요약 등의 기능을 갖추게 되었습니다."
+    },
+    {
+      "id": 88,
+      "question": "GPT-3에서 발견된 'In-Context Learning' 능력에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델을 Fine-tuning하여 새로운 Task를 학습하는 능력",
+        "2": "입력 데이터를 주고 다음에 관련 내용을 붙였을 때 해당 데이터를 바탕으로 답변하는 능력",
+        "3": "최소한의 데이터로 패턴을 파악하는 능력",
+        "4": "질문에 정확하게 답변하는 능력",
+        "5": "문맥을 이해하여 벡터를 출력하는 능력"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "In-Context Learning은 입력 데이터를 주고 다음에 관련 내용을 붙였을 때 해당 데이터를 바탕으로 답변하는 능력입니다. 예: '메뉴얼 가격과 함께 A 메뉴의 가격은?'이라고 입력 시 '3만 7천원이다'와 같이 답변"
+    },
+    {
+      "id": 89,
+      "question": "GPT-3의 'Few-Shot Learning' 능력에 대한 예시로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "긴 글 뒤에 TL;DR을 붙이면 요약을 만든다",
+        "2": "'쌍둥이:Twin, 독수리:Eagle, 사자:' 입력 시 패턴을 인식하여 '사자:Lion'이라고 답한다",
+        "3": "메뉴얼 가격을 참고하여 가격을 답변한다",
+        "4": "오늘이 무슨 요일인지 정확하게 답변한다",
+        "5": "문장의 긍정/부정을 Fine-tuning을 통해 학습한다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "Few-Shot Learning은 최소한의 데이터(예시)를 통해 패턴을 파악하여 답변하는 능력입니다. '쌍둥이:Twin, 독수리:Eagle' 같은 예시를 보고 '사자:Lion'이라는 패턴을 인식합니다."
+    },
+    {
+      "id": 90,
+      "question": "GPT-3의 한계점으로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "In-Context Learning 능력이 없다",
+        "2": "Few-Shot Learning 능력이 부족하다",
+        "3": "질의응답 능력이 부족하여 질문에 일관된 답변을 하지 못한다",
+        "4": "모델 크기가 너무 작아 성능이 낮다",
+        "5": "웹 텍스트 학습이 부족하다"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT-3는 In-Context Learning과 Few-Shot Learning 능력은 뛰어나지만, '오늘이 무슨 요일입니까?'와 같은 질문에 대해 질문을 이어 써야 하는지 답을 해야 하는지 혼동하여 일관된 답변을 하지 못하는 한계가 있었습니다."
+    },
+    {
+      "id": 91,
+      "question": "GPT-3.5 (ChatGPT)에서 GPT-3의 질의응답 능력 부족 문제를 개선하기 위해 사용한 학습 방법은?",
+      "points": 4,
+      "options": {
+        "1": "In-Context Learning + Few-Shot Learning",
+        "2": "SFT + RLHF",
+        "3": "MoE + Router",
+        "4": "Early Fusion + Multimodal",
+        "5": "Pretrain + Fine-tuning"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "GPT-3.5는 질의 응답 포맷 학습(SFT)과 강화 학습(RLHF)을 이용해 인간의 선호도를 반영하여 GPT-3의 질의응답 능력 부족 문제를 해결했습니다."
+    },
+    {
+      "id": 92,
+      "question": "Supervised Fine Tuning (SFT)에 대한 설명으로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "사람이 여러 답변 중 좋은 답변을 선택하여 라벨링한다",
+        "2": "질문과 답변 세트 포맷을 만들어 학습시킨다",
+        "3": "Reward Model을 학습시킨다",
+        "4": "인간의 선호도를 반영하여 강화학습을 진행한다",
+        "5": "여러 개의 FFN 중 일부만 활성화한다"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "SFT(Supervised Fine Tuning)는 '질문 + 답변 세트 포맷(User: ~ 답변: ~)'을 만들어 학습시키는 방법입니다. 정답이 있는 Fine-tuning으로, 답변이 일관성이 뛰어지게 됩니다."
+    },
+    {
+      "id": 93,
+      "question": "Reward Model 학습 과정에 대한 설명으로 옳지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "사람에게 질문에 대한 여러 답변을 제시하고 순위를 매기게 한다",
+        "2": "좋은 답변과 나쁜 답변을 판단하는 문제로 학습한다",
+        "3": "0(나쁜 답변) vs 1(좋은 답변)으로 라벨링한다",
+        "4": "바르고 유익한 말일수록 높은 점수를 주도록 학습시킨다",
+        "5": "질문과 답변 세트 포맷을 템플릿으로 만들어 학습시킨다"
+      },
+      "answer": 5,
+      "category": "Fine-tuning",
+      "explanation": "질문과 답변 세트 포맷 템플릿 학습은 SFT 단계입니다. Reward Model 학습은 사람이 라벨링한 순위 정보를 토대로 좋은 답변과 나쁜 답변을 판단하는 모델을 학습시키는 과정입니다."
+    },
+    {
+      "id": 94,
+      "question": "RLHF (Reinforcement Learning with Human Feedback)에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "질문과 답변 포맷을 학습시키는 방법",
+        "2": "LLM의 출력을 인간 선호도에 맞게 바꿔주는 강화학습",
+        "3": "좋은 답변과 나쁜 답변을 판단하는 모델을 학습하는 방법",
+        "4": "여러 개의 전문가 모델을 혼합하는 기법",
+        "5": "멀티모달 데이터를 초기에 융합하는 방법"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "RLHF는 Reward Model이 결과에 대해 인간의 선호도를 반영하여 평가하고, Reward 점수가 높은 방향으로 다시 학습하는 방식입니다. LLM의 출력을 인간 선호도에 맞게 바꿔주는 강화학습입니다."
+    },
+    {
+      "id": 95,
+      "question": "GPT-3.5 학습의 3단계 순서로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "RLHF → SFT → Reward Model",
+        "2": "SFT → RLHF → Reward Model",
+        "3": "Reward Model → SFT → RLHF",
+        "4": "SFT → Reward Model → RLHF",
+        "5": "Reward Model → RLHF → SFT"
+      },
+      "answer": 4,
+      "category": "Fine-tuning",
+      "explanation": "GPT-3.5는 Step 1: SFT(질문+답변 포맷 학습) → Step 2: Reward Model 학습 → Step 3: RLHF(인간 선호도 반영) 순서로 학습됩니다."
+    },
+    {
+      "id": 96,
+      "question": "RLHF 단계에서 '6살 아이한테 달 착륙에 대해 설명해주세요.'라는 요청에 대해 진행되는 프로세스 순서로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "질문 입력 → 답변 생성 → 사람이 순위 매김 → Reward 점수 계산",
+        "2": "질문 입력 → Policy 모델이 출력 생성 → Reward Model이 평가 → Reward 점수 높은 방향으로 학습",
+        "3": "질문 입력 → SFT 학습 → Reward Model 학습 → RLHF",
+        "4": "질문 입력 → 여러 답변 생성 → 사람이 라벨링 → Reward Model 학습",
+        "5": "질문 입력 → User/답변 포맷 생성 → 템플릿 학습 → 강화학습"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "RLHF 단계에서는 '새로운 프롬프트 샘플링 → Policy(모델)이 출력 생성 → Reward Model이 인간 선호도 반영하여 평가 → Reward 점수 높은 방향으로 다시 학습' 순서로 진행됩니다."
+    },
+    {
+      "id": 97,
+      "question": "GPT-3.5의 RLHF 부작용으로 언급된 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 시간이 과도하게 길어진다",
+        "2": "질의응답 능력이 감소한다",
+        "3": "Reward 학습으로 인해 객관성을 잃고 아첨을 하는 부작용이 생긴다",
+        "4": "In-Context Learning 능력이 저하된다",
+        "5": "메모리 사용량이 급격히 증가한다"
+      },
+      "answer": 3,
+      "category": "Fine-tuning",
+      "explanation": "GPT-3.5는 3단계를 거쳐 완성되었지만, Reward 학습으로 인해 객관성을 잃고 아첨을 하는 부작용이 생기는 문제가 있습니다."
+    },
+    {
+      "id": 98,
+      "question": "GPT-4에서 사용된 MoE (Mixture of Experts) 기법에 대한 설명으로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "Self-Attention 전체와 모든 MLP를 활성화한다",
+        "2": "Self-Attention은 공유하고 여러 개의 MLP 중 일부만 활성화한다",
+        "3": "Encoder와 Decoder를 혼합하여 사용한다",
+        "4": "텍스트와 이미지를 초기에 융합한다",
+        "5": "질문과 답변 포맷을 혼합하여 학습한다"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "GPT-4의 MoE 구조는 Self-Attention은 공유하고 여러 개의 MLP(FFN) 중 일부만 활성화하는 방식입니다."
+    },
+    {
+      "id": 99,
+      "question": "GPT-4의 MoE 구조에서 'Router'의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "질문과 답변을 라우팅한다",
+        "2": "여러 개의 FFN 지식 중에서 문제를 풀게 할 FFN을 결정하는 모듈",
+        "3": "Self-Attention의 가중치를 결정한다",
+        "4": "Reward 점수를 계산한다",
+        "5": "텍스트를 이미지로 변환한다"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "Router는 여러 개의 FFN 지식 중에서 문제를 풀게 할 FFN을 결정하는 모듈입니다. 예: 이탈리아어로 된 수학 문제가 입력될 경우 3번과 7번 FFN이 같이 문제를 풀도록 함"
+    },
+    {
+      "id": 100,
+      "question": "GPT-4의 MoE 기법의 장점으로 옳지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델은 크게 만들고 실제 필요한 계산량은 줄일 수 있다",
+        "2": "출력이 빠라진다",
+        "3": "적절한 배분이 쉬워 모델을 만들기 쉽다",
+        "4": "DeepSeekV2 등에서 개선된 구조로 계속 활용되고 있다",
+        "5": "여러 전문가 모델의 지식을 활용할 수 있다"
+      },
+      "answer": 3,
+      "category": "Transformer",
+      "explanation": "MoE 기법은 모델을 크게 만들면서도 계산량을 줄일 수 있어 출력이 빠르지만, 적절한 배분을 하기 어려워 모델을 만들기 어렵다는 단점이 있습니다."
+    },
+    {
+      "id": 101,
+      "question": "GPT-4o의 'o'가 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "Optimization",
+        "2": "Omnimodal",
+        "3": "Online",
+        "4": "Objective",
+        "5": "Output"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "GPT-4o의 'o'는 Omnimodal을 의미하며, 텍스트/이미지/오디오/비디오를 멀티미디어 토큰으로 변환하여 초기에 융합하여 학습하는 모델입니다."
+    },
+    {
+      "id": 102,
+      "question": "GPT-4와 GPT-4o의 주요 차이점은?",
+      "points": 4,
+      "options": {
+        "1": "GPT-4o는 MoE 기법을 사용하지 않는다",
+        "2": "GPT-4는 Vision Encoder를 사용하지만, GPT-4o는 Early Fusion 방식으로 이미지를 처리한다",
+        "3": "GPT-4o는 텍스트만 처리할 수 있다",
+        "4": "GPT-4는 RLHF를 사용하지 않는다",
+        "5": "GPT-4o는 한국어를 처리할 수 없다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "GPT-4는 Vision Encoder를 이용하여 이미지 인코딩 후 Projection layer를 거쳐 결합하지만, GPT-4o는 텍스트/이미지/오디오/비디오를 멀티미디어 토큰으로 변환하여 초기에 융합(Early Fusion)하는 방식을 사용합니다."
+    },
+    {
+      "id": 103,
+      "question": "GPT-4o의 'Any-to-Any 모델'이 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "어떤 언어든 번역할 수 있다",
+        "2": "텍스트/오디오/이미지 생성을 개별적으로 공개한다",
+        "3": "현재는 텍스트/오디오/이미지 생성 개별 공개되었지만, 궁극적으로는 다양한 입출력 형태를 지원한다",
+        "4": "모든 Task를 동시에 수행할 수 있다",
+        "5": "Fine-tuning 없이 모든 Task를 수행한다"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT-4o는 Any-to-Any 모델 형태를 지향하며, 현재는 텍스트/오디오/이미지 생성이 개별적으로 공개되었습니다."
+    },
+    {
+      "id": 104,
+      "question": "GPT-4o에서 개선된 토크나이저의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "영어 처리 속도가 빨라졌다",
+        "2": "한국어 등의 다국어 데이터 처리 속도가 대폭 증가했다",
+        "3": "토큰 수를 줄여 비용이 감소했다",
+        "4": "이미지 처리 속도가 빨라졌다",
+        "5": "메모리 사용량이 감소했다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "GPT-4o는 토크나이저 개선으로 한국어 등의 다국어 데이터 처리 속도가 대폭 증가했습니다."
+    },
+    {
+      "id": 105,
+      "question": "GPT-4에서 이미지를 처리할 때 필요한 구성요소가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "Vision Encoder",
+        "2": "Projection layer",
+        "3": "Router",
+        "4": "이미지 인코딩",
+        "5": "언어 모델의 벡터"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT-4는 Vision Encoder로 이미지 인코딩을 생성한 후, Projection layer를 거쳐 언어 모델의 벡터로 변환합니다. Router는 MoE 구조에서 사용되는 구성요소입니다."
+    },
+    {
+      "id": 106,
+      "question": "OpenAI o 시리즈의 주요 특징은?",
+      "points": 4,
+      "options": {
+        "1": "이미지 생성에 특화되어 있다",
+        "2": "질문이 주어지면 긴장하긴 출력을 통해 답을 생성하는 추론 전문 모델이다",
+        "3": "번역에 특화되어 있다",
+        "4": "MoE 기법을 사용한다",
+        "5": "Early Fusion 방식을 사용한다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "OpenAI o 시리즈는 질문이 주어지면 긴 추론 과정을 통해 답을 생성하는 추론 전문 모델입니다. 추론을 통해 어려운 문제도 잘 풀어냅니다."
+    },
+    {
+      "id": 107,
+      "question": "GPT-5의 특징으로 언급된 것은?",
+      "points": 4,
+      "options": {
+        "1": "가장 빠른 응답 속도를 갖추고 있다",
+        "2": "가장 적은 파라미터를 사용한다",
+        "3": "문제가 주어지면 Thinking을 광장히 많이 한 다음 답을 하며, 현존하는 모델 중 모든 분야에서 1등의 성능을 달성했다",
+        "4": "텍스트만 처리할 수 있다",
+        "5": "Fine-tuning이 필요하다"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "GPT-5는 문제가 주어지면 Thinking을 광장히 많이 한 다음 답을 하는 기장 최신 모델로, 현존하는 모델 중에 모든 분야에서 1등의 성능을 달성했습니다."
+    },
+    {
+      "id": 108,
+      "question": "Encoder 모델의 문장 이해력이 Decoder 모델보다 이론적으로 뛰어난 이유는?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 수가 더 많기 때문에",
+        "2": "양방향 맥락을 참고하기 때문에",
+        "3": "학습 데이터가 더 많기 때문에",
+        "4": "MoE 기법을 사용하기 때문에",
+        "5": "RLHF를 사용하기 때문에"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "Encoder는 양방향 맥락을 참고하고 Decoder는 단방향 맥락을 참고하므로, 이론적으로는 Encoder 모델의 문장 이해력이 더 뛰어납니다."
+    },
+    {
+      "id": 109,
+      "question": "Encoder 모델의 사용 방식이 제한적인 이유와 최근 Decoder 기반 모델이 주목받는 이유로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder 모델은 학습이 어렵고, Decoder 모델은 학습이 쉽다",
+        "2": "어느 정도의 파라미터가 주어지고 데이터를 충분히 학습하면 Decoder 모델도 높은 수준의 이해력을 갖게 되며, 다양한 언어 Task에 모두 활용 가능하다",
+        "3": "Encoder 모델은 비용이 많이 들고, Decoder 모델은 비용이 적게 든다",
+        "4": "Decoder 모델은 In-Context Learning이 가능하지만, Encoder 모델은 불가능하다",
+        "5": "Encoder 모델은 텍스트 생성이 불가능하지만, Decoder 모델은 가능하다"
+      },
+      "answer": 2,
+      "category": "Transformer",
+      "explanation": "Encoder 모델은 사용 방식이 제한적이지만, 어느 정도의 파라미터가 주어지고 데이터를 충분히 학습하면 Decoder 모델도 높은 수준의 이해력을 갖게 됩니다. 최근의 Decoder 기반 모델은 다양한 언어 Task에 모두 활용 가능합니다."
+    },
+    {
+      "id": 110,
+      "question": "Foundation Model의 구성 요소로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "Encoder + Decoder",
+        "2": "Pretrain + Fine-tuning",
+        "3": "SFT + RLHF",
+        "4": "In-Context Learning + Few-Shot Learning",
+        "5": "Self-Attention + MLP"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "Foundation Model은 Pretrain(사전학습)과 Fine-tuning(추가학습)으로 구성됩니다."
+    },
+    {
+      "id": 111,
+      "question": "GPT 시리즈의 파라미터 수 발전 순서로 옳은 것은?",
+      "points": 4,
+      "options": {
+        "1": "0.1B → 1.5B → 175B → 1760B",
+        "2": "1B → 15B → 175B → 1760B",
+        "3": "0.1B → 15B → 1.75B → 176B",
+        "4": "1B → 1.5B → 17.5B → 176B",
+        "5": "0.1B → 1.5B → 17.5B → 1760B"
+      },
+      "answer": 1,
+      "category": "LLM 기초",
+      "explanation": "GPT 시리즈의 파라미터 수는 GPT-1: 0.1B → GPT-2: 1.5B → GPT-3: 175B → GPT-4: 1760B 순서로 증가했습니다."
+    },
+    {
+      "id": 112,
+      "question": "GPT-2에서 TL;DR이 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "Translation Learning: Deep Reading",
+        "2": "Too Long: Didn't Read",
+        "3": "Text Language: Direct Response",
+        "4": "Training Large: Data Requirements",
+        "5": "Token Length: Data Reduction"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "TL;DR은 'Too Long: Didn't Read'의 약자로, GPT-2는 긴 글 뒤에 TL;DR을 붙이면 요약을 만드는 기능을 갖추게 되었습니다."
+    },
+    {
+      "id": 113,
+      "question": "GPT-3.5 학습 과정에서 Step 1(SFT)의 목적으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "좋은 답변과 나쁜 답변을 구분한다",
+        "2": "인제 질문에 답을 해야 할지 이해하고, 질문에 대한 답변 타이밍을 템플릿으로 만들어 학습시킨다",
+        "3": "인간의 선호도를 반영한다",
+        "4": "Reward 점수를 계산한다",
+        "5": "여러 전문가 모델을 혼합한다"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "SFT 단계에서는 '질문에 답을 해야 할지 이해를 하지 못함'을 해결하기 위해 질문에 대한 답변 타이밍을 'User: ~ 답변: ~' 템플릿으로 만들어 학습시킵니다."
+    },
+    {
+      "id": 114,
+      "question": "Reward Model 학습에서 4개의 답변(A: 중력 설명, B: 진짜 설명, C: 달은 지구의 위성, D: 사람들이 달에 가서 사진)에 대해 사람이 A→B→D→C 순으로 평가했을 때, 좋은 답변(1)으로 분류되는 것은?",
+      "points": 4,
+      "options": {
+        "1": "A, C",
+        "2": "B, D",
+        "3": "A, B",
+        "4": "C, D",
+        "5": "A, D"
+      },
+      "answer": 3,
+      "category": "Fine-tuning",
+      "explanation": "Reward Model 학습에서는 순위가 높은 답변(A, B)을 1(좋은 답변)로, 순위가 낮은 답변(D, C)을 0(나쁜 답변)으로 라벨링하여 학습합니다."
+    },
+    {
+      "id": 115,
+      "question": "GPT-4o에서 'Early Fusion'의 의미로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 초기에 데이터를 혼합한다",
+        "2": "텍스트/이미지/오디오/비디오를 멀티미디어 토큰으로 변환하여 초기에 융합한다",
+        "3": "Encoder와 Decoder를 초기에 결합한다",
+        "4": "여러 모델을 초기에 병합한다",
+        "5": "SFT와 RLHF를 동시에 진행한다"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "GPT-4o의 Early Fusion은 텍스트/이미지/오디오/비디오를 멀티미디어 토큰으로 변환하여 초기에 융합하는 방식을 의미합니다."
+    },
+    {
+      "id": 116,
+      "question": "OpenAI o3-pro가 다른 모델보다 뛰어난 분야로 언급된 것은?",
+      "points": 4,
+      "options": {
+        "1": "이미지 생성",
+        "2": "질문이 주어지면 긴장하긴 출력을 통해 답을 생성하여 추론을 통해 어려운 문제도 잘 풀어냄",
+        "3": "번역",
+        "4": "요약",
+        "5": "감정 분석"
+      },
+      "answer": 2,
+      "category": "LLM 기초",
+      "explanation": "OpenAI o 시리즈는 질문이 주어지면 긴 추론 과정을 통해 답을 생성하는 모델로, 추론을 통해 어려운 문제도 잘 풀어냅니다."
+    },
+    {
+      "id": 117,
+      "question": "다음 중 GPT-3.5 학습의 Step 2(Reward Model 학습)에 해당하는 설명은?",
+      "points": 4,
+      "options": {
+        "1": "질문과 답변 세트 포맷을 만들어 학습시킨다",
+        "2": "사람에게 질문에 대한 좋은 답변이 무엇인지 라벨링하게 하여 Reward Model을 학습시킨다",
+        "3": "Reward 점수가 높은 방향으로 다시 학습한다",
+        "4": "User: ~ 답변: ~ 템플릿을 만든다",
+        "5": "새로운 프롬프트를 샘플링한다"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "Step 2는 사람에게 질문에 대한 여러 답변을 제시하고 순위를 매기게 하여, 좋은 답변과 나쁜 답변을 판단하는 Reward Model을 학습시키는 단계입니다."
+    },
+    {
+      "id": 118,
+      "question": "RLHF 단계에서 Policy의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "좋은 답변을 선택한다",
+        "2": "모델이 출력을 생성한다",
+        "3": "답변의 순위를 매긴다",
+        "4": "질문을 분석한다",
+        "5": "데이터를 전처리한다"
+      },
+      "answer": 2,
+      "category": "Fine-tuning",
+      "explanation": "RLHF 단계에서 Policy는 모델을 의미하며, 새로운 프롬프트에 대해 출력을 생성하는 역할을 합니다."
+    },
+    {
+      "id": 119,
+      "question": "GPT-4의 MoE 구조에서 'p=0.65'와 'p=0.8'이 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습률",
+        "2": "정확도",
+        "3": "FFN 선택 확률 또는 가중치",
+        "4": "드롭아웃 비율",
+        "5": "배치 크기"
+      },
+      "answer": 3,
+      "category": "Transformer",
+      "explanation": "MoE 구조에서 p값은 Router가 특정 FFN을 선택하는 확률 또는 가중치를 나타냅니다. 예: p=0.65인 왼쪽 그룹과 p=0.8인 오른쪽 그룹"
+    },
+    {
+      "id": 120,
+      "question": "현재 LLM 성능 평가에서 1위를 유지하고 있는 모델 계열은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Gemini 계열",
+        "2": "Claude 계열",
+        "3": "GPT 계열",
+        "4": "Llama 계열",
+        "5": "Qwen 계열"
+      },
+      "answer": 3,
+      "category": "LLM 성능 현황",
+      "explanation": "GPT 계열 모델이 성능 1위를 유지하고 있으며, GPT-5는 최고 성능 유지 중입니다. Gemini 2.5 Pro, Claude 4.1, Grok 4 등도 Top 10 안에 위치하지만 GPT가 선두를 지키고 있습니다."
+    },
+    {
+      "id": 121,
+      "question": "다음 중 Artificial Analysis Intelligence Index에서 가장 높은 점수를 기록한 모델은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-5(High) - 69점",
+        "2": "Gemini 2.5 Pro - 65점",
+        "3": "Claude 4.1 - 61점",
+        "4": "Grok 4 - 68점",
+        "5": "Qwen3 - 64점"
+      },
+      "answer": 1,
+      "category": "LLM 성능 현황",
+      "explanation": "GPT-5(High)가 69점으로 가장 높은 Intelligence Index를 기록했습니다. 그 다음으로 GPT-5(Medium), Grok 4, O3-Pro가 68점을 기록했습니다."
+    },
+    {
+      "id": 122,
+      "question": "Context Window가 가장 큰 모델은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-5 - 400k",
+        "2": "Gemini 2.5 Pro - 1m",
+        "3": "Claude 4.1 - 200k",
+        "4": "Grok 4 - 256k",
+        "5": "Qwen3 - 256k"
+      },
+      "answer": 2,
+      "category": "LLM 성능 현황",
+      "explanation": "Gemini 2.5 Pro는 1M(100만) 토큰의 컨텍스트 윈도우를 제공하여 가장 큰 컨텍스트 윈도우를 가지고 있습니다. GPT-5는 400k, Claude 4.1과 O3-Pro는 200k 토큰을 지원합니다."
+    },
+    {
+      "id": 123,
+      "question": "상용 모델(Proprietary Model)의 특징으로 적합하지 않은 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "기술적으로 공개 안 됨",
+        "2": "다운로드 불가",
+        "3": "API를 통해서만 사용 가능",
+        "4": "GPU만 있으면 직접 사용 가능",
+        "5": "GPT, Claude, Gemini 등이 해당"
+      },
+      "answer": 4,
+      "category": "모델 구분",
+      "explanation": "GPU만 있으면 직접 사용 가능한 것은 오픈 모델의 특징입니다. 상용 모델은 기술이 공개되지 않으며, API를 통해서만 사용할 수 있습니다."
+    },
+    {
+      "id": 124,
+      "question": "오픈 모델(Open Model)의 예시로 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT, Claude, Gemini",
+        "2": "Llama, Mistral, Qwen",
+        "3": "GPT, Llama, Claude",
+        "4": "Gemini, Qwen, GPT",
+        "5": "Claude, Mistral, Gemini"
+      },
+      "answer": 2,
+      "category": "모델 구분",
+      "explanation": "Llama, Mistral, Qwen은 대표적인 오픈소스 모델입니다. GPU만 있으면 직접 사용 가능하며 파라미터가 공개되어 있습니다."
+    },
+    {
+      "id": 125,
+      "question": "OpenAI의 실험 모델이 달성한 성과로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "정보 올림피아드 금메달 획득",
+        "2": "국제 수학 올림피아드(IMO) 문제를 풀어 금메달급 점수 달성",
+        "3": "물리 올림피아드 은메달 획득",
+        "4": "화학 올림피아드 동메달 획득",
+        "5": "생물 올림피아드 참가"
+      },
+      "answer": 2,
+      "category": "OpenAI 성과",
+      "explanation": "OpenAI의 모델은 국제 수학 올림피아드(IMO) 문제를 풀어서 금메달급 점수를 달성했습니다. 금메달을 실제로 딴 것은 아니지만, 채점 결과 금메달 수준의 점수가 나왔습니다."
+    },
+    {
+      "id": 126,
+      "question": "OpenAI 모델이 IMO 금메달급 성과 이후 추가로 달성한 성과는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "물리 올림피아드 1등",
+        "2": "화학 올림피아드 2등",
+        "3": "정보 올림피아드에서 6등 성적 기록",
+        "4": "생물 올림피아드 3등",
+        "5": "언어 올림피아드 5등"
+      },
+      "answer": 3,
+      "category": "OpenAI 성과",
+      "explanation": "IMO 금메달급 이후, OpenAI 모델은 정보 올림피아드에서 6등 성적을 기록했습니다. 이는 LLM이 해결 가능한 문제 범위와 난이도가 급격히 확장되고 있음을 보여줍니다."
+    },
+    {
+      "id": 127,
+      "question": "OpenAI의 IMO 문제 풀이가 벤치마크로서 의미 있는 이유는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "문제가 매우 쉬워서",
+        "2": "IMO 문제는 모델 학습 시기와 겹치지 않아 '커닝이 아님'을 증명할 수 있음",
+        "3": "모델이 문제를 미리 학습했기 때문에",
+        "4": "IMO 문제가 공개되어 있어서",
+        "5": "다른 모델들도 모두 풀 수 있어서"
+      },
+      "answer": 2,
+      "category": "OpenAI 성과",
+      "explanation": "IMO 문제는 모델 학습 시기와 겹치지 않기 때문에 '벤치마크는 커닝이 아닐'을 증명할 수 있는 좋은 사례입니다. 과거 Gemini 모델들이 온레벨급 성능을 기록한 적이 있습니다."
+    },
+    {
+      "id": 128,
+      "question": "OpenAI PaperBench에서 Agent가 수행하는 작업이 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "논문을 읽고 직접 코드 구현",
+        "2": "코드가 없어도 내용을 바탕으로 코드 작성",
+        "3": "실행 및 결과 검증",
+        "4": "사람이 작성한 코드를 복사",
+        "5": "얼마나 잘 벤치마크인지 평가"
+      },
+      "answer": 4,
+      "category": "OpenAI 성과",
+      "explanation": "PaperBench에서 Agent는 논문을 읽고 직접 코드를 구현합니다. 코드가 없어도 내용을 바탕으로 작성하며, 실행 및 결과를 검증합니다. 사람이 작성한 코드를 복사하는 것은 Agent의 작업이 아닙니다."
+    },
+    {
+      "id": 129,
+      "question": "당시 최고 모델 Claude 3.5 Sonnet이 PaperBench에서 달성한 점수는 얼마입니까?",
+      "points": 4,
+      "options": {
+        "1": "10% (100점 만점 기준)",
+        "2": "28% (100점 만점 기준)",
+        "3": "50% (100점 만점 기준)",
+        "4": "75% (100점 만점 기준)",
+        "5": "90% (100점 만점 기준)"
+      },
+      "answer": 2,
+      "category": "OpenAI 성과",
+      "explanation": "당시 최고 모델인 Claude 3.5 Sonnet은 PaperBench에서 28% 점수를 달성했습니다(100점 만점 기준). 현재 모델들은 성능이 향상되어 더 많은 논문을 복제할 수 있습니다."
+    },
+    {
+      "id": 130,
+      "question": "Sakana AI를 세운 사람은 누구입니까?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI CEO",
+        "2": "Google CEO",
+        "3": "Transformer 저자 중 1명",
+        "4": "Meta CEO",
+        "5": "Microsoft CEO"
+      },
+      "answer": 3,
+      "category": "Sakana AI",
+      "explanation": "Sakana AI는 Transformer 저자 중 1명이 세운 회사입니다. 아이디어 생성부터 실험, 논문 작성까지 자동화 가능한 모델을 공개했습니다."
+    },
+    {
+      "id": 131,
+      "question": "Sakana AI가 25달러 수준으로 워크샵 페이퍼(3페이지) 3편을 제출했을 때, Accept된 논문의 점수는 얼마입니까?",
+      "points": 4,
+      "options": {
+        "1": "5.00/10",
+        "2": "6.76/10",
+        "3": "7.50/10",
+        "4": "8.20/10",
+        "5": "9.00/10"
+      },
+      "answer": 2,
+      "category": "Sakana AI",
+      "explanation": "Sakana AI는 25달러 수준으로 워크샵 페이퍼 3편을 제출하여 1편이 Accept되었으며, 점수는 6.76/10을 받았습니다. 이는 플페이퍼 수준 연구 자동화의 가능성을 시사합니다."
+    },
+    {
+      "id": 132,
+      "question": "Google의 AlphaEvolve 프로젝트가 사용하는 기반 모델은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT 기반",
+        "2": "Claude 기반",
+        "3": "Gemini 기반",
+        "4": "Llama 기반",
+        "5": "Qwen 기반"
+      },
+      "answer": 3,
+      "category": "Sakana AI",
+      "explanation": "Google의 AlphaEvolve 프로젝트는 Gemini 기반 코딩 에이전트를 활용합니다. 스스로 알고리즘을 작성하고 계산을 수행하며, 데이터센터 코드 스케줄링, TPU 칩 설계 변경, LLM 학습 코드 작성 등을 수행합니다."
+    },
+    {
+      "id": 133,
+      "question": "Chat GPT의 3년 전 성능과 현재 성능을 비교한 설명으로 적합하지 않은 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "3년 전: Human Eval 같은 쉬운 코딩 문제에서 50~60점 수준",
+        "2": "3년 전: 초등 수준의 수학 문제만 해결",
+        "3": "현재: Human Eval에서 99점으로 거의 다 맞는 수준",
+        "4": "현재: 올림피아드 수준까지 발전한 수학 문제 해결",
+        "5": "현재: 여전히 초등 수준의 문제만 해결 가능"
+      },
+      "answer": 5,
+      "category": "LLM 발전",
+      "explanation": "현재 Chat GPT는 올림피아드 수준까지 발전한 수학 문제를 해결할 수 있습니다. 3년 전에는 초등 수준의 문제만 해결했지만, 현재는 경쟁하는 입장이 되어 99점으로 거의 다 맞는 수준에 도달했습니다."
+    },
+    {
+      "id": 134,
+      "question": "코딩 영역까지 확장된 LLM의 대표적 도구가 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Claude Code",
+        "2": "Cursor AI",
+        "3": "Codex",
+        "4": "GitHub Copilot",
+        "5": "Microsoft Word"
+      },
+      "answer": 5,
+      "category": "LLM 발전",
+      "explanation": "Microsoft Word는 코딩 도구가 아닙니다. Claude Code, Cursor AI, Codex, GitHub Copilot 등이 대표적인 LLM 기반 코딩 도구입니다. Cursor AI는 출시 한 달 만에 기업가치 1조 원을 연금할 정도의 폭발적 인기를 얻었습니다."
+    },
+    {
+      "id": 135,
+      "question": "Cursor AI가 출시 한 달 만에 달성한 기업가치는 얼마입니까?",
+      "points": 4,
+      "options": {
+        "1": "1천억 원",
+        "2": "5천억 원",
+        "3": "1조 원",
+        "4": "5조 원",
+        "5": "10조 원"
+      },
+      "answer": 3,
+      "category": "LLM 발전",
+      "explanation": "Cursor AI는 출시 한 달 만에 기업가치 1조 원을 연금할 정도의 폭발적 인기를 얻었습니다. 이는 코딩이 핵심 영역이 되면서 개발자의 업무 상당 부분이 대체 가능한 수준에 도달했음을 보여줍니다."
+    },
+    {
+      "id": 136,
+      "question": "Project Vend에서 Claude가 관리한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "레스토랑 경영",
+        "2": "냉장고 판매 관리",
+        "3": "호텔 관리",
+        "4": "슈퍼마켓 관리",
+        "5": "자동차 판매"
+      },
+      "answer": 2,
+      "category": "Project Vend",
+      "explanation": "Project Vend는 앤트로픽의 실험으로, Claude에게 냉장고 판매 관리를 맡겼습니다. 장부, 웹 검색, 공급업체 연락, 이메일 등 분야에서 운영했습니다."
+    },
+    {
+      "id": 137,
+      "question": "Project Vend에서 Claude가 발생시킨 문제가 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "직원 요청에 휘둘러서 할인 남발",
+        "2": "원가 이하 판매",
+        "3": "고객의 80%가 직원인데도 할인",
+        "4": "웹 검색으로 특정 초코우유를 찾아 주문",
+        "5": "매출이 지속적으로 증가"
+      },
+      "answer": 4,
+      "category": "Project Vend",
+      "explanation": "웹 검색으로 특정 초코우유를 찾아 주문한 것은 잘한 사례입니다. 문제는 직원 요청에 휘둘려 할인을 남발하고, 원가 이하 판매를 하는 등의 경영상 오류를 범한 것입니다."
+    },
+    {
+      "id": 138,
+      "question": "Project Vend가 시사하는 바로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "LLM은 완벽하게 경영을 할 수 있다",
+        "2": "LLM은 모든 업무를 대체할 수 있다",
+        "3": "뛰어난 LLM도 현실 세계 문제 해결은 아직 한계가 있음",
+        "4": "LLM은 항상 실패한다",
+        "5": "LLM은 사용해서는 안 된다"
+      },
+      "answer": 3,
+      "category": "Project Vend",
+      "explanation": "Project Vend는 초반에 성과가 있었지만, 이후 직원 요청에 휘둘려 할인 남발, 원가 이하 판매 같은 문제가 발생했습니다. 이는 뛰어난 LLM도 현실 세계 문제 해결은 아직 한계가 있음을 보여줍니다."
+    },
+    {
+      "id": 139,
+      "question": "2024년 7월 이후 오픈소스 모델 성능 격차가 빠르게 축소된 계기는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-5 공개",
+        "2": "Llama 3 공개",
+        "3": "Claude 4 공개",
+        "4": "Gemini 2 공개",
+        "5": "Grok 4 공개"
+      },
+      "answer": 2,
+      "category": "오픈 모델 생태계",
+      "explanation": "2024년 7월 Llama 3가 공개된 이후 성능 격차가 빠르게 축소되었습니다. O1과 DeepSeek 등장으로 순위 변동이 반복되는 양상을 보이고 있습니다."
+    },
+    {
+      "id": 140,
+      "question": "GPU만 있으면 개인이 실행 가능한 모델 수준은 어느 정도입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-3 수준",
+        "2": "GPT-4 수준",
+        "3": "GPT-5 Mini급",
+        "4": "GPT-5 High급",
+        "5": "실행 불가능"
+      },
+      "answer": 3,
+      "category": "오픈 모델 생태계",
+      "explanation": "GPU만 있으면 GPT-5 Mini급 모델도 개인이 실행 가능합니다. 상위권 성능은 여전히 프론티어 모델(OpenAI, Google 등 상용)이 차지하고 있습니다."
+    },
+    {
+      "id": 141,
+      "question": "파라미터(Parameter)의 정의로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "모델의 학습 속도",
+        "2": "모델이 가진 변수 개수",
+        "3": "모델의 메모리 용량",
+        "4": "모델의 학습 데이터 양",
+        "5": "모델의 출력 속도"
+      },
+      "answer": 2,
+      "category": "오픈 모델 생태계",
+      "explanation": "파라미터는 모델이 가진 변수의 개수입니다. 예를 들어, 32비트 실수 데이터 1개는 0.1B 모델, 실수 데이터 20억 개는 2B 모델입니다. 대부분 실제 활용 모델은 16비트 기준이라 사이즈가 절반 수준으로 이해해야 합니다."
+    },
+    {
+      "id": 142,
+      "question": "오픈 모델의 장점이 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "프라이버시: 민감 데이터 보안을 문제없이 처리 가능",
+        "2": "비용: API 호출 비용 절약, 예측 가능한 비용 구조",
+        "3": "파인튜닝 가능: 특수 목적/데이터에 맞춰 맞춤형 모델 제작 가능",
+        "4": "GPU, 계산량, 비용이 적게 듦",
+        "5": "내부망, 온디바이스 등 다양한 환경에 최적화 가능"
+      },
+      "answer": 4,
+      "category": "오픈 모델 생태계",
+      "explanation": "GPU, 계산량, 비용이 많이 드는 것은 오픈 모델의 단점입니다. 장점은 프라이버시 보호, API 호출 비용 절약, 파인튜닝 가능성, 다양한 환경 최적화 등입니다."
+    },
+    {
+      "id": 143,
+      "question": "상업적 이용이 가능한 오픈 모델이 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Qwen3 (아파치 라이선스)",
+        "2": "DeepSeek Phi-4 (MIT 라이선스)",
+        "3": "Gemma3 (부분적 이용 가능)",
+        "4": "Llama3·4 (부분적 이용 가능)",
+        "5": "EXAONE"
+      },
+      "answer": 5,
+      "category": "오픈 모델 생태계",
+      "explanation": "EXAONE은 상업적 이용이 불가능합니다. Qwen3은 아파치 라이선스, DeepSeek Phi-4는 MIT 라이선스로 상업적 이용이 가능하며, Gemma3와 Llama3·4는 부분적 이용이 가능합니다."
+    },
+    {
+      "id": 144,
+      "question": "Llama 1의 주요 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "멀티모달 기능 지원",
+        "2": "오픈데이터만으로 고성능 지향 모델로 등장",
+        "3": "경량화(SLM) 모델",
+        "4": "405B 초대형 모델",
+        "5": "컨텍스트 윈도우 10M 지원"
+      },
+      "answer": 2,
+      "category": "Llama",
+      "explanation": "Llama 1은 오픈데이터만으로 고성능을 지향하는 모델로 등장했습니다. 데이터 레시피(책/코드 비율 등)를 공개해 참고자료로 가치가 컸습니다."
+    },
+    {
+      "id": 145,
+      "question": "Llama 3에서 공개된 모델 크기가 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "8B",
+        "2": "70B",
+        "3": "405B",
+        "4": "1B",
+        "5": "이후 3.1에서 추가된 모든 크기"
+      },
+      "answer": 4,
+      "category": "Llama",
+      "explanation": "Llama 3에서는 8B·70B가 공개되었고, 이후 3.1에서 8B·70B·405B가 추가되었습니다. 1B는 Llama 3.2의 경량화(SLM) 라인에서 공개되었습니다."
+    },
+    {
+      "id": 146,
+      "question": "Llama 3.2에서 새롭게 추가된 기능은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "405B 초대형 모델",
+        "2": "경량화(SLM) 라인 1B·3B 추가 및 멀티모달 버전 공개",
+        "3": "컨텍스트 윈도우 10M 지원",
+        "4": "70B가 405B급 성능",
+        "5": "GPT-4급 성능"
+      },
+      "answer": 2,
+      "category": "Llama",
+      "explanation": "Llama 3.2에서는 경량화(SLM) 라인 1B·3B가 추가되었고, 8B·70B에 4B·20B 비전 레이어를 붙인 멀티모달 버전도 공개되었습니다."
+    },
+    {
+      "id": 147,
+      "question": "Llama 3.3의 주요 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "1B·3B 경량화 모델 추가",
+        "2": "70B가 405B급 성능으로 소형화·효율 최적화 성과 시사",
+        "3": "컨텍스트 윈도우 10M 지원",
+        "4": "멀티모달 기능 추가",
+        "5": "GPT-5 성능 달성"
+      },
+      "answer": 2,
+      "category": "Llama",
+      "explanation": "Llama 3.3에서는 70B가 405B급 성능을 보인다고 보고되어, 소형화·효율 최적화 성과를 시사했습니다."
+    },
+    {
+      "id": 148,
+      "question": "Llama 4에서 화제가 된 기능과 그 결과로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "컨텍스트 윈도우 10M 공개로 화제 → 실제 벤치마크 성능 우수",
+        "2": "컨텍스트 윈도우 10M 공개로 화제 → 실제 벤치마크 성능 저조, 사용량 감소",
+        "3": "405B 모델 공개 → 성능 우수",
+        "4": "1B 모델 공개 → 경량화 성공",
+        "5": "멀티모달 기능 → 이미지 인식 성능 우수"
+      },
+      "answer": 2,
+      "category": "Llama",
+      "explanation": "Llama 4는 컨텍스트 윈도우 10M 공개로 화제가 되었지만, 실제 벤치마크 성능이 저조하여 사용량이 감소했습니다. 이후 메타는 초지능 팀을 꾸려 차기 모델을 준비 중입니다."
+    },
+    {
+      "id": 149,
+      "question": "Microsoft Phi 시리즈의 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "국내에서 매우 인기가 많음",
+        "2": "합성 데이터를 많이 활용",
+        "3": "GPU 없이도 사용 가능",
+        "4": "한국어 성능이 매우 우수",
+        "5": "상용 모델로만 제공"
+      },
+      "answer": 2,
+      "category": "Microsoft Phi",
+      "explanation": "Microsoft Phi 시리즈는 합성 데이터를 많이 활용하는 것이 특징입니다. 국내 인지도는 낮지만 해외에서 인기가 있으며, AWS를 통해 바로 사용 가능하고, 오픈소스 형태로 공개되어 있습니다."
+    },
+    {
+      "id": 150,
+      "question": "Microsoft Phi 시리즈에서 '합성 데이터'의 활용 방식으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "사람이 직접 작성한 데이터만 사용",
+        "2": "선대 LLM이 생성한 데이터를 사용하여 파인튜닝",
+        "3": "인터넷에서 크롤링한 데이터만 사용",
+        "4": "책에서 추출한 데이터만 사용",
+        "5": "음성 데이터로 학습"
+      },
+      "answer": 2,
+      "category": "Microsoft Phi",
+      "explanation": "합성 데이터는 선대 LLM이 생성한 데이터를 사용합니다. 예를 들어 '감기 증상?' / '감기약 종류?'를 물어보고 LLM 답변을 활용합니다. 생성 데이터를 정화하면 파인튜닝을 통해 다른 모델에 지식을 전이할 수 있습니다."
+    },
+    {
+      "id": 151,
+      "question": "Microsoft Phi 시리즈의 장점과 단점으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "장점: 한국어 성능 우수 / 단점: 사이즈가 너무 큼",
+        "2": "장점: 사이즈 대비 성능 우수 / 단점: 한국어 성능 부족",
+        "3": "장점: GPU 불필요 / 단점: 영어 성능 부족",
+        "4": "장점: 무료 사용 / 단점: 상용화 불가",
+        "5": "장점: 멀티모달 지원 / 단점: 코딩 성능 부족"
+      },
+      "answer": 2,
+      "category": "Microsoft Phi",
+      "explanation": "Microsoft Phi 시리즈의 장점은 사이즈 대비 성능이 우수하다는 것이고, 단점은 한국어 성능이 부족하다는 것입니다(1~4 공통 문제). Phi 4는 한국어 사용이 가능하지만 토큰 효율이 낮습니다."
+    },
+    {
+      "id": 152,
+      "question": "Microsoft Phi 시리즈의 모델 크기가 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "3.8B",
+        "2": "7B",
+        "3": "14B",
+        "4": "70B",
+        "5": "위의 모든 크기가 존재함"
+      },
+      "answer": 4,
+      "category": "Microsoft Phi",
+      "explanation": "Microsoft Phi 시리즈는 3.8B, 7B, 14B 등 상대적으로 작은 규모로 구성되어 있습니다. 70B는 Phi 시리즈에 없는 크기입니다. 14B 모델도 양자화하면 충분히 실사용이 가능합니다."
+    },
+    {
+      "id": 153,
+      "question": "Alibaba Qwen 시리즈의 가장 큰 특징은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "가장 빠른 속도",
+        "2": "가장 큰 파라미터",
+        "3": "현존 가장 다국어 처리 잘하는 모델",
+        "4": "가장 저렴한 비용",
+        "5": "가장 작은 모델 크기"
+      },
+      "answer": 3,
+      "category": "Alibaba Qwen",
+      "explanation": "Alibaba Qwen 시리즈는 현존 가장 다국어 처리를 잘하는 모델입니다. 초기부터 멀티링구얼 모델을 표방하여 언어별 최적화된 토크나이저 설계, 데이터 균형 잡은 학습, 언어 전문가의 직접 평가 참여 등을 통해 성능을 검증했습니다."
+    },
+    {
+      "id": 154,
+      "question": "Qwen 3 30B 모델의 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "실제 활성화는 30B 수준",
+        "2": "실제 활성화는 3B 수준, 속도는 3B 모델 수준, 성능은 30B 모델 수준",
+        "3": "실제 활성화는 70B 수준",
+        "4": "속도가 매우 느림",
+        "5": "성능이 3B 수준"
+      },
+      "answer": 2,
+      "category": "Alibaba Qwen",
+      "explanation": "Qwen 3 30B 모델은 실제 활성화는 3B 수준이지만, 속도는 3B 모델 수준이고 성능은 30B 모델 수준입니다. 이는 효율성과 성능을 동시에 챙긴 설계입니다."
+    },
+    {
+      "id": 155,
+      "question": "Qwen 모델의 Tie Embedding이 'Yes'인 모델 크기 범위는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "0.5B~3B",
+        "2": "7B 이상",
+        "3": "14B 이상",
+        "4": "32B 이상",
+        "5": "모든 크기"
+      },
+      "answer": 1,
+      "category": "Alibaba Qwen",
+      "explanation": "Qwen 모델에서 Tie Embedding이 'Yes'인 범위는 0.5B~3B(초기 버전) 또는 0.6B~4B(Qwen3)입니다. 7B 이상의 모델은 Tie Embedding이 'No'입니다."
+    },
+    {
+      "id": 156,
+      "question": "Qwen 시리즈의 Context Length로 적합하지 않은 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "32K",
+        "2": "8K",
+        "3": "128K",
+        "4": "256K",
+        "5": "모두 적합함"
+      },
+      "answer": 4,
+      "category": "Alibaba Qwen",
+      "explanation": "Qwen 시리즈는 32K/8K(초기 버전) 또는 32K/128K(Qwen3)의 Context Length를 지원합니다. 256K는 Qwen 시리즈의 Context Length가 아닙니다."
+    },
+    {
+      "id": 157,
+      "question": "GPT-OSS-125B(High) 모델의 Intelligence Index는 얼마입니까?",
+      "points": 4,
+      "options": {
+        "1": "69",
+        "2": "68",
+        "3": "65",
+        "4": "63",
+        "5": "61"
+      },
+      "answer": 5,
+      "category": "LLM 성능 현황",
+      "explanation": "GPT-OSS-125B(High)는 Intelligence Index 61점을 기록했습니다. 이는 Claude 4.1 Opus Thinking과 같은 점수입니다."
+    },
+    {
+      "id": 158,
+      "question": "다음 중 오픈소스 버전 모델로 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-5",
+        "2": "Claude 4.1",
+        "3": "Gemini 2.5 Pro",
+        "4": "GPT-OSS-125B",
+        "5": "O3-Pro"
+      },
+      "answer": 4,
+      "category": "모델 구분",
+      "explanation": "GPT-OSS-125B는 'OSS(Open Source Software)'라는 이름에서 알 수 있듯이 오픈소스 버전 모델입니다. GPT-5, Claude 4.1, Gemini 2.5 Pro, O3-Pro는 모두 상용 모델입니다."
+    },
+    {
+      "id": 159,
+      "question": "Llama 시리즈에서 참고 문서로 가장 유명한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Llama 1 테크 리포트",
+        "2": "Llama 2 테크 리포트",
+        "3": "Llama 3 테크 리포트",
+        "4": "Llama 4 테크 리포트",
+        "5": "모든 테크 리포트가 동일하게 유명"
+      },
+      "answer": 3,
+      "category": "Llama",
+      "explanation": "Llama 3 테크 리포트가 참고 문서로 가장 유명합니다. 메타는 어텐션 계산/데이터 파이프라인 등 방법론도 다수 제안했습니다."
+    },
+    {
+      "id": 160,
+      "question": "Qwen3 모델의 크기와 구조에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Qwen3는 Dense 모델만 제공한다",
+        "2": "모델 크기는 레이어 개수와 밀접하게 연관된다",
+        "3": "모델 크기가 커질수록 레이어 수는 감소한다",
+        "4": "Qwen3는 MOE 모델만 제공한다",
+        "5": "모든 Qwen3 모델은 동일한 레이어 수를 가진다"
+      },
+      "answer": 2,
+      "category": "Alibaba Qwen Series",
+      "explanation": "Qwen3는 Dense 모델과 MOE(Mixture of Experts) 모델을 모두 보유하고 있으며, 모델 크기가 커질수록 레이어 개수가 증가한다. 예를 들어 0.6B 모델은 28개 레이어를 가지고, 더 큰 모델로 갈수록 36개, 40개, 64개 등으로 레이어 수가 증가한다."
+    },
+    {
+      "id": 161,
+      "question": "Transformer 장점으로 인해 Qwen3에서 가능한 것은?",
+      "points": 4,
+      "options": {
+        "1": "스택을 쌓아 성능 향상이 가능하다",
+        "2": "레이어 수를 줄여도 성능이 향상된다",
+        "3": "Attention 메커니즘 없이 동작 가능하다",
+        "4": "MLP 레이어가 필요 없다",
+        "5": "고정된 레이어 수로만 구성된다"
+      },
+      "answer": 1,
+      "category": "Alibaba Qwen Series",
+      "explanation": "Transformer 구조는 Attention + MLP 구조 덕분에 레이어를 쌓아 성능을 향상시킬 수 있다. 0.6B에서 32B 모델로 성장 시 약 50배 차이가 발생하며, 이는 단순히 레이어만 늘리는 것이 아니라 차원, 헤드 등을 종합적으로 확장한 결과이다."
+    },
+    {
+      "id": 162,
+      "question": "작은 모델의 일반적인 특징으로 가장 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "Input/Output 임베딩이 간소화되어 있다",
+        "2": "Context 윈도우가 짧다",
+        "3": "레이어 수가 적다",
+        "4": "Context 윈도우가 길다",
+        "5": "차원이 작다"
+      },
+      "answer": 4,
+      "category": "Alibaba Qwen Series",
+      "explanation": "작은 모델은 일반적으로 Input/Output 임베딩이 간소화되어 있고, Context 윈도우가 짧으며, 레이어 수와 차원이 작다. 따라서 'Context 윈도우가 길다'는 작은 모델의 특징이 아니다."
+    },
+    {
+      "id": 163,
+      "question": "Mistral의 Mixtral 모델에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Dense 모델만 제공한다",
+        "2": "MOE(Mixture of Experts) 방법을 활용한다",
+        "3": "한국어 성능이 매우 우수하다",
+        "4": "2025년에 처음 공개되었다",
+        "5": "단일 모델로만 구성되어 있다"
+      },
+      "answer": 2,
+      "category": "Mistral Series",
+      "explanation": "Mixtral 모델은 Mixture of Expert(MoE) 방법을 활용하여 여러 모델을 묶어 만든 모델이다. 8*7B, 8*22B 모델이 2024년 4월까지 파운데이션 모델 1위를 기록했으나, 국내에서는 한국어 인식 부족으로 인기가 낮다."
+    },
+    {
+      "id": 164,
+      "question": "Mistral Large 2 모델의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "2024년 2월에 출시되었다",
+        "2": "한국어 지원을 시작했다",
+        "3": "파라미터 수가 50B이다",
+        "4": "MOE 방식을 사용하지 않는다",
+        "5": "Llama 3.1보다 먼저 출시되었다"
+      },
+      "answer": 2,
+      "category": "Mistral Series",
+      "explanation": "Mistral Large 2는 2024년 7월에 출시되었으며, 한국어 지원을 시작했다. 사이즈는 123B parameter이며, Llama 3.1(405B) 출시 다음날 공개되어 주목을 받았다."
+    },
+    {
+      "id": 165,
+      "question": "Gemma 3 모델에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "구글이 개발한 멀티모달 LLM이다",
+        "2": "한국어 성능이 매우 낮다",
+        "3": "텍스트만 처리 가능하다",
+        "4": "1B 모델만 제공한다",
+        "5": "범용성이 매우 제한적이다"
+      },
+      "answer": 1,
+      "category": "Gemma Series",
+      "explanation": "Gemma 3는 구글이 개발한 멀티모달 LLM으로, 1B, 4B, 12B, 27B가 공개되었다. 4B, 12B, 27B는 이미지 입력이 가능하며(멀티모달 지원), 범용성과 성능이 우수하여 다양한 작업에 활용 가능하다. 한국어 성능도 우수하다."
+    },
+    {
+      "id": 166,
+      "question": "PaliGemma는 무엇을 결합하여 만든 모델인가?",
+      "points": 4,
+      "options": {
+        "1": "Gemma 1 + CLIP 인코더",
+        "2": "Gemma 2 + SigLIP 인코더",
+        "3": "Gemma 3 + ViT 인코더",
+        "4": "Gemma 2 + BERT 인코더",
+        "5": "Gemma 1 + ResNet 인코더"
+      },
+      "answer": 2,
+      "category": "Gemma Series",
+      "explanation": "PaliGemma는 Gemma 2와 SigLIP 인코더를 결합하여 공개된 모델이다. 이후 완전히 결합되어 멀티모달 LLM인 Gemma 3가 출시되었다."
+    },
+    {
+      "id": 167,
+      "question": "카카오 Kanana 모델의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "버전 2.0, 사이즈는 10B만 제공한다",
+        "2": "라이선스는 GPL이다",
+        "3": "8B 모델의 한국어 처리 성능이 우수하다",
+        "4": "Instruct 모델만 제공한다",
+        "5": "영어 전용 모델이다"
+      },
+      "answer": 3,
+      "category": "국내 LLM 모델",
+      "explanation": "카카오 Kanana는 버전 1.5로, 2.1B와 8B 사이즈를 제공한다. Base/Instruct 모델을 모두 제공하며, 라이선스는 Apache이다. 특히 8B 모델은 한국어 처리가 우수하여 실사용 가능성이 높다."
+    },
+    {
+      "id": 168,
+      "question": "네이버 HyperCLOVA Series의 Think 모델에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "사이즈가 3B이다",
+        "2": "14B로 Reasoning에 특화되어 있다",
+        "3": "멀티모달을 지원하지 않는다",
+        "4": "영어 리즈닝만 지원한다",
+        "5": "Seed 모델보다 크기가 작다"
+      },
+      "answer": 2,
+      "category": "국내 LLM 모델",
+      "explanation": "HyperCLOVA Think 모델은 14B 크기로 Reasoning에 특화되어 있으며, 한국어 리즈닝을 지원한다. Seed 모델은 0.5B, 1.5B, 3B를 제공하며, 3B 이상은 멀티모달을 지원한다. MAU 1천만 이상 고객이 사용 가능하다는 장점이 있다."
+    },
+    {
+      "id": 169,
+      "question": "LG-AI EXAONE 4.0의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "사이즈는 2.4B와 7.8B만 제공한다",
+        "2": "한국어 리즈닝에 특화되어 있다",
+        "3": "국내 모델 중 벤치마크 성능이 낮다",
+        "4": "영어 전용 모델이다",
+        "5": "EXAONE 3.5 이전 버전이다"
+      },
+      "answer": 2,
+      "category": "국내 LLM 모델",
+      "explanation": "EXAONE 4.0은 1.1B와 32B 사이즈를 제공하며, 한국어 리즈닝에 특화되어 있다. 국내 모델 중 최상위권 벤치마크 성능을 기록하고 있다. 초기 공개 모델인 2.4B, 7.8B, 32B는 EXAONE 3.5 기반이었다."
+    },
+    {
+      "id": 170,
+      "question": "Upstage Solar Series의 Depth Upscaling(DUS) 기법에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델 1개를 압축하는 방식이다",
+        "2": "모델 2개를 준비하여 각 모델의 3/4만 남겨 이어 붙인다",
+        "3": "레이어 수를 줄여 모델 크기를 축소한다",
+        "4": "파라미터를 양자화하여 크기를 줄인다",
+        "5": "모델 4개를 결합하는 방식이다"
+      },
+      "answer": 2,
+      "category": "국내 LLM 모델",
+      "explanation": "Depth Upscaling(DUS)는 모델 2개를 준비하여 앞 모델은 후반부를 제거하고, 뒤 모델은 앞부분을 제거한 후, 각 모델의 3/4만 남겨서 이어 붙이는 방식이다. Solar 10.7B는 7B × 1.5 = 10.7B로 구성되었으며, 추가 학습 시 성능이 향상되어 당시 UAE Falcon 등 대형 모델을 능가하고 리더보드 1위를 기록했다."
+    },
+    {
+      "id": 171,
+      "question": "국내 주요 통신사의 LLM 모델로 옳지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "LG는 EXAONE을 개발했다",
+        "2": "SKT는 A.X 모델을 공개했다",
+        "3": "KT는 LLM 모델을 공개하지 않았다",
+        "4": "국내 모델은 한국어 데이터를 다량 학습했다",
+        "5": "국내 모델은 한국어 성능이 우수하다"
+      },
+      "answer": 3,
+      "category": "국내 LLM 모델",
+      "explanation": "LG는 EXAONE, SKT와 KT는 A.X 등의 모델을 공개했다. 국내 모델의 강점은 한국어 데이터를 다량 학습하여 한국어 성능이 우수하다는 점이다."
+    },
+    {
+      "id": 172,
+      "question": "오픈소스 LLM 모델 선택 시 사이즈가 중요한 이유로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "사이즈가 클수록 학습 속도가 빠르다",
+        "2": "사이즈는 GPU 크기와 직결된다",
+        "3": "사이즈가 작을수록 성능이 좋다",
+        "4": "사이즈는 성능과 무관하다",
+        "5": "사이즈가 클수록 CPU 성능이 중요하다"
+      },
+      "answer": 2,
+      "category": "오픈 LLM 모델 선택",
+      "explanation": "모델 사이즈는 단순히 클라 쓰는 문제가 아니라 사이즈 자체가 중요한 변수이다. 사이즈는 곧 GPU 크기와 직결되며, 일부는 CPU 실행을 시도 중이나 여전히 GPU가 핵심(Critical)이다."
+    },
+    {
+      "id": 173,
+      "question": "7B 파라미터 모델이 16bit로 구성되어 있을 때, 모델을 로드하는 데 필요한 최소 GPU 메모리는?",
+      "points": 4,
+      "options": {
+        "1": "7GB",
+        "2": "10GB",
+        "3": "14GB",
+        "4": "21GB",
+        "5": "28GB"
+      },
+      "answer": 3,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "7B 모델 (16bit 기준) 계산: 파라미터 70억 × 16bit (=2바이트) = 140억 바이트, 140억 바이트 ÷ 10억 = 14GB. 공식: 16bit 모델 = 파라미터 수 × 2 → GB 변환. 안정적 사용을 위해서는 1.5배인 21GB가 권장된다."
+    },
+    {
+      "id": 174,
+      "question": "16bit와 32bit 부동소수점 구조에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "16bit는 부호(±) + 지수(8bit) + 가수(7bit)로 구성된다",
+        "2": "32bit는 부호(±) + 지수(16bit) + 가수(15bit)로 구성된다",
+        "3": "16bit가 32bit보다 정밀도가 높다",
+        "4": "최근 모델은 대부분 32bit를 사용한다",
+        "5": "16bit와 32bit의 정밀도는 동일하다"
+      },
+      "answer": 1,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "16bit는 부호(±) + 지수(8bit) + 가수(7bit)로 구성되고, 32bit는 부호(±) + 지수(8bit) + 가수(23bit)로 구성된다. 32bit가 정밀도/해상도가 더 높으며, GPT-2 등 구형 모델은 32bit를, 최근 모델은 16bit를 주로 사용한다."
+    },
+    {
+      "id": 175,
+      "question": "32bit 모델의 GPU 메모리 사용량 계산 공식으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 수 × 2 → GB 변환",
+        "2": "파라미터 수 × 4 → GB 변환",
+        "3": "파라미터 수 × 8 → GB 변환",
+        "4": "파라미터 수 ÷ 2 → GB 변환",
+        "5": "파라미터 수 ÷ 4 → GB 변환"
+      },
+      "answer": 2,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "32bit 모델은 파라미터 수 × 4 → GB로 변환한다. 32bit = 4바이트이므로, 파라미터 수에 4를 곱한 후 10억으로 나누면 GB 단위가 된다. 16bit 모델은 파라미터 수 × 2 → GB로 변환한다."
+    },
+    {
+      "id": 176,
+      "question": "실제 LLM 사용 시 GPU 메모리 소모가 증가하는 주요 원인은?",
+      "points": 4,
+      "options": {
+        "1": "모델 크기가 줄어들어서",
+        "2": "입력 컨텍스트 길이와 KV 캐싱",
+        "3": "레이어 수가 감소해서",
+        "4": "파라미터가 압축되어서",
+        "5": "CPU 사용량이 증가해서"
+      },
+      "answer": 2,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "실제 사용 시 입력 컨텍스트 길이에 따라 GPU 사용량이 더 증가한다. Attention과 MLP 연산을 반복하며 과거 입력을 유지해야 하므로, 과거 입력값을 저장/재활용하는 KV 캐싱으로 인해 GPU 메모리가 추가로 소모된다."
+    },
+    {
+      "id": 177,
+      "question": "7B 모델을 학습할 때 필요한 GPU 메모리는 최소 몇 배 정도인가?",
+      "points": 4,
+      "options": {
+        "1": "2배 이상",
+        "2": "5배 이상",
+        "3": "10배 이상",
+        "4": "15배 이상",
+        "5": "1.5배 이상"
+      },
+      "answer": 3,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "7B 모델은 14GB 필요하며, 안정적 사용을 위해 1.5배인 21GB가 권장된다. 그러나 학습 시에는 최소 10배 이상이 필요하며, 학습 시에는 GPU가 많을수록 좋다."
+    },
+    {
+      "id": 178,
+      "question": "GPU 소모를 줄이기 위한 기법으로 가장 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "vLLM 프레임워크 사용",
+        "2": "Ollama 프레임워크 사용",
+        "3": "양자화(Quantization) 적용",
+        "4": "레이어 수 증가",
+        "5": "서빙 최적화 프레임워크 사용"
+      },
+      "answer": 4,
+      "category": "파라미터 수-VRAM 관계",
+      "explanation": "GPU 소모를 줄이기 위해서는 vLLM, Ollama 등의 서빙 최적화 프레임워크를 사용하거나 양자화(Quantization)를 통해 모델 크기를 압축하는 방법이 있다. 레이어 수를 증가시키면 오히려 GPU 소모가 증가한다."
+    },
+    {
+      "id": 179,
+      "question": "양자화(Quantization)의 주요 목적은?",
+      "points": 4,
+      "options": {
+        "1": "모델의 학습 속도를 높이기 위해",
+        "2": "Weight 값을 줄여 모델 크기를 작게 만들기 위해",
+        "3": "모델의 레이어 수를 증가시키기 위해",
+        "4": "GPU 성능을 향상시키기 위해",
+        "5": "학습 데이터를 증가시키기 위해"
+      },
+      "answer": 2,
+      "category": "Quantization(양자화)",
+      "explanation": "양자화(Quantization)는 Weight 값을 줄여 모델 크기를 작게 만드는 과정이다. 이를 통해 모델 크기를 줄이고 GPU 메모리를 절감할 수 있다."
+    },
+    {
+      "id": 180,
+      "question": "INT8 양자화의 원리로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "가중치를 256 단계로 나누어 표현한다",
+        "2": "최솟값과 최댓값 기준으로 255 단계 분할한다",
+        "3": "가중치를 8개로 나누어 표현한다",
+        "4": "가중치를 128 단계로 나누어 표현한다",
+        "5": "가중치를 16개로 나누어 표현한다"
+      },
+      "answer": 2,
+      "category": "Quantization(양자화)",
+      "explanation": "INT8 양자화는 최솟값과 최댓값 기준으로 255 단계로 분할한다. 가중치 분포(예: 0~1 사이 값)를 0~255 값으로 매핑하며, 공식은 (값 - 최솟값) ÷ (최댓값 - 최솟값) × 255이다. 실제는 음수 범위를 고려해 ÷ 2가 필요하다."
+    },
+    {
+      "id": 181,
+      "question": "양자화의 단점으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델 크기가 증가한다",
+        "2": "GPU 메모리 사용량이 증가한다",
+        "3": "가중치가 미세하게 변형되어 성능이 저하된다",
+        "4": "학습 시간이 증가한다",
+        "5": "레이어 수가 증가한다"
+      },
+      "answer": 3,
+      "category": "Quantization(양자화)",
+      "explanation": "양자화 시 가중치가 미세하게 변형되어 성능 저하가 발생할 수 있으며, 답변 결과가 달라질 수 있다. 특히 INT4에서는 성능 저하가 심각하다. 장점은 모델 크기 감소와 GPU 메모리 절감이지만, 성능 저하가 주요 단점이다."
+    },
+    {
+      "id": 182,
+      "question": "고전적 양자화 방식의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "분위수 기반 양자화를 사용한다",
+        "2": "파라미터 중요도를 고려한다",
+        "3": "최대-최소 기준 단순 스케일링 방식이다",
+        "4": "활성화 정도를 반영한다",
+        "5": "학습 단계에서 양자화를 고려한다"
+      },
+      "answer": 3,
+      "category": "Quantization(양자화)",
+      "explanation": "고전적 양자화 방식은 최대값과 최솟값을 기준으로 등간격 분할하는 단순한 기계적 방법(단순 스케일링)이다. 이는 분위수 기반이나 파라미터 중요도를 고려하지 않는 초기 방식이다."
+    },
+    {
+      "id": 183,
+      "question": "QLoRA가 제안한 개선된 양자화 방식은?",
+      "points": 4,
+      "options": {
+        "1": "등간격 분할 방식",
+        "2": "분위수(Quantile) 기준 분할 방식",
+        "3": "최대-최소 기준 분할 방식",
+        "4": "고정 구간 분할 방식",
+        "5": "단순 스케일링 방식"
+      },
+      "answer": 2,
+      "category": "Quantization(양자화)",
+      "explanation": "QLoRA는 기존의 등간격(등 길이) 분할 방식의 한계를 극복하기 위해 분위수(Quantile) 기준 분할 방식을 적용했다. 등 길이 대신 분위수를 기준으로 나누어 성능 손실을 줄였다."
+    },
+    {
+      "id": 184,
+      "question": "NF4(NormalFloat4) 양자화 방식의 장점으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모든 파라미터를 동일하게 처리한다",
+        "2": "원래 값 보존률이 높아 성능 저하가 적다",
+        "3": "아웃라이어에 취약하다",
+        "4": "등간격 분할을 사용한다",
+        "5": "처리 속도가 느리다"
+      },
+      "answer": 2,
+      "category": "Quantization(양자화)",
+      "explanation": "NF4는 전체 값 범위를 분위수 구간으로 나누고 각 분위수의 대표 값만 저장하여 활용한다. 이를 통해 원래 값 보존률이 높아 성능 저하가 적으며, 아웃라이어가 있어도 강건하다는 장점이 있다."
+    },
+    {
+      "id": 185,
+      "question": "기존 양자화 방식의 한계로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 중요도를 고려하여 차등 양자화한다",
+        "2": "모든 뉴런을 동일한 기준으로 양자화한다",
+        "3": "분위수 기반으로 양자화한다",
+        "4": "활성화 정도를 반영하여 양자화한다",
+        "5": "학습 단계에서 양자화를 고려한다"
+      },
+      "answer": 2,
+      "category": "Quantization(양자화)",
+      "explanation": "기존 양자화 방식의 한계는 모든 뉴런(파라미터)을 동일한 기준으로 양자화한다는 점이다. 뉴런마다 중요도가 다른데 동일하게 처리하면 성능 저하가 불가피하다."
+    },
+    {
+      "id": 186,
+      "question": "GPTQ 양자화 기법의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모든 파라미터를 동일하게 양자화한다",
+        "2": "파라미터 중요도 기반 차등 양자화를 수행한다",
+        "3": "레이어 단위로 활성화 값을 확인한다",
+        "4": "CPU 추론에 최적화되어 있다",
+        "5": "학습 단계에서 양자화를 고려한다"
+      },
+      "answer": 2,
+      "category": "개선된 양자화 기법",
+      "explanation": "GPTQ는 파라미터 중요도 기반 차등 양자화를 수행한다. 중요한 파라미터는 적게 양자화하고 덜 중요한 파라미터는 크게 양자화하며, 앞단 양자화로 발생한 오류를 뒷단 양자화에 반영해 보정하는 단계별 기계적 방법이다."
+    },
+    {
+      "id": 187,
+      "question": "AWQ 양자화 기법의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "파라미터 중요도만 고려한다",
+        "2": "레이어 단위로 입력 활성화 값을 확인하여 양자화한다",
+        "3": "분위수 기반으로 양자화한다",
+        "4": "CPU 추론에 최적화되어 있다",
+        "5": "모든 파라미터를 동일하게 처리한다"
+      },
+      "answer": 2,
+      "category": "개선된 양자화 기법",
+      "explanation": "AWQ는 레이어 단위로 입력 활성화 값을 확인하여 가중치의 활성화 정도를 반영해 양자화를 적용한다. 이는 GPTQ와 다른 접근 방식으로, 활성화 패턴을 고려한다는 특징이 있다."
+    },
+    {
+      "id": 188,
+      "question": "GGUF, GGML의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Python 기반 LLM 실행 라이브러리이다",
+        "2": "GPU 추론에 최적화되어 있다",
+        "3": "C++ 기반 CPU 추론 최적화 포맷이다",
+        "4": "학습 단계에서 양자화를 고려한다",
+        "5": "여러 파일로 모델을 분산 저장한다"
+      },
+      "answer": 3,
+      "category": "추가 양자화 방식",
+      "explanation": "GGUF, GGML은 Python이 아닌 C++ 기반 LLM 실행 라이브러리로, CPU 추론에 최적화되어 있다. 라마 CPP 기반 포맷이며, 전체 모델을 단일 파일로 저장할 수 있어 배포가 간편하다. 올라마 프로그램을 활용하면 손쉬운 서빙이 가능하다."
+    },
+    {
+      "id": 189,
+      "question": "QAT(Quantization Aware Training)의 특징으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 완료 후에만 양자화를 적용한다",
+        "2": "학습 단계에서 중간중간 양자화를 적용/해제하며 학습한다",
+        "3": "CPU 추론에만 최적화되어 있다",
+        "4": "파라미터 중요도를 고려하지 않는다",
+        "5": "단일 파일로 모델을 저장한다"
+      },
+      "answer": 2,
+      "category": "추가 양자화 방식",
+      "explanation": "QAT(Quantization Aware Training)는 학습 단계에서 양자화를 고려하여 중간중간 양자화를 적용/해제하며 반복적으로 학습한다. 구글 Gemma3에 적용되어 양자화 친화적 학습을 구현했다."
+    },
+    {
+      "id": 190,
+      "question": "Gemma 3n의 동적 파라미터 선택 기법의 목적으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "학습 속도를 향상시키기 위해",
+        "2": "온디바이스 환경에서 GPU 소모를 최소화하기 위해",
+        "3": "모델 크기를 증가시키기 위해",
+        "4": "레이어 수를 증가시키기 위해",
+        "5": "학습 데이터를 증가시키기 위해"
+      },
+      "answer": 2,
+      "category": "추가 양자화 방식",
+      "explanation": "Gemma 3n은 입력 처리 시 동적으로 파라미터를 선택하여 온디바이스 환경에서 GPU 소모를 최소화하고 경량화·효율적 실행을 목적으로 한다."
+    },
+    {
+      "id": 191,
+      "question": "현재 양자화 방식의 연구 현황으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Hugging Face에서 AQLM부터 HEX까지 다양한 방식이 출시되었다",
+        "2": "양자화 연구가 완료되어 더 이상 새로운 방식이 나오지 않는다",
+        "3": "INT8만 사용되고 있다",
+        "4": "양자화는 성능 저하가 너무 심해 사용되지 않는다",
+        "5": "모든 모델이 동일한 양자화 방식을 사용한다"
+      },
+      "answer": 1,
+      "category": "대표적 모델 양자화 방법",
+      "explanation": "Hugging Face 등에서 이미 AQLM부터 HEX까지 다양한 양자화 방식이 출시되었으며, 현재도 지속적으로 새로운 방식이 연구·출시되고 있다. 목표는 성능 안정화와 모델 사이즈 축소이다."
+    },
+    {
+      "id": 192,
+      "question": "큰 모델을 양자화하는 것과 작은 모델을 그냥 사용하는 것 중 어느 것이 일반적으로 유리한가?",
+      "points": 4,
+      "options": {
+        "1": "작은 모델을 그냥 사용하는 것이 항상 유리하다",
+        "2": "큰 모델을 양자화하는 것이 일반적으로 유리하다",
+        "3": "두 방법의 성능 차이가 없다",
+        "4": "양자화는 성능을 크게 저하시키므로 사용하지 않는 것이 좋다",
+        "5": "모델 크기와 양자화는 무관하다"
+      },
+      "answer": 2,
+      "category": "핵심 질문",
+      "explanation": "일반적으로 큰 모델을 양자화하는 것이 유리하다. 큰 모델은 ①레이어 개수가 많고, ②차원이 크며, ③컨텍스트 길이가 길고, ④많은 데이터를 학습했기 때문이다."
+    },
+    {
+      "id": 193,
+      "question": "다음 중 MoE(Mixture of Experts) 방식을 사용하는 모델로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Gemma 3",
+        "2": "Kanana",
+        "3": "Mixtral",
+        "4": "HyperCLOVA Seed",
+        "5": "Solar 10.7B"
+      },
+      "answer": 3,
+      "category": "종합",
+      "explanation": "Mixtral은 Mixture of Expert(MoE) 방법을 활용하여 여러 모델을 묶어 만든 모델이다. 8*7B, 8*22B 모델이 대표적이다. Qwen3도 MoE 모델을 제공하지만, 선택지 중 가장 대표적인 MoE 모델은 Mixtral이다."
+    },
+    {
+      "id": 194,
+      "question": "다음 중 멀티모달을 지원하는 모델로 가장 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "Gemma 3 (4B, 12B, 27B)",
+        "2": "HyperCLOVA (3B 이상)",
+        "3": "PaliGemma",
+        "4": "Kanana 8B",
+        "5": "Gemma 3 27B"
+      },
+      "answer": 4,
+      "category": "종합",
+      "explanation": "Gemma 3의 4B, 12B, 27B는 이미지 입력이 가능한 멀티모달을 지원하며, HyperCLOVA는 3B 이상에서 멀티모달을 지원한다. PaliGemma는 Gemma 2와 SigLIP 인코더를 결합한 멀티모달 모델이다. Kanana 8B는 텍스트 전용 모델이다."
+    },
+    {
+      "id": 195,
+      "question": "국내 LLM 모델의 공통적인 강점으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "영어 성능이 매우 우수하다",
+        "2": "한국어 데이터를 다량 학습하여 한국어 성능이 우수하다",
+        "3": "파라미터 수가 해외 모델보다 크다",
+        "4": "멀티모달을 모두 지원한다",
+        "5": "양자화가 필요 없다"
+      },
+      "answer": 2,
+      "category": "종합",
+      "explanation": "국내 LLM 모델(Kanana, HyperCLOVA, EXAONE, Solar)의 공통적인 강점은 한국어 데이터를 다량 학습하여 한국어 성능이 우수하다는 점이다. LLM 연구·개발 시 파이프라인을 구축한 후 모델을 교체·테스트하는 방식으로 성능을 비교·검증하는 것이 권장된다."
+    },
+    {
+      "id": 196,
+      "question": "다음 중 한국어 리즈닝에 특화된 모델로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "Mixtral 8*7B",
+        "2": "EXAONE 4.0",
+        "3": "Gemma 3 1B",
+        "4": "Qwen3 0.6B",
+        "5": "Mistral Large"
+      },
+      "answer": 2,
+      "category": "종합",
+      "explanation": "EXAONE 4.0은 1.1B와 32B 사이즈를 제공하며, 한국어 리즈닝에 특화되어 있다. HyperCLOVA Think 모델(14B)도 한국어 리즈닝을 지원하지만, 선택지 중에서는 EXAONE 4.0이 가장 적합하다."
+    },
+    {
+      "id": 197,
+      "question": "vLLM과 Ollama의 주요 역할로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델 학습을 위한 프레임워크",
+        "2": "서빙 최적화 프레임워크로 GPU 소모를 줄임",
+        "3": "데이터 전처리 도구",
+        "4": "모델 평가 도구",
+        "5": "양자화 알고리즘"
+      },
+      "answer": 2,
+      "category": "종합",
+      "explanation": "vLLM과 Ollama는 서빙 최적화 프레임워크로, GPU 소모를 줄이기 위한 기법이다. 양자화(Quantization)와 함께 모델 크기를 압축하여 GPU 메모리를 절감하는 데 사용된다."
+    },
+    {
+      "id": 198,
+      "question": "LLM의 Reasoning 능력에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "LLM은 항상 즉시 답변을 생성해야 성능이 좋다",
+        "2": "생각할 시간(과 텍스트 공간)을 주면 복잡한 문제를 더 잘 해결할 수 있다",
+        "3": "Reasoning 능력은 모델 크기와만 관련이 있다",
+        "4": "단순 암기 문제에서만 Reasoning이 필요하다",
+        "5": "Reasoning은 이미지 처리에만 사용된다"
+      },
+      "answer": 2,
+      "category": "Reasoning",
+      "explanation": "LLM에게 생각할 시간(과 텍스트 공간)을 주면, 수학 문제나 코딩 문제 같은 복잡한 사고가 필요한 작업에서 더 나은 성능을 발휘합니다. 이것이 Reasoning 모델의 핵심 개념입니다."
+    },
+    {
+      "id": 199,
+      "question": "Thinking 토큰 (<think> </think>)에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "최종 답변만 저장하는 특수 토큰이다",
+        "2": "Budget 설정을 통해 사고 과정의 길이를 조절할 수 없다",
+        "3": "Qwen 3 모델은 /no_think 옵션으로 Thinking 없이 즉각 응답 가능하다",
+        "4": "모든 LLM이 기본적으로 Thinking 토큰을 사용한다",
+        "5": "Thinking 토큰은 이미지 생성에만 사용된다"
+      },
+      "answer": 3,
+      "category": "Reasoning",
+      "explanation": "Qwen 3 모델은 /no_think 옵션을 제공하여 Thinking 과정 없이 즉각 응답할 수 있습니다. Thinking 토큰의 Budget을 조절하면 성능과 속도의 균형을 맞출 수 있습니다."
+    },
+    {
+      "id": 200,
+      "question": "OpenAI-o1의 Reasoning 출력을 분류하는 6개 패턴 중 '자체 평가를 통해 오류를 검출하고 수정'하는 패턴은?",
+      "points": 4,
+      "options": {
+        "1": "Systematic Analysis",
+        "2": "Method Reuse",
+        "3": "Divide and Conquer",
+        "4": "Self-Refinement",
+        "5": "Context Identification"
+      },
+      "answer": 4,
+      "category": "Reasoning",
+      "explanation": "Self-Refinement은 LLM이 자체 평가를 통해 오류를 검출하고 수정하는 패턴입니다. Thinking의 모든 과정이 텍스트로 표출되어 이러한 개선 과정을 확인할 수 있습니다."
+    },
+    {
+      "id": 201,
+      "question": "다음 중 OpenAI의 6가지 Reasoning 패턴에 포함되지 않는 것은?",
+      "points": 4,
+      "options": {
+        "1": "Systematic Analysis (전체적 구조 파악)",
+        "2": "Method Reuse (알려진 문제 해결법 적용)",
+        "3": "Divide and Conquer (하위 문제 분할)",
+        "4": "Emphasizing Constraints (제약 조건 강조)",
+        "5": "Deep Learning Optimization (딥러닝 최적화)"
+      },
+      "answer": 5,
+      "category": "Reasoning",
+      "explanation": "OpenAI-o1의 6가지 Reasoning 패턴은 Systematic Analysis, Method Reuse, Divide and Conquer, Self-Refinement, Context Identification, Emphasizing Constraints입니다. Deep Learning Optimization은 포함되지 않습니다."
+    },
+    {
+      "id": 202,
+      "question": "Reasoning 모델의 성능 지표인 'Median First Chunk'가 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "전체 응답 생성에 걸리는 총 시간",
+        "2": "첫 번째 출력을 생성하는 데 걸리는 시간",
+        "3": "모델 학습에 소요된 시간",
+        "4": "메모리 사용량",
+        "5": "토큰 생성 속도"
+      },
+      "answer": 2,
+      "category": "Reasoning",
+      "explanation": "Median First Chunk는 첫 번째 출력을 생성하는 데 걸리는 시간을 의미합니다. Reasoning 모델은 출력 전에 사고 과정을 거치므로 이 시간이 길어질 수 있으며, GPT-5 (high)는 71.26초, o3-pro는 137.86초를 기록했습니다."
+    },
+    {
+      "id": 203,
+      "question": "'Over Thinking' 현상에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "생각을 많이 할수록 항상 성능이 향상된다",
+        "2": "Thinking을 많이 하면 오히려 성능이 저하될 수 있다",
+        "3": "모델 크기가 클수록 Over Thinking이 발생하지 않는다",
+        "4": "Gemini 모델에서는 발생하지 않는 현상이다",
+        "5": "GPU 메모리 부족으로 인한 오류이다"
+      },
+      "answer": 2,
+      "category": "Reasoning",
+      "explanation": "Over Thinking은 Thinking을 너무 많이 하면 오히려 성능이 저하되는 현상을 의미합니다. Gemini 등의 모델에서도 관찰되며, 적절한 균형이 필요합니다."
+    },
+    {
+      "id": 204,
+      "question": "Long Thinking Makes Perfect의 핵심 개념으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "빠른 응답 속도가 가장 중요하다",
+        "2": "패턴 강화 학습으로 긴 시간동안 생각하고 어려운 문제의 해답을 탐색한다",
+        "3": "단순히 모델 크기만 늘리면 성능이 향상된다",
+        "4": "사전 학습 데이터양만 중요하다",
+        "5": "Context Window 크기만 영향을 미친다"
+      },
+      "answer": 2,
+      "category": "Reasoning",
+      "explanation": "Long Thinking Makes Perfect는 패턴 강화 학습을 통해 LLM이 긴 시간동안 깊이 생각하며 어려운 문제의 해답을 탐색하는 능력을 의미합니다. 이는 단순한 모델 크기나 데이터양과는 다른 차원의 능력입니다."
+    },
+    {
+      "id": 205,
+      "question": "LMM (Large Multimodal Models)에 대한 설명으로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트만 처리할 수 있는 모델이다",
+        "2": "LLM 모델에 Vision 능력을 결합한 모델이다",
+        "3": "오직 음성만 처리하는 특화 모델이다",
+        "4": "코드 생성에만 사용되는 모델이다",
+        "5": "Reasoning 능력이 없는 모델이다"
+      },
+      "answer": 2,
+      "category": "Multimodal",
+      "explanation": "LMM(Large Multimodal Models)은 LLM에 Vision 능력을 결합한 모델입니다. 이미지 생성 → 이미지 처리 인코더 결합 → 인코더와 LLM 연결의 과정을 거쳐 발전했습니다."
+    },
+    {
+      "id": 206,
+      "question": "멀티모달 LLM의 대표적인 모델이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "GPT-4o",
+        "2": "Gemini",
+        "3": "Qwen-VL",
+        "4": "Llama 3.2",
+        "5": "BERT"
+      },
+      "answer": 5,
+      "category": "Multimodal",
+      "explanation": "GPT-4o, Gemini, Qwen-VL, Llama 3.2는 모두 Vision 능력을 가진 멀티모달 모델입니다. BERT는 텍스트 전용 모델로 멀티모달 기능이 없습니다."
+    },
+    {
+      "id": 207,
+      "question": "Qwen2.5-VL 모델의 아키텍처에서 이미지와 비디오를 처리하는 부분은?",
+      "points": 4,
+      "options": {
+        "1": "LM Decoder만 사용한다",
+        "2": "Vision Encoder와 LM Decoder를 결합한다",
+        "3": "텍스트 토크나이저만 사용한다",
+        "4": "별도의 이미지 처리 없이 직접 텍스트로 변환한다",
+        "5": "오직 텍스트만 처리한다"
+      },
+      "answer": 2,
+      "category": "Multimodal",
+      "explanation": "Qwen2.5-VL은 Vision Encoder로 이미지/비디오를 처리하고 이를 LM Decoder와 결합하여 멀티모달 입력을 처리합니다. Native Resolution Input을 통해 다양한 해상도의 입력을 처리할 수 있습니다."
+    },
+    {
+      "id": 208,
+      "question": "Native LMM 연구의 발전 방향으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트 입력만 지원하는 방향",
+        "2": "멀티모달 입력과 멀티모달 출력 모두 지원하는 방향",
+        "3": "Vision 기능을 제거하는 방향",
+        "4": "모델 크기만 증가시키는 방향",
+        "5": "단일 모달리티로 회귀하는 방향"
+      },
+      "answer": 2,
+      "category": "Multimodal",
+      "explanation": "Native LMM은 멀티모달 입력뿐만 아니라 멀티모달 출력(이미지/음성 생성 등)도 지원하는 방향으로 발전하고 있습니다. GPT-4o의 이미지/음성 생성 기능이나 Qwen-VL의 Thinker-Talker 구조가 대표적인 예시입니다."
+    },
+    {
+      "id": 209,
+      "question": "Qwen2.5-VL에서 Native Resolution Input의 의미는?",
+      "points": 4,
+      "options": {
+        "1": "모든 이미지를 고정된 크기로 변환한다",
+        "2": "다양한 해상도의 이미지와 비디오를 그대로 처리할 수 있다",
+        "3": "저해상도 이미지만 처리 가능하다",
+        "4": "텍스트만 입력으로 받는다",
+        "5": "이미지를 처리하지 않는다"
+      },
+      "answer": 2,
+      "category": "Multimodal",
+      "explanation": "Native Resolution Input은 다양한 해상도의 이미지와 비디오를 원본 그대로 처리할 수 있는 기능입니다. 이를 통해 정보 손실 없이 효율적으로 멀티모달 데이터를 처리할 수 있습니다."
+    },
+    {
+      "id": 210,
+      "question": "sLLM (small Large Language Model)의 정의로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "100B 파라미터 이상의 초대형 모델",
+        "2": "파라미터 크기가 작은 경량화된 LLM",
+        "3": "텍스트만 처리하는 특수 모델",
+        "4": "클라우드에서만 실행 가능한 모델",
+        "5": "Vision 기능만 있는 모델"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "sLLM(small Large Language Model)은 파라미터 크기가 상대적으로 작은 경량화된 LLM을 의미합니다. 예를 들어 Qwen 3 0.7B, Gemma 3 236M, 1B, 4B 등이 있습니다."
+    },
+    {
+      "id": 211,
+      "question": "모델 경량화 기법 중 '가지치기(Pruning)'에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델의 파라미터를 늘려 성능을 향상시킨다",
+        "2": "영향이 적은 파라미터를 제거하여 모델 크기를 줄인다",
+        "3": "학습 데이터를 더 많이 추가한다",
+        "4": "오직 텍스트 데이터만 처리하도록 제한한다",
+        "5": "모델을 완전히 재학습시킨다"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "가지치기(Pruning)는 모델에서 영향이 적은 파라미터를 제거하여 성능을 유지하면서 크기를 감소시키는 기법입니다. 가로로 자르기(레이어 감소)와 세로로 자르기(차원 감소) 두 가지 방법이 있습니다."
+    },
+    {
+      "id": 212,
+      "question": "증류(Distillation) 기법의 핵심 원리는?",
+      "points": 4,
+      "options": {
+        "1": "작은 모델을 크게 만든다",
+        "2": "큰 모델의 출력으로 작은 모델을 학습시킨다",
+        "3": "모델의 학습 데이터를 삭제한다",
+        "4": "파라미터를 무작위로 제거한다",
+        "5": "모델의 속도만 향상시킨다"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "증류(Distillation)는 큰 모델(Teacher)의 출력 결과를 학습 데이터로 사용하여 작은 모델(Student)을 학습시키는 기법입니다. 이를 통해 작은 모델이 큰 모델의 사고 방식을 학습할 수 있습니다."
+    },
+    {
+      "id": 213,
+      "question": "sLLM이 중요한 이유로 가장 적절한 것은?",
+      "points": 4,
+      "options": {
+        "1": "클라우드 서버에서만 실행하기 위해",
+        "2": "엣지 디바이스나 CPU 환경에서도 LLM을 실행하기 위해",
+        "3": "학습 시간을 늘리기 위해",
+        "4": "더 많은 GPU를 사용하기 위해",
+        "5": "멀티모달 기능을 제거하기 위해"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "sLLM은 엣지 디바이스나 CPU 환경 같은 제한된 리소스 환경에서도 LLM을 실행할 수 있게 하기 위해 중요합니다. 온디바이스 AI 구현과 도메인 특화 모델 구성에도 유리합니다."
+    },
+    {
+      "id": 214,
+      "question": "DeepSeek R1의 연구 결과에서 확인할 수 있는 sLLM의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "작은 모델은 큰 모델보다 항상 성능이 낮다",
+        "2": "Distillation을 통해 작은 모델도 큰 모델의 사고방식을 학습하여 높은 성능을 달성할 수 있다",
+        "3": "모델 크기만 중요하다",
+        "4": "sLLM은 Reasoning 능력이 없다",
+        "5": "증류는 효과가 없다"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "DeepSeek R1 연구는 Distillation을 통해 작은 크기의 모델(1.5B~32B)도 큰 모델의 사고방식을 학습하여 AIME 2024 벤치마크에서 높은 Reasoning 성능(pass@1: 28.9~72.6)을 달성할 수 있음을 보여줍니다."
+    },
+    {
+      "id": 215,
+      "question": "Tool Calling의 주요 목적은?",
+      "points": 4,
+      "options": {
+        "1": "LLM의 크기를 줄이는 것",
+        "2": "LLM이 외부 함수나 API를 호출할 수 있도록 하는 것",
+        "3": "모델 학습 속도를 높이는 것",
+        "4": "텍스트만 생성하도록 제한하는 것",
+        "5": "Vision 기능을 추가하는 것"
+      },
+      "answer": 2,
+      "category": "Tool Calling & Agent",
+      "explanation": "Tool Calling은 LLM이 외부 함수나 API를 호출하여 데이터베이스 쿼리, 파일 시스템 조작, 외부 서비스 연동 등의 작업을 수행할 수 있도록 하는 기능입니다."
+    },
+    {
+      "id": 216,
+      "question": "MCP (Model Context Protocol)의 역할로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델의 학습 데이터를 관리한다",
+        "2": "AI Application과 외부 도구/서비스를 연결하는 표준 프로토콜이다",
+        "3": "오직 OpenAI 모델에만 사용된다",
+        "4": "Vision 기능만 지원한다",
+        "5": "모델을 경량화한다"
+      },
+      "answer": 2,
+      "category": "Tool Calling & Agent",
+      "explanation": "MCP(Model Context Protocol)은 AI Application과 다양한 외부 도구/서비스(Web APIs, Slack, Gmail, Database, GitHub 등)를 연결하는 표준 프로토콜입니다. Tool Calling의 표준화를 통해 일관된 인터페이스를 제공합니다."
+    },
+    {
+      "id": 217,
+      "question": "Agent가 LLM과 다른 점은?",
+      "points": 4,
+      "options": {
+        "1": "Agent는 텍스트를 생성할 수 없다",
+        "2": "Agent는 Tool Calling 능력이 탑재되어 외부 도구와 상호작용할 수 있다",
+        "3": "Agent는 더 큰 모델 크기가 필요하다",
+        "4": "Agent는 Reasoning 능력이 없다",
+        "5": "Agent는 오직 이미지만 처리한다"
+      },
+      "answer": 2,
+      "category": "Tool Calling & Agent",
+      "explanation": "Agent는 기본 LLM에 Tool Calling 능력이 추가되어 외부 함수, API, 데이터베이스 등과 상호작용하며 복잡한 워크플로우를 자동화할 수 있는 시스템입니다."
+    },
+    {
+      "id": 218,
+      "question": "LLM에서 JSON 형식의 출력이 중요한 이유는?",
+      "points": 4,
+      "options": {
+        "1": "모델 크기를 줄이기 위해",
+        "2": "구조화된 데이터를 생성하여 프로그래밍적으로 처리하기 쉽기 때문에",
+        "3": "학습 속도를 높이기 위해",
+        "4": "오직 이미지 생성을 위해",
+        "5": "모델의 Reasoning 능력을 제거하기 위해"
+      },
+      "answer": 2,
+      "category": "Tool Calling & Agent",
+      "explanation": "JSON 형식의 출력은 구조화된 데이터를 생성하여 파싱과 프로그래밍적 처리가 쉽기 때문에 중요합니다. Tool Calling에서 함수 호출 정보를 전달하거나 데이터베이스에 저장할 데이터를 생성할 때 특히 유용합니다."
+    },
+    {
+      "id": 219,
+      "question": "Anthropic Computer Use가 가능하게 하는 기능은?",
+      "points": 4,
+      "options": {
+        "1": "오직 텍스트 생성만 가능",
+        "2": "Claude와 연계하여 컴퓨터 제어 및 자동화",
+        "3": "모델 크기 축소",
+        "4": "학습 데이터 증가",
+        "5": "Vision 기능 제거"
+      },
+      "answer": 2,
+      "category": "Tool Calling & Agent",
+      "explanation": "Anthropic Computer Use는 Claude와 연계되어 컴퓨터 제어 및 자동화를 가능하게 합니다. 25년 3월부터 다양한 어플리케이션이 개발되고 있으며, Agent의 실제 적용 사례를 보여줍니다."
+    },
+    {
+      "id": 220,
+      "question": "LLM 어플리케이션에서 일반적으로 쓸만한 성능을 얻기 위한 모델 크기는?",
+      "points": 4,
+      "options": {
+        "1": "1B 이상",
+        "2": "5B 이상",
+        "3": "10B 이상",
+        "4": "100B 이상",
+        "5": "1000B 이상"
+      },
+      "answer": 3,
+      "category": "LLM Application",
+      "explanation": "일반적으로 쓸만한 성능의 LLM 어플리케이션을 구축하기 위해서는 10B 파라미터 이상의 모델이 권장됩니다. 다만, 특정 작업에서는 더 작은 모델도 효과적으로 활용될 수 있습니다."
+    },
+    {
+      "id": 221,
+      "question": "LLM 어플리케이션의 성능을 보완하는 4가지 요소에 포함되지 않는 것은?",
+      "points": 4,
+      "options": {
+        "1": "프롬프트 엔지니어링",
+        "2": "파인 튜닝",
+        "3": "RAG",
+        "4": "Agent",
+        "5": "GPU 업그레이드"
+      },
+      "answer": 5,
+      "category": "LLM Application",
+      "explanation": "LLM 어플리케이션의 성능을 보완하는 4가지 핵심 요소는 프롬프트 엔지니어링, 파인튜닝, RAG, Agent입니다. GPU 업그레이드는 인프라 개선이지 성능 보완 기법이 아닙니다."
+    },
+    {
+      "id": 222,
+      "question": "비정형 텍스트 데이터를 LLM으로 처리할 때 가장 중요한 것은?",
+      "points": 4,
+      "options": {
+        "1": "가장 큰 모델을 사용하는 것",
+        "2": "데이터 전처리와 결과 평가 방식을 갖추는 것",
+        "3": "GPU를 최대한 많이 사용하는 것",
+        "4": "학습 데이터를 무조건 늘리는 것",
+        "5": "모델 크기만 고려하는 것"
+      },
+      "answer": 2,
+      "category": "LLM Application",
+      "explanation": "비정형 텍스트 데이터 처리에서는 데이터 전처리가 필요하며, 문제에 맞는 데이터와 결과를 평가하는 방식(정량적/정성적 평가)을 갖추는 것이 가장 중요합니다."
+    },
+    {
+      "id": 223,
+      "question": "현업에서 LLM 앱 개발 시 가장 중요한 부분은?",
+      "points": 4,
+      "options": {
+        "1": "가장 최신 모델만 사용하는 것",
+        "2": "결과 평가 방식과 데이터 파이프라인 구축",
+        "3": "오직 모델 크기만 고려하는 것",
+        "4": "GPU 개수를 늘리는 것",
+        "5": "프롬프트 길이를 최대화하는 것"
+      },
+      "answer": 2,
+      "category": "LLM Application",
+      "explanation": "현업에서는 LLM 단독보다는 실제 데이터를 기반으로 수행하며, 결과에 대한 평가 방식과 데이터를 수급하는 파이프라인이 가장 중요한 부분입니다."
+    },
+    {
+      "id": 224,
+      "question": "LLM 어플리케이션 개발에서 RAG(Retrieval-Augmented Generation)의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "모델을 경량화한다",
+        "2": "외부 지식 베이스를 활용하여 최신 정보 및 도메인 지식을 보강한다",
+        "3": "모델의 학습 속도를 높인다",
+        "4": "오직 이미지 생성에 사용된다",
+        "5": "Tool Calling을 제거한다"
+      },
+      "answer": 2,
+      "category": "LLM Application",
+      "explanation": "RAG는 외부 지식 베이스를 활용하여 LLM의 한계(지식 컷오프, 도메인 지식 부족 등)를 보완하고 최신 정보 및 특정 도메인의 전문 지식을 제공하는 핵심 기법입니다."
+    },
+    {
+      "id": 225,
+      "question": "Qwen 3의 학습 파이프라인에서 DeepSeek 스타일로 분류되는 주요 단계는?",
+      "points": 4,
+      "options": {
+        "1": "사전학습만 진행",
+        "2": "Cold Start + RL + Distillation",
+        "3": "오직 Fine-tuning만 수행",
+        "4": "데이터 수집만 진행",
+        "5": "모델 압축만 수행"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "Qwen 3의 학습 파이프라인은 DeepSeek 스타일로 Cold Start(초기 긴 추론 능력 구축) + RL(강화학습을 통한 개선) + Distillation(작은 모델로 지식 전달)의 3단계로 구성됩니다."
+    },
+    {
+      "id": 226,
+      "question": "Gemma 3 시리즈가 제공하는 모델 크기가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "236M",
+        "2": "1B",
+        "3": "4B",
+        "4": "70B",
+        "5": "위 모두 Gemma 3 시리즈에 포함된다"
+      },
+      "answer": 4,
+      "category": "sLLM",
+      "explanation": "Gemma 3 시리즈는 236M, 1B, 4B 등 다양한 크기의 경량 모델을 제공합니다. 70B는 Gemma 3 시리즈에 포함되지 않으며, Llama 계열의 크기입니다."
+    },
+    {
+      "id": 227,
+      "question": "파인 튜닝을 통한 단일 작업 성능 향상의 장점은?",
+      "points": 4,
+      "options": {
+        "1": "모든 작업에서 동시에 성능이 향상된다",
+        "2": "특정 도메인이나 기업용 규칙에 맞는 sLLM을 구성할 수 있다",
+        "3": "모델 크기가 자동으로 줄어든다",
+        "4": "학습 데이터가 필요없다",
+        "5": "Reasoning 능력이 자동으로 추가된다"
+      },
+      "answer": 2,
+      "category": "sLLM",
+      "explanation": "파인튜닝을 통해 특정 도메인이나 기업의 규칙에 맞는 sLLM을 구성할 수 있습니다. 예를 들어, 기업용 코드의 규칙 준수를 판단하는 sLLM 배치가 가능합니다."
+    },
+    {
+      "id": 228,
+      "question": "Context Window가 LLM 어플리케이션에서 의미하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "모델의 파라미터 개수",
+        "2": "모델이 한 번에 처리할 수 있는 토큰의 최대 길이",
+        "3": "학습에 사용된 데이터의 양",
+        "4": "GPU 메모리 크기",
+        "5": "Thinking 토큰의 개수"
+      },
+      "answer": 2,
+      "category": "LLM Application",
+      "explanation": "Context Window는 LLM이 한 번에 처리할 수 있는 토큰(입력+출력)의 최대 길이를 의미합니다. Reasoning 모델의 성능 지표 표에서 GPT-5 (high)는 400k, Gemini 2.5 Pro는 1m 등 다양한 크기의 Context Window를 가집니다."
+    },
+    {
+      "id": 229,
+      "question": "LLM 어플리케이션의 데이터 파이프라인 구성요소가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "데이터 수집 및 저장",
+        "2": "데이터 전처리 및 정제",
+        "3": "결과 검증 및 피드백",
+        "4": "지속적 개선",
+        "5": "GPU 교체"
+      },
+      "answer": 5,
+      "category": "LLM Application",
+      "explanation": "LLM 어플리케이션의 데이터 파이프라인은 데이터 수집/저장, 전처리/정제, LLM 처리, 결과 검증/피드백, 지속적 개선으로 구성됩니다. GPU 교체는 인프라 관리 영역으로 파이프라인의 구성요소가 아닙니다."
+    },
+    {
+      "id": 230,
+      "question": "다음 중 상용 LLM API를 제공하는 기업이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI",
+        "2": "Anthropic",
+        "3": "Google",
+        "4": "Meta",
+        "5": "Microsoft (Azure)"
+      },
+      "answer": 4,
+      "category": "LLM API 기초",
+      "explanation": "Meta는 LLaMA와 같은 오픈소스 모델을 제공하지만, 직접적인 상용 API 서비스를 제공하지 않습니다. OpenAI, Anthropic, Google, Microsoft는 모두 상용 API를 제공합니다."
+    },
+    {
+      "id": 231,
+      "question": "OpenAI의 Python SDK를 설치하는 올바른 명령어는?",
+      "points": 4,
+      "options": {
+        "1": "pip install openai-python",
+        "2": "pip install openai",
+        "3": "npm install openai",
+        "4": "pip install gpt",
+        "5": "conda install openai"
+      },
+      "answer": 2,
+      "category": "OpenAI SDK",
+      "explanation": "OpenAI Python SDK는 'pip install openai' 명령어로 설치합니다. npm은 Node.js 패키지 관리자이며, conda도 사용 가능하지만 공식 문서에서는 pip를 권장합니다."
+    },
+    {
+      "id": 232,
+      "question": "API Key를 안전하게 관리하는 방법으로 가장 적절하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "환경 변수로 관리",
+        "2": "코드에 직접 하드코딩",
+        "3": ".env 파일 사용 후 .gitignore에 추가",
+        "4": "정기적인 Key 교체",
+        "5": "Key 권한 최소화"
+      },
+      "answer": 2,
+      "category": "API Key 관리",
+      "explanation": "API Key를 코드에 직접 하드코딩하면 GitHub 등에 노출될 위험이 있습니다. 반드시 환경 변수나 .env 파일을 사용하여 관리해야 합니다."
+    },
+    {
+      "id": 233,
+      "question": "다음 중 오픈소스 LLM이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "LLaMA",
+        "2": "Gemma",
+        "3": "Mistral",
+        "4": "GPT-4",
+        "5": "Ollama"
+      },
+      "answer": 4,
+      "category": "오픈소스 LLM",
+      "explanation": "GPT-4는 OpenAI의 상용 모델로 오픈소스가 아닙니다. LLaMA, Gemma, Mistral은 오픈소스 모델이며, Ollama는 오픈소스 모델을 실행하는 도구입니다."
+    },
+    {
+      "id": 234,
+      "question": "OpenAI Chat API에서 AI의 역할을 정의하는 데 사용하는 role은?",
+      "points": 4,
+      "options": {
+        "1": "user",
+        "2": "system",
+        "3": "assistant",
+        "4": "admin",
+        "5": "developer"
+      },
+      "answer": 2,
+      "category": "Chat API",
+      "explanation": "system role은 AI의 역할이나 행동 방식을 정의하는 시스템 프롬프트에 사용됩니다. user는 사용자 입력, assistant는 AI의 응답을 나타냅니다."
+    },
+    {
+      "id": 235,
+      "question": "temperature 매개변수에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "값이 높을수록 일관된 답변 생성",
+        "2": "값이 낮을수록 창의적인 답변 생성",
+        "3": "0.0~2.0 범위의 값을 가짐",
+        "4": "최대 토큰 수를 조절함",
+        "5": "응답 속도를 조절함"
+      },
+      "answer": 3,
+      "category": "API 매개변수",
+      "explanation": "temperature는 0.0~2.0 범위의 값을 가지며, 낮을수록 일관된 답변, 높을수록 창의적인 답변을 생성합니다. 최대 토큰 수는 max_tokens 매개변수로 조절합니다."
+    },
+    {
+      "id": 236,
+      "question": "다음 코드의 실행 결과로 가장 적합한 것은?\n\nfrom openai import OpenAI\nclient = OpenAI(api_key=\"sk-test\")\nresponse = client.chat.completions.create(\n    model=\"gpt-4o-mini\",\n    messages=[{\"role\": \"user\", \"content\": \"Hi\"}]\n)\nprint(type(response))",
+      "points": 4,
+      "options": {
+        "1": "str",
+        "2": "dict",
+        "3": "ChatCompletion 객체",
+        "4": "list",
+        "5": "에러 발생"
+      },
+      "answer": 3,
+      "category": "OpenAI SDK",
+      "explanation": "OpenAI SDK의 chat.completions.create() 메서드는 ChatCompletion 객체를 반환합니다. 실제 응답 텍스트는 response.choices[0].message.content로 접근합니다."
+    },
+    {
+      "id": 237,
+      "question": "curl 명령어로 OpenAI API를 호출할 때 필수적으로 포함해야 하는 헤더는?",
+      "points": 4,
+      "options": {
+        "1": "Content-Type만",
+        "2": "Authorization만",
+        "3": "Content-Type과 Authorization 모두",
+        "4": "Accept-Language",
+        "5": "User-Agent"
+      },
+      "answer": 3,
+      "category": "API 호출",
+      "explanation": "curl로 API 호출 시 Content-Type: application/json과 Authorization: Bearer $API_KEY 헤더를 모두 포함해야 합니다."
+    },
+    {
+      "id": 238,
+      "question": "vLLM에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI의 공식 라이브러리",
+        "2": "고성능 LLM 추론을 위한 라이브러리",
+        "3": "음성 인식 전용 라이브러리",
+        "4": "이미지 생성 라이브러리",
+        "5": "데이터베이스 관리 도구"
+      },
+      "answer": 2,
+      "category": "오픈소스 라이브러리",
+      "explanation": "vLLM은 PagedAttention 알고리즘을 사용하여 메모리 효율을 높이고 높은 처리량을 제공하는 고성능 LLM 추론 라이브러리입니다."
+    },
+    {
+      "id": 239,
+      "question": "Groq의 주요 특징은?",
+      "points": 4,
+      "options": {
+        "1": "저비용 추론 서비스",
+        "2": "초고속 추론을 위한 LPU 사용",
+        "3": "오픈소스 모델 학습 플랫폼",
+        "4": "데이터 전처리 도구",
+        "5": "프롬프트 엔지니어링 도구"
+      },
+      "answer": 2,
+      "category": "클라우드 API",
+      "explanation": "Groq은 LPU(Language Processing Unit)라는 특화된 하드웨어를 사용하여 초고속 추론을 제공하는 서비스입니다."
+    },
+    {
+      "id": 240,
+      "question": "OpenRouter의 주요 장점은?",
+      "points": 4,
+      "options": {
+        "1": "무료 LLM 제공",
+        "2": "단일 API로 여러 모델 접근 가능",
+        "3": "가장 빠른 추론 속도",
+        "4": "오픈소스 모델만 지원",
+        "5": "한국어 전용 서비스"
+      },
+      "answer": 2,
+      "category": "통합 플랫폼",
+      "explanation": "OpenRouter는 여러 LLM API를 통합하여 단일 API로 다양한 모델에 접근할 수 있으며, 자동 라우팅 및 로드 밸런싱 기능을 제공합니다."
+    },
+    {
+      "id": 241,
+      "question": "Ollama에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "클라우드 전용 서비스",
+        "2": "로컬에서 LLM을 쉽게 실행할 수 있는 도구",
+        "3": "유료 상용 API",
+        "4": "이미지 생성 전용 도구",
+        "5": "데이터 라벨링 도구"
+      },
+      "answer": 2,
+      "category": "오픈소스 라이브러리",
+      "explanation": "Ollama는 로컬 환경에서 다양한 오픈소스 LLM을 간단한 명령어로 실행할 수 있게 해주는 도구입니다."
+    },
+    {
+      "id": 242,
+      "question": "OpenAI API의 Billing 시스템에서 확인할 수 있는 정보가 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "Credit Balance (잔액)",
+        "2": "Usage limits (사용 한도)",
+        "3": "Billing history (청구 내역)",
+        "4": "소스 코드",
+        "5": "모델별 사용량"
+      },
+      "answer": 4,
+      "category": "Billing 관리",
+      "explanation": "Billing 시스템에서는 잔액, 사용 한도, 청구 내역, 모델별 사용량 등을 확인할 수 있지만, 소스 코드는 확인할 수 없습니다."
+    },
+    {
+      "id": 243,
+      "question": "HyperCLOVA의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "Google의 오픈소스 모델",
+        "2": "Meta의 대규모 언어 모델",
+        "3": "네이버의 한국어 특화 모델",
+        "4": "OpenAI의 상용 모델",
+        "5": "Anthropic의 모델"
+      },
+      "answer": 3,
+      "category": "오픈소스 LLM",
+      "explanation": "HyperCLOVA는 네이버에서 개발한 한국어에 특화된 대규모 언어 모델입니다."
+    },
+    {
+      "id": 244,
+      "question": "다음 중 Chat API의 messages 배열에 포함될 수 있는 role이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "system",
+        "2": "user",
+        "3": "assistant",
+        "4": "function",
+        "5": "moderator"
+      },
+      "answer": 5,
+      "category": "Chat API",
+      "explanation": "Chat API의 role로는 system, user, assistant, function(tool) 등이 있지만 moderator는 없습니다."
+    },
+    {
+      "id": 245,
+      "question": "temperature를 0.2로 설정했을 때 기대되는 결과는?",
+      "points": 4,
+      "options": {
+        "1": "매우 창의적이고 다양한 답변",
+        "2": "일관되고 정확한 답변",
+        "3": "무작위 답변",
+        "4": "에러 발생",
+        "5": "응답 속도가 빨라짐"
+      },
+      "answer": 2,
+      "category": "API 매개변수",
+      "explanation": "temperature가 낮을수록 (0에 가까울수록) 확률이 높은 토큰을 선택하여 일관되고 정확한 답변을 생성합니다."
+    },
+    {
+      "id": 246,
+      "question": "max_tokens 매개변수의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "입력 토큰의 최대 개수",
+        "2": "생성할 출력의 최대 토큰 수",
+        "3": "API 호출 횟수 제한",
+        "4": "동시 요청 수 제한",
+        "5": "응답 시간 제한"
+      },
+      "answer": 2,
+      "category": "API 매개변수",
+      "explanation": "max_tokens는 모델이 생성할 출력(응답)의 최대 토큰 수를 제한하는 매개변수입니다."
+    },
+    {
+      "id": 247,
+      "question": "AWS에서 LLM을 활용할 수 있는 서비스는?",
+      "points": 4,
+      "options": {
+        "1": "EC2만",
+        "2": "S3만",
+        "3": "Amazon Bedrock, SageMaker",
+        "4": "Lambda만",
+        "5": "RDS만"
+      },
+      "answer": 3,
+      "category": "클라우드 플랫폼",
+      "explanation": "AWS에서는 Amazon Bedrock과 SageMaker를 통해 다양한 LLM을 활용할 수 있습니다."
+    },
+    {
+      "id": 248,
+      "question": "Hugging Face의 Transformers 라이브러리를 사용하는 주요 장점은?",
+      "points": 4,
+      "options": {
+        "1": "유료 API 사용 불필요",
+        "2": "로컬 환경에서 모델 실행 가능",
+        "3": "모델 구조에 대한 완전한 제어",
+        "4": "위의 모든 것",
+        "5": "1번과 2번만"
+      },
+      "answer": 4,
+      "category": "오픈소스 라이브러리",
+      "explanation": "Transformers 라이브러리는 유료 API 없이 로컬에서 모델을 실행할 수 있고, 모델 구조에 대한 완전한 제어가 가능합니다."
+    },
+    {
+      "id": 249,
+      "question": "다음 중 LLaMA 모델에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI의 상용 모델",
+        "2": "Meta에서 공개한 오픈소스 모델",
+        "3": "Google의 검색 엔진",
+        "4": "Microsoft의 클라우드 서비스",
+        "5": "이미지 생성 모델"
+      },
+      "answer": 2,
+      "category": "오픈소스 LLM",
+      "explanation": "LLaMA(Large Language Model Meta AI)는 Meta(구 Facebook)에서 공개한 오픈소스 대규모 언어 모델입니다."
+    },
+    {
+      "id": 250,
+      "question": "API 호출 시 발생할 수 있는 에러 처리를 위해 구현해야 하는 것은?",
+      "points": 4,
+      "options": {
+        "1": "try-except 블록",
+        "2": "Rate limiting 대응",
+        "3": "타임아웃 설정",
+        "4": "위의 모든 것",
+        "5": "1번과 2번만"
+      },
+      "answer": 4,
+      "category": "API 호출",
+      "explanation": "프로덕션 환경에서는 try-except를 통한 예외 처리, rate limiting 대응, 타임아웃 설정 등 모든 에러 처리를 구현해야 합니다."
+    },
+    {
+      "id": 251,
+      "question": "Azure OpenAI Service의 주요 장점은?",
+      "points": 4,
+      "options": {
+        "1": "무료 사용",
+        "2": "엔터프라이즈급 보안 및 컴플라이언스",
+        "3": "가장 빠른 속도",
+        "4": "오픈소스 전용",
+        "5": "API Key 불필요"
+      },
+      "answer": 2,
+      "category": "클라우드 플랫폼",
+      "explanation": "Azure OpenAI Service는 기업용 보안, 컴플라이언스, 기존 Azure 인프라와의 통합 등 엔터프라이즈급 기능을 제공합니다."
+    },
+    {
+      "id": 252,
+      "question": "다음 코드에서 잘못된 부분은?\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4o-mini\",\n    messages=[{\"role\": \"admin\", \"content\": \"Hello\"}]\n)",
+      "points": 4,
+      "options": {
+        "1": "model 이름이 잘못됨",
+        "2": "role이 잘못됨 (admin은 유효하지 않음)",
+        "3": "messages 형식이 잘못됨",
+        "4": "content가 잘못됨",
+        "5": "문제없음"
+      },
+      "answer": 2,
+      "category": "Chat API",
+      "explanation": "role에는 'system', 'user', 'assistant' 등만 사용할 수 있으며, 'admin'은 유효한 role이 아닙니다."
+    },
+    {
+      "id": 253,
+      "question": "프롬프트 엔지니어링에서 few-shot learning이란?",
+      "points": 4,
+      "options": {
+        "1": "모델을 재학습시키는 것",
+        "2": "예시를 제공하여 원하는 출력 형식을 유도하는 것",
+        "3": "API 호출 횟수를 줄이는 것",
+        "4": "temperature를 낮추는 것",
+        "5": "max_tokens를 증가시키는 것"
+      },
+      "answer": 2,
+      "category": "프롬프트 엔지니어링",
+      "explanation": "few-shot learning은 프롬프트에 몇 개의 예시를 제공하여 모델이 원하는 형식이나 스타일로 답변하도록 유도하는 기법입니다."
+    },
+    {
+      "id": 254,
+      "question": "OpenAI API의 종량제 과금 방식에서 비용이 발생하는 단위는?",
+      "points": 4,
+      "options": {
+        "1": "API 호출 횟수",
+        "2": "토큰(token) 사용량",
+        "3": "응답 시간",
+        "4": "모델 로딩 횟수",
+        "5": "동시 사용자 수"
+      },
+      "answer": 2,
+      "category": "Billing 관리",
+      "explanation": "OpenAI API는 입력과 출력에 사용된 토큰 수를 기준으로 비용이 책정됩니다."
+    },
+    {
+      "id": 255,
+      "question": "Cerebras의 특징으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "저가형 추론 서비스",
+        "2": "대규모 AI 칩을 활용한 추론 서비스",
+        "3": "오픈소스 모델 학습 전용",
+        "4": "모바일 최적화 서비스",
+        "5": "데이터 저장 서비스"
+      },
+      "answer": 2,
+      "category": "클라우드 API",
+      "explanation": "Cerebras는 대규모 AI 칩을 활용하여 빠른 응답 시간과 배치 처리 최적화를 제공하는 추론 서비스입니다."
+    },
+    {
+      "id": 256,
+      "question": "다음 중 API Key 유출 시 즉시 취해야 할 조치는?",
+      "points": 4,
+      "options": {
+        "1": "아무것도 하지 않음",
+        "2": "API Key 재발급",
+        "3": "사용량 모니터링만",
+        "4": "비밀번호 변경",
+        "5": "계정 삭제"
+      },
+      "answer": 2,
+      "category": "API Key 관리",
+      "explanation": "API Key가 유출되면 즉시 해당 Key를 비활성화하고 새로운 Key를 재발급받아야 합니다."
+    },
+    {
+      "id": 257,
+      "question": "비용 최적화를 위해 간단한 작업에 사용하기 적합한 모델은?",
+      "points": 4,
+      "options": {
+        "1": "gpt-4",
+        "2": "gpt-4-turbo",
+        "3": "gpt-3.5-turbo",
+        "4": "dall-e-3",
+        "5": "whisper-large"
+      },
+      "answer": 3,
+      "category": "비용 최적화",
+      "explanation": "간단한 작업에는 비용 효율적인 gpt-3.5-turbo를 사용하고, 복잡한 작업에만 gpt-4를 사용하는 것이 비용 최적화 전략입니다."
+    },
+    {
+      "id": 258,
+      "question": "다음 중 Gemma 모델에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "Meta의 상용 모델",
+        "2": "Google의 오픈소스 모델",
+        "3": "OpenAI의 최신 모델",
+        "4": "Anthropic의 모델",
+        "5": "Microsoft의 클라우드 서비스"
+      },
+      "answer": 2,
+      "category": "오픈소스 LLM",
+      "explanation": "Gemma는 Google에서 공개한 오픈소스 대규모 언어 모델입니다."
+    },
+    {
+      "id": 259,
+      "question": "대화 이력을 포함한 API 호출에서 messages 배열의 올바른 구조는?",
+      "points": 4,
+      "options": {
+        "1": "최신 메시지만 포함",
+        "2": "system, user, assistant 순서로 전체 대화 이력 포함",
+        "3": "user 메시지만 포함",
+        "4": "assistant 메시지만 포함",
+        "5": "system 메시지만 포함"
+      },
+      "answer": 2,
+      "category": "Chat API",
+      "explanation": "대화 이력을 유지하려면 system 프롬프트를 포함하여 user와 assistant의 전체 대화 이력을 순서대로 messages 배열에 포함해야 합니다."
+    },
+    {
+      "id": 260,
+      "question": "환경 변수로 API Key를 설정하는 Python 코드는?",
+      "points": 4,
+      "options": {
+        "1": "api_key = 'sk-...'",
+        "2": "api_key = os.environ.get('OPENAI_API_KEY')",
+        "3": "api_key = input('Enter API Key:')",
+        "4": "api_key = config.API_KEY",
+        "5": "api_key = sys.argv[1]"
+      },
+      "answer": 2,
+      "category": "API Key 관리",
+      "explanation": "os.environ.get()을 사용하여 환경 변수에서 API Key를 안전하게 가져오는 것이 권장되는 방법입니다."
+    },
+    {
+      "id": 261,
+      "question": "Mistral 모델의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "중국 기업의 모델",
+        "2": "유럽 기반의 고성능 오픈소스 모델",
+        "3": "이미지 생성 전용 모델",
+        "4": "음성 인식 전용 모델",
+        "5": "번역 전용 모델"
+      },
+      "answer": 2,
+      "category": "오픈소스 LLM",
+      "explanation": "Mistral은 프랑스의 Mistral AI에서 개발한 유럽 기반의 고성능 오픈소스 언어 모델입니다."
+    },
+    {
+      "id": 262,
+      "question": "다음 중 GPT-4 Vision API에서 지원하는 입력 형식은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트만",
+        "2": "이미지만",
+        "3": "텍스트와 이미지 모두",
+        "4": "음성만",
+        "5": "동영상만"
+      },
+      "answer": 3,
+      "category": "Chat API",
+      "explanation": "GPT-4 Vision(gpt-4-vision-preview)은 텍스트와 이미지를 모두 입력으로 받아 분석할 수 있는 멀티모달 모델입니다."
+    },
+    {
+      "id": 263,
+      "question": "top_p 매개변수(nucleus sampling)의 역할은?",
+      "points": 4,
+      "options": {
+        "1": "최대 토큰 수 조절",
+        "2": "확률 분포의 상위 p% 내에서 토큰 선택",
+        "3": "응답 속도 조절",
+        "4": "API 호출 우선순위 설정",
+        "5": "모델 버전 선택"
+      },
+      "answer": 2,
+      "category": "API 매개변수",
+      "explanation": "top_p는 누적 확률이 p에 도달할 때까지의 토큰들 중에서 선택하는 nucleus sampling 기법의 매개변수입니다."
+    },
+    {
+      "id": 264,
+      "question": "캐싱을 활용한 비용 절감 방법은?",
+      "points": 4,
+      "options": {
+        "1": "동일한 질문의 응답을 저장하여 재사용",
+        "2": "API Key를 여러 개 사용",
+        "3": "temperature를 높임",
+        "4": "max_tokens를 늘림",
+        "5": "모델을 자주 변경"
+      },
+      "answer": 1,
+      "category": "비용 최적화",
+      "explanation": "자주 사용하는 질문의 응답을 캐싱하여 재사용하면 API 호출 횟수를 줄여 비용을 절감할 수 있습니다."
+    },
+    {
+      "id": 265,
+      "question": "OpenAI SDK에서 스트리밍 방식으로 응답을 받는 매개변수는?",
+      "points": 4,
+      "options": {
+        "1": "stream=True",
+        "2": "streaming=True",
+        "3": "real_time=True",
+        "4": "async=True",
+        "5": "live=True"
+      },
+      "answer": 1,
+      "category": "OpenAI SDK",
+      "explanation": "stream=True 매개변수를 설정하면 응답을 실시간으로 스트리밍 방식으로 받을 수 있습니다."
+    },
+    {
+      "id": 266,
+      "question": "다음 중 프로덕션 환경에서 권장되지 않는 방법은?",
+      "points": 4,
+      "options": {
+        "1": "에러 핸들링 구현",
+        "2": "Rate limiting 대응",
+        "3": "API Key를 코드에 하드코딩",
+        "4": "로깅 구현",
+        "5": "타임아웃 설정"
+      },
+      "answer": 3,
+      "category": "API 호출",
+      "explanation": "프로덕션 환경에서는 API Key를 절대 코드에 하드코딩하지 않고 환경 변수나 시크릿 관리 시스템을 사용해야 합니다."
+    },
+    {
+      "id": 267,
+      "question": "Node.js에서 OpenAI SDK를 설치하는 명령어는?",
+      "points": 4,
+      "options": {
+        "1": "pip install openai",
+        "2": "npm install openai",
+        "3": "yarn add gpt",
+        "4": "npm install gpt-api",
+        "5": "brew install openai"
+      },
+      "answer": 2,
+      "category": "OpenAI SDK",
+      "explanation": "Node.js 환경에서는 npm(또는 yarn)을 사용하여 'npm install openai' 명령어로 OpenAI SDK를 설치합니다."
+    },
+    {
+      "id": 268,
+      "question": "다음 중 system role의 올바른 사용 예는?",
+      "points": 4,
+      "options": {
+        "1": "{\"role\": \"system\", \"content\": \"안녕하세요\"}",
+        "2": "{\"role\": \"system\", \"content\": \"당신은 전문 번역가입니다\"}",
+        "3": "{\"role\": \"system\", \"content\": \"이것을 번역해주세요\"}",
+        "4": "{\"role\": \"system\", \"content\": \"감사합니다\"}",
+        "5": "{\"role\": \"system\", \"content\": \"더 자세히 설명해주세요\"}"
+      },
+      "answer": 2,
+      "category": "Chat API",
+      "explanation": "system role은 AI의 역할이나 페르소나를 정의하는 데 사용됩니다. '당신은 전문 번역가입니다'처럼 AI의 역할을 명시하는 것이 올바른 사용법입니다."
+    },
+    {
+      "id": 269,
+      "question": "LLM API 사용 시 윤리적 고려사항이 아닌 것은?",
+      "points": 4,
+      "options": {
+        "1": "유해한 콘텐츠 생성 금지",
+        "2": "개인정보 보호 준수",
+        "3": "편향성 인식 및 완화",
+        "4": "API 호출 속도 최대화",
+        "5": "모델의 제한사항 이해"
+      },
+      "answer": 4,
+      "category": "윤리적 사용",
+      "explanation": "API 호출 속도 최대화는 기술적 고려사항이며, 윤리적 고려사항은 유해 콘텐츠 방지, 개인정보 보호, 편향성 완화 등입니다."
+    },
+    {
+      "id": 270,
+      "question": "다음 코드의 출력 결과는?\n\nresponse = client.chat.completions.create(\n    model=\"gpt-4o-mini\",\n    messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n    max_tokens=5\n)\nprint(response.choices[0].message.content)",
+      "points": 4,
+      "options": {
+        "1": "최대 5개의 토큰으로 제한된 짧은 응답",
+        "2": "정확히 5개의 단어",
+        "3": "5개의 문장",
+        "4": "에러 발생",
+        "5": "제한 없는 전체 응답"
+      },
+      "answer": 1,
+      "category": "API 매개변수",
+      "explanation": "max_tokens=5로 설정하면 모델이 생성하는 응답이 최대 5개의 토큰으로 제한되어 매우 짧은 응답이 생성됩니다."
+    },
+    {
+      "id": 271,
+      "question": "Rate limiting 에러를 방지하기 위한 방법은?",
+      "points": 4,
+      "options": {
+        "1": "요청 간 지연 시간 추가",
+        "2": "지수 백오프(exponential backoff) 구현",
+        "3": "병렬 요청 수 제한",
+        "4": "위의 모든 것",
+        "5": "1번과 2번만"
+      },
+      "answer": 4,
+      "category": "API 호출",
+      "explanation": "Rate limiting 에러를 방지하려면 요청 간 지연, 지수 백오프, 병렬 요청 수 제한 등 다양한 방법을 함께 사용하는 것이 좋습니다."
+    },
+    {
+      "id": 272,
+      "question": "OpenAI의 Whisper API는 무엇을 위한 것인가?",
+      "points": 4,
+      "options": {
+        "1": "텍스트 생성",
+        "2": "이미지 생성",
+        "3": "음성 인식(Speech-to-Text)",
+        "4": "번역",
+        "5": "요약"
+      },
+      "answer": 3,
+      "category": "OpenAI API",
+      "explanation": "Whisper는 OpenAI의 음성 인식(Speech-to-Text) API로, 오디오 파일을 텍스트로 변환합니다."
+    },
+    {
+      "id": 273,
+      "question": "다음 중 토큰(token)에 대한 설명으로 올바른 것은?",
+      "points": 4,
+      "options": {
+        "1": "항상 하나의 단어와 동일",
+        "2": "API 인증 키",
+        "3": "텍스트를 작은 단위로 나눈 것",
+        "4": "파일 크기 단위",
+        "5": "요청 횟수 단위"
+      },
+      "answer": 3,
+      "category": "LLM 기초",
+      "explanation": "토큰은 모델이 처리하는 텍스트의 기본 단위로, 단어, 부분 단어, 문장 부호 등이 토큰이 될 수 있습니다. 대략 4자 = 1토큰(영어 기준)입니다."
+    },
+    {
+      "id": 274,
+      "question": "function calling(도구 호출) 기능의 용도는?",
+      "points": 4,
+      "options": {
+        "1": "API 호출 횟수 증가",
+        "2": "LLM이 외부 도구나 API를 호출할 수 있게 함",
+        "3": "응답 속도 향상",
+        "4": "비용 절감",
+        "5": "모델 학습"
+      },
+      "answer": 2,
+      "category": "Chat API",
+      "explanation": "function calling(도구 호출)은 LLM이 외부 API나 도구를 호출하여 실시간 정보를 가져오거나 작업을 수행할 수 있게 하는 기능입니다."
+    },
+    {
+      "id": 275,
+      "question": "다음 중 temperature=0으로 설정했을 때의 특징은?",
+      "points": 4,
+      "options": {
+        "1": "완전히 무작위 출력",
+        "2": "가장 확률이 높은 토큰만 선택 (결정론적)",
+        "3": "에러 발생",
+        "4": "응답 속도 최대화",
+        "5": "창의성 최대화"
+      },
+      "answer": 2,
+      "category": "API 매개변수",
+      "explanation": "temperature=0으로 설정하면 항상 가장 확률이 높은 토큰을 선택하여 결정론적이고 일관된 출력을 생성합니다."
+    },
+    {
+      "id": 276,
+      "question": "Anthropic의 Claude API에서 사용하는 메시지 역할(role)은?",
+      "points": 4,
+      "options": {
+        "1": "system, user, bot",
+        "2": "user, assistant",
+        "3": "human, ai",
+        "4": "input, output",
+        "5": "question, answer"
+      },
+      "answer": 2,
+      "category": "LLM API 기초",
+      "explanation": "Anthropic의 Claude API는 'user'(사용자)와 'assistant'(AI) 역할을 사용하며, system 프롬프트는 별도 매개변수로 전달합니다."
+    },
+    {
+      "id": 277,
+      "question": "대규모 배치 처리에 가장 적합한 라이브러리는?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI SDK의 기본 기능",
+        "2": "vLLM",
+        "3": "Ollama",
+        "4": "curl",
+        "5": "Postman"
+      },
+      "answer": 2,
+      "category": "오픈소스 라이브러리",
+      "explanation": "vLLM은 높은 처리량(throughput)과 메모리 효율을 제공하여 대규모 배치 처리에 가장 적합합니다."
+    },
+    {
+      "id": 278,
+      "question": "다음 중 API 응답에서 실제 생성된 텍스트를 추출하는 올바른 방법은?",
+      "points": 4,
+      "options": {
+        "1": "response.text",
+        "2": "response.content",
+        "3": "response.choices[0].message.content",
+        "4": "response.output",
+        "5": "response.result"
+      },
+      "answer": 3,
+      "category": "OpenAI SDK",
+      "explanation": "OpenAI API의 응답에서 생성된 텍스트는 response.choices[0].message.content로 접근합니다."
+    },
+    {
+      "id": 279,
+      "question": "API 호출 시 timeout 설정이 중요한 이유는?",
+      "points": 4,
+      "options": {
+        "1": "비용 절감",
+        "2": "응답 품질 향상",
+        "3": "무한 대기 방지 및 안정성 확보",
+        "4": "속도 향상",
+        "5": "토큰 수 증가"
+      },
+      "answer": 3,
+      "category": "API 호출",
+      "explanation": "timeout을 설정하지 않으면 네트워크 문제나 서버 응답 지연 시 무한정 대기할 수 있으므로, 안정적인 애플리케이션을 위해 적절한 timeout 설정이 필수입니다."
+    },
+    {
+      "id": 280,
+      "question": "LangChain에 대한 설명으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI 전용 라이브러리",
+        "2": "LLM 어플리케이션 개발 프레임워크",
+        "3": "데이터베이스 관리 도구",
+        "4": "웹 프레임워크",
+        "5": "이미지 생성 라이브러리"
+      },
+      "answer": 2,
+      "category": "LangChain 기초",
+      "explanation": "LangChain은 LLM(Large Language Model) 어플리케이션 개발을 위한 프레임워크로, 다양한 도구와 추상화를 지원합니다."
+    },
+    {
+      "id": 281,
+      "question": "기존 OpenAI API 사용 방식의 문제점으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "API 호출 속도가 느림",
+        "2": "비용이 너무 비쌈",
+        "3": "Model이나 Provider 변경 시 코드 수정이 어려움",
+        "4": "Python에서만 사용 가능함",
+        "5": "동시 접속이 불가능함"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "OpenAI API를 직접 사용할 경우, Model이나 Provider를 변경할 때마다 코드를 대폭 수정해야 하는 문제가 있습니다. LangChain은 이를 해결하기 위해 통일된 인터페이스를 제공합니다."
+    },
+    {
+      "id": 282,
+      "question": "LangChain에서 '추상화(Abstraction)'가 제공하는 가장 큰 이점은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "실행 속도를 빠르게 함",
+        "2": "ML이나 AI 배경 지식이 적어도 LLM 기반 어플리케이션 구성 가능",
+        "3": "API 비용을 절감함",
+        "4": "더 많은 토큰을 사용할 수 있음",
+        "5": "GPU를 사용하지 않아도 됨"
+      },
+      "answer": 2,
+      "category": "LangChain 기초",
+      "explanation": "LangChain의 추상화는 복잡한 내부 구현을 숨기고 간단한 인터페이스를 제공하여, ML이나 AI 배경 지식이 부족해도 LLM 기반 어플리케이션을 쉽게 구성할 수 있게 합니다."
+    },
+    {
+      "id": 283,
+      "question": "LangChain이 지원하는 모델 유형에 대한 설명으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Open 모델만 지원",
+        "2": "Closed 모델만 지원",
+        "3": "Open·Closed 모델 모두 활용 가능",
+        "4": "Google 모델만 지원",
+        "5": "OpenAI 모델만 지원"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "LangChain은 Open 모델(오픈소스 LLM)과 Closed 모델(상용 API) 모두 동일한 인터페이스로 활용할 수 있습니다."
+    },
+    {
+      "id": 284,
+      "question": "대부분의 LangChain 구성요소를 실행하는 메서드는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "run()",
+        "2": "execute()",
+        "3": "invoke()",
+        "4": "call()",
+        "5": "process()"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "LangChain의 대부분의 구성요소는 invoke() 메서드를 통해 실행됩니다. 이는 통일된 실행 인터페이스를 제공합니다."
+    },
+    {
+      "id": 285,
+      "question": "LangChain을 사용하는 것의 단점으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "비용이 더 많이 듦",
+        "2": "OpenAI만 지원함",
+        "3": "API SDK 대비 약간 느리고, 원하는 기능 구현에 제약이 있을 수 있음",
+        "4": "코드가 더 복잡해짐",
+        "5": "문서화가 부족함"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "LangChain은 추상화 계층을 추가하여 약간의 성능 저하가 있을 수 있고, 때로는 원하는 특정 기능 구현에 제약이 있을 수 있습니다. 하지만 대부분의 경우 이러한 단점은 코드 재사용성과 유지보수 용이성으로 상쇄됩니다."
+    },
+    {
+      "id": 286,
+      "question": "다음 중 LangChain에서 OpenAI 모델을 연결하기 위한 라이브러리는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "langchain-openai",
+        "2": "langchain-gpt",
+        "3": "openai-langchain",
+        "4": "langchain-api",
+        "5": "openai-connect"
+      },
+      "answer": 1,
+      "category": "LLM Provider 연결",
+      "explanation": "OpenAI 모델을 LangChain에 연결하기 위해서는 langchain-openai 라이브러리를 사용합니다."
+    },
+    {
+      "id": 287,
+      "question": "다음 중 Google Gemini 모델을 LangChain에 연결하기 위한 라이브러리는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "langchain-google",
+        "2": "langchain-gemini",
+        "3": "langchain-google-genai",
+        "4": "google-langchain",
+        "5": "langchain-genai"
+      },
+      "answer": 3,
+      "category": "LLM Provider 연결",
+      "explanation": "Google Gemini 모델을 LangChain에 연결하기 위해서는 langchain-google-genai 라이브러리를 사용합니다."
+    },
+    {
+      "id": 288,
+      "question": "다음 중 Anthropic Claude 모델을 LangChain에 연결하기 위한 라이브러리는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "langchain-claude",
+        "2": "langchain-anthropic",
+        "3": "anthropic-langchain",
+        "4": "langchain-ai",
+        "5": "claude-connect"
+      },
+      "answer": 2,
+      "category": "LLM Provider 연결",
+      "explanation": "Anthropic Claude 모델을 LangChain에 연결하기 위해서는 langchain-anthropic 라이브러리를 사용합니다."
+    },
+    {
+      "id": 289,
+      "question": "HuggingFace의 오픈소스 모델을 LangChain에 연결하기 위한 라이브러리는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "langchain-huggingface",
+        "2": "huggingface-langchain",
+        "3": "langchain-hf",
+        "4": "langchain-transformers",
+        "5": "hf-connector"
+      },
+      "answer": 1,
+      "category": "LLM Provider 연결",
+      "explanation": "HuggingFace의 다양한 오픈소스 모델을 LangChain에 연결하기 위해서는 langchain-huggingface 라이브러리를 사용합니다."
+    },
+    {
+      "id": 290,
+      "question": "다음 코드에서 빈칸에 들어갈 적절한 클래스는 무엇입니까?\n\nfrom langchain_openai import _____\n\nllm = _____(model='gpt-4o-mini', temperature=0.5, max_tokens=1024)",
+      "points": 4,
+      "options": {
+        "1": "OpenAI",
+        "2": "ChatOpenAI",
+        "3": "GPTModel",
+        "4": "OpenAIChat",
+        "5": "LLMOpenAI"
+      },
+      "answer": 2,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "LangChain에서 OpenAI의 채팅 모델을 사용하기 위해서는 ChatOpenAI 클래스를 import하여 사용합니다."
+    },
+    {
+      "id": 291,
+      "question": "ChatOpenAI 객체 생성 시 temperature 파라미터의 역할은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "API 호출 속도를 조절",
+        "2": "출력의 창의성/무작위성을 조절 (0~2)",
+        "3": "최대 토큰 수를 제한",
+        "4": "모델 버전을 지정",
+        "5": "응답 시간을 제한"
+      },
+      "answer": 2,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "temperature 파라미터는 출력의 창의성과 무작위성을 조절합니다. 0에 가까울수록 정확하고 일관된 답변을, 2에 가까울수록 창의적이고 다양한 답변을 생성합니다."
+    },
+    {
+      "id": 292,
+      "question": "다음 중 temperature 값이 0에 가까울 때의 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "매우 창의적이고 다양한 답변 생성",
+        "2": "무작위성이 높아짐",
+        "3": "정확하고 일관된 답변 생성",
+        "4": "토큰 사용량이 증가함",
+        "5": "실행 속도가 빨라짐"
+      },
+      "answer": 3,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "temperature가 0에 가까울수록 모델은 가장 확률이 높은 답변을 선택하여 정확하고 일관된 답변을 생성합니다."
+    },
+    {
+      "id": 293,
+      "question": "ChatOpenAI 객체 생성 시 max_tokens 파라미터의 역할은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "입력 토큰의 최대 개수 제한",
+        "2": "출력 토큰의 최대 개수 제한",
+        "3": "API 호출 횟수 제한",
+        "4": "처리 시간 제한",
+        "5": "메모리 사용량 제한"
+      },
+      "answer": 2,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "max_tokens 파라미터는 모델이 생성하는 출력(응답)의 최대 토큰 수를 제한합니다. 이를 통해 응답 길이를 조절하고 비용을 관리할 수 있습니다."
+    },
+    {
+      "id": 294,
+      "question": "다음 코드의 실행 결과로 가장 적합한 것은 무엇입니까?\n\nfrom langchain_openai import ChatOpenAI\n\nllm = ChatOpenAI(model='gpt-4o-mini', temperature=0.5)\nresult = llm.invoke('안녕하세요')",
+      "points": 4,
+      "options": {
+        "1": "에러 발생",
+        "2": "None 반환",
+        "3": "LLM이 생성한 응답 텍스트 반환",
+        "4": "'안녕하세요' 그대로 반환",
+        "5": "토큰 정보만 반환"
+      },
+      "answer": 3,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "invoke() 메서드는 입력 질문에 대해 LLM이 생성한 응답을 반환합니다."
+    },
+    {
+      "id": 295,
+      "question": "Google Gemini 모델을 사용하기 위해 API 키를 발급받을 수 있는 플랫폼은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "OpenAI Platform",
+        "2": "Google Cloud Console",
+        "3": "Google AI Studio",
+        "4": "Azure Portal",
+        "5": "AWS Console"
+      },
+      "answer": 3,
+      "category": "Gemini 연결",
+      "explanation": "Google Gemini 모델을 사용하기 위해서는 Google AI Studio(https://aistudio.google.com)에서 API 키를 발급받아야 합니다."
+    },
+    {
+      "id": 296,
+      "question": "Ollama에 대한 설명으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Google의 LLM 모델",
+        "2": "OpenAI의 새로운 API",
+        "3": "GGUF 양자화 포맷 전용 라이브러리로 CPU 추론도 가능",
+        "4": "클라우드 기반 LLM 서비스",
+        "5": "데이터베이스 관리 도구"
+      },
+      "answer": 3,
+      "category": "Ollama",
+      "explanation": "Ollama는 GGUF 양자화 포맷을 사용하는 오픈소스 로컬 LLM 실행 도구로, Llama.cpp 기반으로 GPU 없이 CPU만으로도 추론이 가능합니다."
+    },
+    {
+      "id": 297,
+      "question": "Ollama의 주요 특징이 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "로컬 환경에서 LLM 실행 가능",
+        "2": "GPU 없이 CPU로 추론 가능",
+        "3": "오픈소스 모델 지원",
+        "4": "클라우드 서버에서만 실행 가능",
+        "5": "Llama.cpp 기반"
+      },
+      "answer": 4,
+      "category": "Ollama",
+      "explanation": "Ollama는 로컬 환경에서 실행되는 도구로, 클라우드 서버가 아닌 사용자의 컴퓨터에서 직접 LLM을 실행할 수 있습니다."
+    },
+    {
+      "id": 298,
+      "question": "LangChain에서 여러 Provider를 전환하기 위해 주로 변경해야 하는 부분은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "전체 코드를 다시 작성",
+        "2": "import 문과 모델 객체 생성 부분만 변경",
+        "3": "데이터베이스 연결 설정 변경",
+        "4": "프로그래밍 언어 변경",
+        "5": "운영체제 변경"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain의 통일된 인터페이스 덕분에 Provider를 변경할 때는 import 문과 모델 객체 생성 부분만 변경하면 되며, 나머지 코드(invoke() 등)는 동일하게 사용할 수 있습니다."
+    },
+    {
+      "id": 299,
+      "question": "다음 중 LangChain을 사용할 때 얻을 수 있는 이점이 아닌 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "코드 재사용성 증대",
+        "2": "유지보수 용이성",
+        "3": "통일된 인터페이스",
+        "4": "API 비용 절감",
+        "5": "Provider 변경의 용이성"
+      },
+      "answer": 4,
+      "category": "LangChain 응용",
+      "explanation": "LangChain은 개발 편의성과 유지보수성을 높여주지만, API 비용 자체를 절감하는 것은 아닙니다. 비용은 사용하는 LLM Provider의 정책에 따라 결정됩니다."
+    },
+    {
+      "id": 300,
+      "question": "LangChain에서 'Open 모델'에 해당하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "GPT-4",
+        "2": "Claude",
+        "3": "Gemini",
+        "4": "Llama, Ollama 등 오픈소스 LLM",
+        "5": "Copilot"
+      },
+      "answer": 4,
+      "category": "LangChain 기초",
+      "explanation": "Open 모델은 Llama, Ollama 등과 같은 오픈소스 LLM을 의미하며, 누구나 자유롭게 사용하고 수정할 수 있습니다."
+    },
+    {
+      "id": 301,
+      "question": "LangChain에서 'Closed 모델'에 해당하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Ollama",
+        "2": "Llama",
+        "3": "GPT, Gemini, Claude 등 상용 API",
+        "4": "오픈소스 모델",
+        "5": "로컬 모델"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "Closed 모델은 OpenAI GPT, Google Gemini, Anthropic Claude 등과 같은 상용 API 기반 LLM을 의미합니다."
+    },
+    {
+      "id": 302,
+      "question": "HuggingFace(https://huggingface.co)의 주요 역할은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "클라우드 스토리지 서비스",
+        "2": "AI 모델 및 데이터셋 공유 플랫폼",
+        "3": "웹 호스팅 서비스",
+        "4": "데이터베이스 관리 도구",
+        "5": "영상 편집 소프트웨어"
+      },
+      "answer": 2,
+      "category": "LLM Provider 연결",
+      "explanation": "HuggingFace는 AI 커뮤니티의 중심 플랫폼으로, 다양한 오픈소스 모델과 데이터셋을 공유하고 사용할 수 있는 플랫폼입니다."
+    },
+    {
+      "id": 303,
+      "question": "다음 중 LangChain의 코드가 API SDK 대비 가지는 장점은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "항상 더 빠름",
+        "2": "비용이 저렴함",
+        "3": "코드가 더 간결함",
+        "4": "더 많은 기능 제공",
+        "5": "GPU가 필요 없음"
+      },
+      "answer": 3,
+      "category": "LangChain 응용",
+      "explanation": "LangChain은 추상화를 통해 API SDK 대비 더 간결한 코드로 동일한 기능을 구현할 수 있습니다."
+    },
+    {
+      "id": 304,
+      "question": "다음 중 LangChain을 사용하지 않고 직접 OpenAI API를 사용하는 것이 더 적합한 경우는 언제입니까?",
+      "points": 4,
+      "options": {
+        "1": "여러 Provider를 전환해야 할 때",
+        "2": "코드 재사용성이 중요할 때",
+        "3": "OpenAI의 특정 고급 기능이 필수적이고 성능이 매우 중요할 때",
+        "4": "초보자가 개발할 때",
+        "5": "유지보수가 중요할 때"
+      },
+      "answer": 3,
+      "category": "LangChain 응용",
+      "explanation": "LangChain이 제공하지 않는 OpenAI의 특정 고급 기능이 필수적이거나, 약간의 성능 차이도 중요한 경우에는 직접 OpenAI API를 사용하는 것이 더 적합할 수 있습니다."
+    },
+    {
+      "id": 305,
+      "question": "다음 코드의 실행 결과는 무엇입니까?\n\nfrom langchain_openai import ChatOpenAI\n\nllm = ChatOpenAI(model='gpt-4o-mini', temperature=0.0, max_tokens=10)\nresult = llm.invoke('파이썬이란?')",
+      "points": 4,
+      "options": {
+        "1": "매우 긴 상세한 설명이 반환됨",
+        "2": "에러가 발생함",
+        "3": "약 10개 토큰 정도의 짧은 답변이 반환됨",
+        "4": "입력이 그대로 반환됨",
+        "5": "무작위 답변이 생성됨"
+      },
+      "answer": 3,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "max_tokens=10으로 설정했기 때문에 약 10개 토큰 정도의 짧은 답변만 생성됩니다. 또한 temperature=0.0으로 설정하여 일관된 답변이 생성됩니다."
+    },
+    {
+      "id": 306,
+      "question": "LangChain에서 Provider별 라이브러리를 별도로 제공하는 이유는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "설치 용량을 줄이기 위해",
+        "2": "빠른 업데이트를 위해",
+        "3": "보안을 강화하기 위해",
+        "4": "비용을 절감하기 위해",
+        "5": "GPU 사용을 최적화하기 위해"
+      },
+      "answer": 2,
+      "category": "LLM Provider 연결",
+      "explanation": "각 Provider별로 별도의 라이브러리를 제공함으로써, 각 Provider의 업데이트에 빠르게 대응하고 독립적으로 버전을 관리할 수 있습니다."
+    },
+    {
+      "id": 307,
+      "question": "다음 중 temperature 값이 2.0에 가까울 때의 특징으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "정확하고 일관된 답변",
+        "2": "매우 창의적이고 다양한 답변",
+        "3": "실행 속도가 빨라짐",
+        "4": "토큰 사용량이 감소함",
+        "5": "에러가 발생함"
+      },
+      "answer": 2,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "temperature가 2.0에 가까울수록 모델은 더 창의적이고 다양한 답변을 생성하며, 무작위성이 높아집니다."
+    },
+    {
+      "id": 308,
+      "question": "Google AI Studio에서 Gemini API를 사용하기 위해 필요한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "신용카드 등록",
+        "2": "GPU 구매",
+        "3": "API 키 발급 및 환경 변수 설정",
+        "4": "유료 구독",
+        "5": "서버 구축"
+      },
+      "answer": 3,
+      "category": "Gemini 연결",
+      "explanation": "Google AI Studio에서 API 키를 발급받고, 이를 환경 변수로 설정하여 Gemini 모델을 사용할 수 있습니다."
+    },
+    {
+      "id": 309,
+      "question": "Ollama가 사용하는 양자화 포맷은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "ONNX",
+        "2": "TensorFlow Lite",
+        "3": "GGUF",
+        "4": "PyTorch Mobile",
+        "5": "CoreML"
+      },
+      "answer": 3,
+      "category": "Ollama",
+      "explanation": "Ollama는 GGUF(GPT-Generated Unified Format) 양자화 포맷을 사용하여 모델 크기를 줄이고 CPU에서도 효율적으로 실행할 수 있게 합니다."
+    },
+    {
+      "id": 310,
+      "question": "다음 중 Ollama를 사용하는 주요 이유로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "클라우드 API 비용 절감 및 로컬 실행",
+        "2": "더 높은 성능",
+        "3": "더 많은 기능 제공",
+        "4": "인터넷 연결 필수",
+        "5": "GPU 필수"
+      },
+      "answer": 1,
+      "category": "Ollama",
+      "explanation": "Ollama는 로컬 환경에서 LLM을 실행할 수 있어 클라우드 API 비용을 절감하고, 인터넷 연결 없이도 사용할 수 있습니다."
+    },
+    {
+      "id": 311,
+      "question": "다음 코드에서 ChatOpenAI와 ChatGoogleGenerativeAI를 전환하려면 어떻게 해야 합니까?\n\nfrom langchain_openai import ChatOpenAI\nllm = ChatOpenAI(model='gpt-4o-mini')\nresult = llm.invoke('안녕')",
+      "points": 4,
+      "options": {
+        "1": "전체 코드를 다시 작성",
+        "2": "import 문과 모델 생성 부분만 변경",
+        "3": "invoke() 메서드를 다른 메서드로 변경",
+        "4": "데이터베이스 연결 변경",
+        "5": "불가능함"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain의 통일된 인터페이스 덕분에 import 문을 'from langchain_google_genai import ChatGoogleGenerativeAI'로 변경하고, 모델 생성 부분만 수정하면 나머지 코드는 동일하게 사용할 수 있습니다."
+    },
+    {
+      "id": 312,
+      "question": "LangChain의 invoke() 메서드가 제공하는 주요 이점은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "실행 속도 향상",
+        "2": "통일된 실행 인터페이스 제공",
+        "3": "비용 절감",
+        "4": "GPU 사용 최적화",
+        "5": "자동 오류 수정"
+      },
+      "answer": 2,
+      "category": "LangChain 기초",
+      "explanation": "invoke() 메서드는 모든 LangChain 구성요소에 대해 통일된 실행 인터페이스를 제공하여, 일관성 있는 코드 작성이 가능합니다."
+    },
+    {
+      "id": 313,
+      "question": "Google Colab에서 LangChain 실습을 위해 권장되는 GPU는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "A100",
+        "2": "V100",
+        "3": "T4 (무료 라이센스)",
+        "4": "P100",
+        "5": "K80"
+      },
+      "answer": 3,
+      "category": "LangChain 응용",
+      "explanation": "교재에서는 Google Colab의 무료 라이센스인 T4 GPU를 사용하는 것을 권장하고 있습니다."
+    },
+    {
+      "id": 314,
+      "question": "LangChain에서 '프레임워크(Framework)'가 제공하는 핵심 가치는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "무료 사용",
+        "2": "체계적인 개발 구조 및 재사용 가능한 컴포넌트 제공",
+        "3": "GPU 성능 향상",
+        "4": "자동 코드 생성",
+        "5": "데이터 저장"
+      },
+      "answer": 2,
+      "category": "LangChain 기초",
+      "explanation": "프레임워크로서 LangChain은 체계적인 개발 구조와 재사용 가능한 컴포넌트를 제공하여 효율적인 개발을 가능하게 합니다."
+    },
+    {
+      "id": 315,
+      "question": "다음 중 LangChain의 추상화가 '숨기는' 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "사용자 데이터",
+        "2": "API 비용",
+        "3": "복잡한 내부 구현",
+        "4": "네트워크 연결",
+        "5": "파일 시스템"
+      },
+      "answer": 3,
+      "category": "LangChain 기초",
+      "explanation": "추상화(Abstraction)는 복잡한 내부 구현을 숨기고 간단한 인터페이스만을 제공하여 사용자가 쉽게 사용할 수 있게 합니다."
+    },
+    {
+      "id": 316,
+      "question": "다음 중 LangChain이 제공하는 '통일된 인터페이스'의 주요 이점은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "실행 속도 향상",
+        "2": "코드 재사용성 및 유지보수 용이성",
+        "3": "메모리 사용량 감소",
+        "4": "자동 오류 수정",
+        "5": "무료 사용"
+      },
+      "answer": 2,
+      "category": "LangChain 기초",
+      "explanation": "통일된 인터페이스는 코드 재사용성을 높이고 유지보수를 쉽게 만들어, 다양한 Provider 간 전환이 용이합니다."
+    },
+    {
+      "id": 317,
+      "question": "OpenAI API를 직접 사용하는 코드와 비교하여 LangChain 코드의 특징은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "항상 더 빠름",
+        "2": "더 간결하고 읽기 쉬움",
+        "3": "더 많은 코드 필요",
+        "4": "더 복잡함",
+        "5": "더 많은 설정 필요"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain은 추상화를 통해 OpenAI API를 직접 사용하는 것보다 더 간결하고 읽기 쉬운 코드를 작성할 수 있게 합니다."
+    },
+    {
+      "id": 318,
+      "question": "다음 중 Ollama의 기반 기술은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "TensorFlow",
+        "2": "PyTorch",
+        "3": "Llama.cpp",
+        "4": "Keras",
+        "5": "Scikit-learn"
+      },
+      "answer": 3,
+      "category": "Ollama",
+      "explanation": "Ollama는 Llama.cpp 기반 라이브러리로, 이를 통해 CPU에서도 효율적인 추론이 가능합니다."
+    },
+    {
+      "id": 319,
+      "question": "LangChain에서 모듈화된 구조가 제공하는 이점은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "실행 속도 향상",
+        "2": "새로운 Provider 추가 용이 및 확장성",
+        "3": "메모리 사용량 감소",
+        "4": "자동 오류 수정",
+        "5": "비용 절감"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "모듈화된 구조는 새로운 Provider를 쉽게 추가할 수 있게 하고, 시스템의 확장성을 높입니다."
+    },
+    {
+      "id": 320,
+      "question": "다음 코드의 목적으로 가장 적합한 것은 무엇입니까?\n\nfrom langchain_openai import ChatOpenAI\n\nllm = ChatOpenAI(model='gpt-4o-mini', temperature=0.5, max_tokens=1024)\nquestion = '파이썬의 장점 3가지를 알려주세요.'\nllm.invoke(question)",
+      "points": 4,
+      "options": {
+        "1": "파일을 저장함",
+        "2": "데이터베이스에 연결함",
+        "3": "LLM에 질문하고 응답을 받음",
+        "4": "모델을 학습시킴",
+        "5": "API 키를 생성함"
+      },
+      "answer": 3,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "이 코드는 ChatOpenAI 객체를 생성하고 invoke() 메서드를 사용하여 LLM에 질문하고 응답을 받는 기본적인 사용 예시입니다."
+    },
+    {
+      "id": 321,
+      "question": "LangChain의 '확장성'이 의미하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "메모리 용량 증가",
+        "2": "새로운 Provider나 기능을 쉽게 추가할 수 있음",
+        "3": "실행 속도 향상",
+        "4": "저장 공간 확대",
+        "5": "사용자 수 증가"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain의 확장성은 새로운 LLM Provider나 기능을 기존 구조를 크게 변경하지 않고 쉽게 추가할 수 있는 능력을 의미합니다."
+    },
+    {
+      "id": 322,
+      "question": "다음 중 temperature 파라미터의 적절한 값 범위는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "0~1",
+        "2": "0~2",
+        "3": "0~10",
+        "4": "0~100",
+        "5": "-1~1"
+      },
+      "answer": 2,
+      "category": "ChatOpenAI 사용법",
+      "explanation": "temperature 파라미터는 일반적으로 0~2 범위의 값을 가지며, 이 범위 내에서 출력의 무작위성을 조절합니다."
+    },
+    {
+      "id": 323,
+      "question": "LangChain이 오픈소스와 상용 모델을 모두 지원하는 이유는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "비용 절감만을 위해",
+        "2": "사용자가 상황에 맞는 모델을 선택할 수 있도록 유연성 제공",
+        "3": "GPU 사용을 위해",
+        "4": "속도 향상을 위해",
+        "5": "법적 요구사항"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain은 오픈소스(Open)와 상용(Closed) 모델을 모두 지원하여, 사용자가 비용, 성능, 프라이버시 등을 고려하여 상황에 맞는 모델을 선택할 수 있도록 유연성을 제공합니다."
+    },
+    {
+      "id": 324,
+      "question": "다음 중 LangChain을 사용하는 프로젝트에서 고려해야 할 사항으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "LangChain은 완벽하므로 아무 것도 고려할 필요 없음",
+        "2": "약간의 성능 저하와 기능 제약 가능성을 인지하되, 유지보수성과 확장성의 이점을 활용",
+        "3": "항상 OpenAI API를 직접 사용하는 것이 좋음",
+        "4": "GPU가 반드시 필요함",
+        "5": "비용이 항상 더 비쌈"
+      },
+      "answer": 2,
+      "category": "LangChain 응용",
+      "explanation": "LangChain은 약간의 성능 저하나 특정 기능 제약이 있을 수 있지만, 대부분의 경우 유지보수성, 확장성, 코드 재사용성의 이점이 이러한 단점을 상쇄합니다. 프로젝트의 요구사항에 따라 적절히 판단해야 합니다."
+    }
+  ],
+  "answer_key": {
+    "1": 3,
+    "2": 2,
+    "3": 3,
+    "4": 2,
+    "5": 2,
+    "6": 2,
+    "7": 2,
+    "8": 3,
+    "9": 1,
+    "10": 2,
+    "11": 2,
+    "12": 3,
+    "13": 2,
+    "14": 2,
+    "15": 3,
+    "16": 2,
+    "17": 3,
+    "18": 2,
+    "19": 3,
+    "20": 2,
+    "21": 3,
+    "22": 3,
+    "23": 3,
+    "24": 2,
+    "25": 4,
+    "26": 3,
+    "27": 3,
+    "28": 4,
+    "29": 2,
+    "30": 3,
+    "31": 2,
+    "32": 2,
+    "33": 3,
+    "34": 3,
+    "35": 3,
+    "36": 2,
+    "37": 2,
+    "38": 3,
+    "39": 2,
+    "40": 4,
+    "41": 3,
+    "42": 2,
+    "43": 3,
+    "44": 3,
+    "45": 2,
+    "46": 3,
+    "47": 3,
+    "48": 3,
+    "49": 2,
+    "50": 2,
+    "51": 3,
+    "52": 2,
+    "53": 2,
+    "54": 2,
+    "55": 2,
+    "56": 3,
+    "57": 2,
+    "58": 3,
+    "59": 4,
+    "60": 2,
+    "61": 3,
+    "62": 2,
+    "63": 2,
+    "64": 3,
+    "65": 2,
+    "66": 2,
+    "67": 2,
+    "68": 2,
+    "69": 3,
+    "70": 2,
+    "71": 2,
+    "72": 3,
+    "73": 3,
+    "74": 2,
+    "75": 3,
+    "76": 2,
+    "77": 2,
+    "78": 2,
+    "79": 2,
+    "80": 3,
+    "81": 2,
+    "82": 4,
+    "83": 2,
+    "84": 3,
+    "85": 2,
+    "86": 3,
+    "87": 4,
+    "88": 2,
+    "89": 2,
+    "90": 3,
+    "91": 2,
+    "92": 2,
+    "93": 5,
+    "94": 2,
+    "95": 4,
+    "96": 2,
+    "97": 3,
+    "98": 2,
+    "99": 2,
+    "100": 3,
+    "101": 2,
+    "102": 2,
+    "103": 3,
+    "104": 2,
+    "105": 3,
+    "106": 2,
+    "107": 3,
+    "108": 2,
+    "109": 2,
+    "110": 2,
+    "111": 1,
+    "112": 2,
+    "113": 2,
+    "114": 3,
+    "115": 2,
+    "116": 2,
+    "117": 2,
+    "118": 2,
+    "119": 3,
+    "120": 3,
+    "121": 1,
+    "122": 2,
+    "123": 4,
+    "124": 2,
+    "125": 2,
+    "126": 3,
+    "127": 2,
+    "128": 4,
+    "129": 2,
+    "130": 3,
+    "131": 2,
+    "132": 3,
+    "133": 5,
+    "134": 5,
+    "135": 3,
+    "136": 2,
+    "137": 4,
+    "138": 3,
+    "139": 2,
+    "140": 3,
+    "141": 2,
+    "142": 4,
+    "143": 5,
+    "144": 2,
+    "145": 4,
+    "146": 2,
+    "147": 2,
+    "148": 2,
+    "149": 2,
+    "150": 2,
+    "151": 2,
+    "152": 4,
+    "153": 3,
+    "154": 2,
+    "155": 1,
+    "156": 4,
+    "157": 5,
+    "158": 4,
+    "159": 3,
+    "160": 2,
+    "161": 1,
+    "162": 4,
+    "163": 2,
+    "164": 2,
+    "165": 1,
+    "166": 2,
+    "167": 3,
+    "168": 2,
+    "169": 2,
+    "170": 2,
+    "171": 3,
+    "172": 2,
+    "173": 3,
+    "174": 1,
+    "175": 2,
+    "176": 2,
+    "177": 3,
+    "178": 4,
+    "179": 2,
+    "180": 2,
+    "181": 3,
+    "182": 3,
+    "183": 2,
+    "184": 2,
+    "185": 2,
+    "186": 2,
+    "187": 2,
+    "188": 3,
+    "189": 2,
+    "190": 2,
+    "191": 1,
+    "192": 2,
+    "193": 3,
+    "194": 4,
+    "195": 2,
+    "196": 2,
+    "197": 2,
+    "198": 2,
+    "199": 3,
+    "200": 4,
+    "201": 5,
+    "202": 2,
+    "203": 2,
+    "204": 2,
+    "205": 2,
+    "206": 5,
+    "207": 2,
+    "208": 2,
+    "209": 2,
+    "210": 2,
+    "211": 2,
+    "212": 2,
+    "213": 2,
+    "214": 2,
+    "215": 2,
+    "216": 2,
+    "217": 2,
+    "218": 2,
+    "219": 2,
+    "220": 3,
+    "221": 5,
+    "222": 2,
+    "223": 2,
+    "224": 2,
+    "225": 2,
+    "226": 4,
+    "227": 2,
+    "228": 2,
+    "229": 5,
+    "230": 4,
+    "231": 2,
+    "232": 2,
+    "233": 4,
+    "234": 2,
+    "235": 3,
+    "236": 3,
+    "237": 3,
+    "238": 2,
+    "239": 2,
+    "240": 2,
+    "241": 2,
+    "242": 4,
+    "243": 3,
+    "244": 5,
+    "245": 2,
+    "246": 2,
+    "247": 3,
+    "248": 4,
+    "249": 2,
+    "250": 4,
+    "251": 2,
+    "252": 2,
+    "253": 2,
+    "254": 2,
+    "255": 2,
+    "256": 2,
+    "257": 3,
+    "258": 2,
+    "259": 2,
+    "260": 2,
+    "261": 2,
+    "262": 3,
+    "263": 2,
+    "264": 1,
+    "265": 1,
+    "266": 3,
+    "267": 2,
+    "268": 2,
+    "269": 4,
+    "270": 1,
+    "271": 4,
+    "272": 3,
+    "273": 3,
+    "274": 2,
+    "275": 2,
+    "276": 2,
+    "277": 2,
+    "278": 3,
+    "279": 3,
+    "280": 2,
+    "281": 3,
+    "282": 2,
+    "283": 3,
+    "284": 3,
+    "285": 3,
+    "286": 1,
+    "287": 3,
+    "288": 2,
+    "289": 1,
+    "290": 2,
+    "291": 2,
+    "292": 3,
+    "293": 2,
+    "294": 3,
+    "295": 3,
+    "296": 3,
+    "297": 4,
+    "298": 2,
+    "299": 4,
+    "300": 4,
+    "301": 3,
+    "302": 2,
+    "303": 3,
+    "304": 3,
+    "305": 3,
+    "306": 2,
+    "307": 2,
+    "308": 3,
+    "309": 3,
+    "310": 1,
+    "311": 2,
+    "312": 2,
+    "313": 3,
+    "314": 2,
+    "315": 3,
+    "316": 2,
+    "317": 2,
+    "318": 3,
+    "319": 2,
+    "320": 3,
+    "321": 2,
+    "322": 2,
+    "323": 2,
+    "324": 2
+  },
+  "category_summary": {
+    "LLM 기본 개념": [
+      1
+    ],
+    "임베딩": [
+      2
+    ],
+    "Word2Vec": [
+      3,
+      4
+    ],
+    "맥락(Context)": [
+      5
+    ],
+    "토큰(Token)": [
+      6
+    ],
+    "Transformer": [
+      7,
+      8,
+      9,
+      81,
+      82,
+      98,
+      99,
+      100,
+      108,
+      109,
+      119
+    ],
+    "토큰화(Tokenization)": [
+      10
+    ],
+    "Transformer 기본": [
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "Encoder": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "Decoder": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "Positional Encoding": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "Self-Attention": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+    ],
+    "Multi-Head Attention": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "FFNN": [
+      50,
+      51,
+      52,
+      53
+    ],
+    "Masking": [
+      54,
+      55,
+      56,
+      57,
+      58,
+      59
+    ],
+    "Encoder-Decoder Attention": [
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "Auto-Regressive": [
+      65,
+      66,
+      67,
+      68,
+      69,
+      70
+    ],
+    "BERT vs GPT": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78
+    ],
+    "Transformer 성능": [
+      79,
+      80
+    ],
+    "LLM 기초": [
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      110,
+      111,
+      112,
+      115,
+      116,
+      273
+    ],
+    "Fine-tuning": [
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      113,
+      114,
+      117,
+      118
+    ],
+    "LLM 성능 현황": [
+      120,
+      121,
+      122,
+      157
+    ],
+    "모델 구분": [
+      123,
+      124,
+      158
+    ],
+    "OpenAI 성과": [
+      125,
+      126,
+      127,
+      128,
+      129
+    ],
+    "Sakana AI": [
+      130,
+      131,
+      132
+    ],
+    "LLM 발전": [
+      133,
+      134,
+      135
+    ],
+    "Project Vend": [
+      136,
+      137,
+      138
+    ],
+    "오픈 모델 생태계": [
+      139,
+      140,
+      141,
+      142,
+      143
+    ],
+    "Llama": [
+      144,
+      145,
+      146,
+      147,
+      148,
+      159
+    ],
+    "Microsoft Phi": [
+      149,
+      150,
+      151,
+      152
+    ],
+    "Alibaba Qwen": [
+      153,
+      154,
+      155,
+      156
+    ],
+    "Alibaba Qwen Series": [
+      160,
+      161,
+      162
+    ],
+    "Mistral Series": [
+      163,
+      164
+    ],
+    "Gemma Series": [
+      165,
+      166
+    ],
+    "국내 LLM 모델": [
+      167,
+      168,
+      169,
+      170,
+      171
+    ],
+    "오픈 LLM 모델 선택": [
+      172
+    ],
+    "파라미터 수-VRAM 관계": [
+      173,
+      174,
+      175,
+      176,
+      177,
+      178
+    ],
+    "Quantization(양자화)": [
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185
+    ],
+    "개선된 양자화 기법": [
+      186,
+      187
+    ],
+    "추가 양자화 방식": [
+      188,
+      189,
+      190
+    ],
+    "대표적 모델 양자화 방법": [
+      191
+    ],
+    "핵심 질문": [
+      192
+    ],
+    "종합": [
+      193,
+      194,
+      195,
+      196,
+      197
+    ],
+    "Reasoning": [
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204
+    ],
+    "Multimodal": [
+      205,
+      206,
+      207,
+      208,
+      209
+    ],
+    "sLLM": [
+      210,
+      211,
+      212,
+      213,
+      214,
+      225,
+      226,
+      227
+    ],
+    "Tool Calling & Agent": [
+      215,
+      216,
+      217,
+      218,
+      219
+    ],
+    "LLM Application": [
+      220,
+      221,
+      222,
+      223,
+      224,
+      228,
+      229
+    ],
+    "LLM API 기초": [
+      230,
+      276
+    ],
+    "OpenAI SDK": [
+      231,
+      236,
+      265,
+      267,
+      278
+    ],
+    "API Key 관리": [
+      232,
+      256,
+      260
+    ],
+    "오픈소스 LLM": [
+      233,
+      243,
+      249,
+      258,
+      261
+    ],
+    "Chat API": [
+      234,
+      244,
+      252,
+      259,
+      262,
+      268,
+      274
+    ],
+    "API 매개변수": [
+      235,
+      245,
+      246,
+      263,
+      270,
+      275
+    ],
+    "API 호출": [
+      237,
+      250,
+      266,
+      271,
+      279
+    ],
+    "오픈소스 라이브러리": [
+      238,
+      241,
+      248,
+      277
+    ],
+    "클라우드 API": [
+      239,
+      255
+    ],
+    "통합 플랫폼": [
+      240
+    ],
+    "Billing 관리": [
+      242,
+      254
+    ],
+    "클라우드 플랫폼": [
+      247,
+      251
+    ],
+    "프롬프트 엔지니어링": [
+      253
+    ],
+    "비용 최적화": [
+      257,
+      264
+    ],
+    "윤리적 사용": [
+      269
+    ],
+    "OpenAI API": [
+      272
+    ],
+    "LangChain 기초": [
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      300,
+      301,
+      312,
+      314,
+      315,
+      316
+    ],
+    "LLM Provider 연결": [
+      286,
+      287,
+      288,
+      289,
+      302,
+      306
+    ],
+    "ChatOpenAI 사용법": [
+      290,
+      291,
+      292,
+      293,
+      294,
+      305,
+      307,
+      320,
+      322
+    ],
+    "Gemini 연결": [
+      295,
+      308
+    ],
+    "Ollama": [
+      296,
+      297,
+      309,
+      310,
+      318
+    ],
+    "LangChain 응용": [
+      298,
+      299,
+      303,
+      304,
+      311,
+      313,
+      317,
+      319,
+      321,
+      323,
+      324
+    ]
+  }
+}

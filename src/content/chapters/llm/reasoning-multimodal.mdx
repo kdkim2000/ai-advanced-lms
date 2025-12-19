@@ -1,0 +1,278 @@
+---
+title: "추론과 멀티모달 모델"
+description: "Reasoning, Thinking 모델, 멀티모달 LLM, sLLM, Agent의 이해"
+---
+
+# 추론과 멀티모달 모델
+
+## 1. LLM 지능 향상의 비결: Reasoning
+
+### Reasoning의 필요성
+
+**LLM에게 생각할 시간(과 텍스트 공간)을 주면 어려운 문제를 잘 풀 수 있다**
+
+- 수학 문제, 코딩 문제 등 복잡한 사고가 필요한 작업에서 유용
+- **Reasoning 모델**: 패턴 강화 학습으로 긴 시간동안 생각하고 어려운 문제 해답 탐색
+
+### Long Thinking Makes Perfect
+
+| 구분 | 언어 모델 | Reasoning 모델 |
+|------|-----------|----------------|
+| **방식** | 다음 토큰 예측 | 긴 시간 생각 후 해답 탐색 |
+| **특징** | 빠른 응답 | 깊은 사고 과정 |
+
+**Reasoning 모델의 성능 지표**:
+- Median First Chunk: 첫 번째 출력 생성 시간
+- GPT-5 (high): 71.26초, o3-pro: 137.86초
+
+<Callout type="info" title="Thinking 모델">
+Thinking을 하는 모델이 상위권에 위치합니다. 더 깊은 사고 과정을 거칠수록 성능이 향상됩니다.
+</Callout>
+
+---
+
+## 2. Thinking 모델의 문제 해결 방식
+
+### 6가지 Reasoning 패턴
+
+| 패턴 | 설명 |
+|------|------|
+| **Systematic Analysis** | 문제 전체를 체계적으로 분석 |
+| **Method Reuse** | 알려진 문제 해결법 적용 |
+| **Divide and Conquer** | 복잡한 문제를 작은 단위로 분할 |
+| **Self-Refinement** | 자체 평가와 수정 (오류 검출) |
+| **Context Identification** | 추가 문맥 활용 |
+| **Emphasizing Constraints** | 제약 조건 강조 및 준수 |
+
+### Thinking 토큰 (< think > < /think >)
+
+**Hybrid 모드로 발전**:
+- Qwen 3 모델: `/no_think` 옵션으로 Thinking 없이 즉각 응답
+- Budget 조절로 성능과 속도의 균형 조절 가능
+
+### Over Thinking 문제
+
+- Thinking을 **너무 많이** 하면 성능이 저하되는 현상
+- 적절한 균형 필요
+
+---
+
+## 3. 멀티모달 LLM (LMM)
+
+### 멀티모달의 개념
+
+**LMM (Large Multimodal Models)**
+- LLM 모델에 **Vision 능력**을 결합
+- 대표 모델: GPT-4o, Gemini, Qwen-VL, Gemma 시리즈
+
+### 발전 과정
+
+```
+이미지 생성 → 이미지 처리 인코더 결합 → 인코더와 LLM 연결
+```
+
+### 주요 모델 아키텍처
+
+| 모델 | 특징 |
+|------|------|
+| **Llama 3.2** | 멀티모달 데이터로 텍스트 생성 |
+| **Qwen2.5-VL** | Vision Encoder + LM Decoder 결합 |
+
+### Native LMM 연구 방향
+
+**멀티모달 → 멀티모달**:
+- GPT-4o의 이미지/음성 생성 기능
+- Qwen-VL의 Thinker-Talker 구조
+- 멀티모달 입력과 멀티모달 출력 모두 지원
+
+---
+
+## 4. sLLM (Small Large Language Model)
+
+### sLLM이란?
+
+- **sLM = sLLM**: Small Large Language Model
+- 파라미터 크기의 차이로 구분
+
+| 모델 타입 | 파라미터 크기 |
+|----------|-------------|
+| 큰 LLM | 1000B |
+| sLLM | 0.7B ~ 235B |
+
+### 가지치기 (Pruning)
+
+**두 가지 방법**:
+
+| 방법 | 설명 |
+|------|------|
+| **가로로 자르기** | Layer Pruning - 레이어 수 감소 |
+| **세로로 자르기** | Channel/Dimension Pruning - 차원 수 감소 |
+
+- 영향이 적은 파라미터 제거
+- 성능 유지하면서 크기 감소
+
+### 증류 (Distillation)
+
+**큰 모델의 출력으로 작은 모델 학습**
+
+```
+큰 모델 데이터 → 작은 모델 파인튜닝 → 효율적인 지식 전달
+```
+
+<Callout type="info" title="증류의 효과">
+작은 모델이 큰 모델의 사고 방식을 학습할 수 있습니다.
+</Callout>
+
+### 경량화된 모델 예시
+
+- Gemma 3: 236M, 1B, 4B
+- Llama 3.2: 1B, 3B
+- Qwen 3: 0.6B, 1.5B
+
+**활용**: 엣지 디바이스, CPU 환경, 온디바이스 AI
+
+---
+
+## 5. Qwen 3의 학습 파이프라인
+
+### DeepSeek 스타일의 학습 과정
+
+**4단계 파이프라인**:
+
+```
+Base Models → Stage 1: Long-CoT Cold Start → Stage 2: Reasoning RL
+                                                    ↓
+                         Stage 3: Thinking Mode Fusion → Stage 4: General RL
+```
+
+### 모델 타입별 학습
+
+| 타입 | 학습 방식 |
+|------|-----------|
+| **Flagship** (235B, 32B) | 4단계 전체 학습 |
+| **Lightweight** (14B 이하) | Strong-to-Weak Distillation |
+
+---
+
+## 6. Tool Calling과 Agent
+
+### 텍스트로 답을 추출하는 LLM
+
+**기본 워크플로우**:
+```
+텍스트 → 파싱 → 데이터
+```
+
+**JSON 형식으로 출력**:
+- 구조화된 데이터 생성
+- 외부 시스템과 연동 가능
+
+### Agent: Tool Calling 능력 탑재
+
+**LLM이 외부 함수나 API를 호출하도록 프롬프트를 통해 전달**
+
+**활용 예시**:
+- API 호출을 통한 외부 서비스 연동
+- 데이터베이스 쿼리 실행
+- 파일 시스템 조작
+
+### MCP (Model Context Protocol)
+
+**Tool Calling의 표준화**
+
+AI Application과 다양한 외부 도구/서비스를 연결하는 표준 프로토콜:
+- Web APIs, Slack, Gmail
+- Database, GitHub
+- Local Filesystem
+
+**MCP의 역할**:
+- 일관된 인터페이스 제공
+- 다양한 도구와 LLM 연결 표준화
+- 확장 가능한 생태계 구축
+
+### 주요 Agent 플랫폼
+
+| 플랫폼 | 특징 |
+|--------|------|
+| **OpenAI Agent** | GPT 모델과 긴밀한 통합 |
+| **Anthropic Computer Use** | Claude 연계, 컴퓨터 제어 자동화 |
+
+---
+
+## 7. LLM 어플리케이션 만들기
+
+### 모델의 성능-크기 상관관계
+
+**주요 고려사항**:
+- 학습 데이터양 / Context Window / 지시 수행 능력에서 큰 차이
+- LLM 어플리케이션에서는 고성능이 필요하지 않은 작업도 존재
+- 일반적으로 **10B 이상**이 쓸만한 성능
+
+### LLM 어플리케이션의 성능 보완 요소
+
+| 요소 | 설명 |
+|------|------|
+| **프롬프트 엔지니어링** | Few-shot, Chain-of-Thought |
+| **파인튜닝** | LoRA, QLoRA로 도메인 최적화 |
+| **RAG** | 외부 지식 베이스 활용 |
+| **Agent** | Tool Calling으로 기능 확장 |
+
+---
+
+## 8. 실무 활용
+
+### 비정형 텍스트 데이터 처리
+
+**핵심 역량**:
+- 데이터 전처리
+- 문제에 맞는 데이터와 결과 평가 방식
+- 정량적/정성적 평가
+
+**실무 워크플로우**:
+```
+비정형 데이터 → 전처리 → LLM 처리 → 결과 평가 → 개선
+```
+
+### 데이터 파이프라인 구성
+
+1. 데이터 수집 및 저장
+2. 데이터 전처리 및 정제
+3. LLM 처리
+4. 결과 검증 및 피드백
+5. 지속적 개선
+
+<Callout type="warning" title="실무에서 가장 중요한 것">
+현업에서는 LLM 단독보다는 **실제 데이터 기반** 수행이 중요합니다. 결과 평가 방식과 데이터 파이프라인이 핵심입니다.
+</Callout>
+
+---
+
+## 핵심 요약
+
+### Reasoning (추론)
+
+- LLM에 생각할 시간을 주면 복잡한 문제를 더 잘 해결
+- 6가지 패턴: Systematic Analysis, Method Reuse, Divide and Conquer, Self-Refinement, Context Identification, Emphasizing Constraints
+
+### 멀티모달 LLM (LMM)
+
+- Vision 능력과 LLM 결합
+- 이미지, 비디오 등 다양한 입력 처리
+- Native LMM으로 진화 중
+
+### sLLM (Small LLM)
+
+- 가지치기(Pruning)와 증류(Distillation)로 경량화
+- 엣지 디바이스 및 CPU 환경에서 실행 가능
+- 도메인 특화 모델 구성에 유리
+
+### Tool Calling & Agent
+
+- JSON 형식의 구조화된 출력
+- MCP를 통한 표준화된 도구 연동
+- 외부 API 및 서비스 활용
+
+### 실무 활용
+
+- 프롬프트 엔지니어링, 파인튜닝, RAG, Agent 활용
+- 데이터 파이프라인과 평가 체계 구축이 핵심

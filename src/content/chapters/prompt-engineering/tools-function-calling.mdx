@@ -1,0 +1,313 @@
+---
+title: "Tools와 Function Calling"
+description: "LLM 한계 극복, RAG, Tool Calling 메커니즘, Memory"
+---
+
+# Tools와 Function Calling
+
+## 1. LLM의 한계 극복 3요소
+
+### LLM의 외연을 확장하는 세 가지 방법
+
+```
+┌─────────────┐        ┌───────┐        ┌────────────┐
+│     IN      │ ──────►│  LLM  │──────► │    OUT     │
+└─────────────┘        └───┬───┘        └────────────┘
+                           │
+                    ┌──────┴──────┐
+                    │  Retrieval  │
+                    │    Tools    │
+                    │   Memory    │
+                    └─────────────┘
+```
+
+### 핵심 3요소
+
+| 요소 | 설명 |
+|------|------|
+| **Retrieval** | 주어진 질문에 관해 검색 후 검색 결과에 따라 답변 |
+| **Tools** | LLM이 사용할 수 있는 외부 함수나 모듈 |
+| **Memory** | 대화 히스토리 저장 및 활용 |
+
+---
+
+## 2. Retrieval Augmented Generation (RAG)
+
+### 기존 방식의 한계
+
+```
+┌────────┐          ┌────────┐
+│  질문   │ ───────► │  답변   │
+└────────┘          └────────┘
+```
+
+- LLM만으로는 최신 정보나 특정 도메인 지식 부족
+
+### RAG의 개념
+
+```
+┌────────┐    Retriever    ┌─────────────┐
+│  질문   │ ──────────────► │   Context   │
+└────────┘                  └──────┬──────┘
+                                   │
+                           검색 결과와 함께 답변
+```
+
+### RAG의 장점
+
+| 장점 | 설명 |
+|------|------|
+| **최신 정보 활용** | 실시간 정보 검색 가능 |
+| **도메인 지식 보강** | 특정 분야 지식 추가 |
+| **환각(Hallucination) 감소** | 검색 결과 기반 답변 |
+| **출처 추적 가능** | 정보의 근거 제시 |
+
+---
+
+## 3. Tool: LLM에게 도구 들려주기
+
+### Tool의 개념
+
+**Tool/함수(Function)**의 역할:
+- LLM이 직접 필요를 판단하여 작업 실행
+- 검색, Python 코드 실행, API 호출 등 다양한 기능 제공
+
+### 대표적 Tool 예시
+
+| Tool 유형 | 기능 | 예시 |
+|-----------|------|------|
+| **웹 검색** | 실시간 정보 검색 | SerpApi, Tavily |
+| **코드 실행** | Python 코드 실행 | Python REPL |
+| **외부 API** | GitHub, Slack, Gmail 등 | GitHub API, Slack API |
+
+### Tool의 특징
+
+| 특징 | 설명 |
+|------|------|
+| **텍스트로 구성** | Tool 정의는 텍스트 형태 |
+| **Prompt 필요** | LLM에 입력할 Prompt 포함 |
+| **자동 실행** | LLM이 판단하여 Tool 호출 |
+
+---
+
+## 4. LLM Tool Calling 메커니즘
+
+### Tool Calling의 흐름
+
+```
+User: "61번 서버 상태 확인해줘"
+         │
+         ▼
+    ┌─────────┐
+    │   LLM   │
+    └────┬────┘
+         │
+         ▼
+Function Call: {Tool: Retrieve_Status, Query: '61'}
+         │
+         ▼
+Tool: {"Result": 504}
+         │
+         ▼
+LLM: "504 Error로, 게이트웨이 타임아웃으로 추정됩니다."
+```
+
+### Tool Calling의 핵심 요소
+
+| 요소 | 설명 |
+|------|------|
+| **Human** | User의 요청 |
+| **Tool** | 실행할 도구/함수 |
+| **AI** | LLM의 판단과 응답 |
+| **System Message** | 사용 가능한 Tool 설명 |
+
+### 메커니즘 단계별 설명
+
+**1단계: 외부 함수를 Prompt로 전달**
+```python
+# 활용할 수 있는 외부 함수를 Prompt로 전달
+# 파싱 가능한 출력을 LLM이 생성하면,
+# 이를 자동으로 실행하여 결과를 LLM에 전달
+```
+
+**2단계: LLM의 Function Call 생성**
+```json
+{
+  "Tool": "Retrieve_Status",
+  "Query": "61"
+}
+```
+
+**3단계: 결과 반환 및 해석**
+```
+Tool: {"Result": 504}
+LLM: "504 Error로, 게이트웨이 타임아웃으로 추정됩니다."
+```
+
+---
+
+## 5. Tool Calling - Taker에서 Giver로
+
+### Taker: LLM이 Tool을 사용하는 주체
+
+- LLM이 Tool을 이용해 정보를 **받는** 역할
+
+### Giver: LLM이 Tool을 제공하는 주체
+
+- LLM이 Tool을 통해 정보를 **전달/실행**하는 역할
+
+**예시 흐름:**
+```
+User: "정리해서 report.txt에 저장해줘"
+         │
+         ▼
+Function Call: {Tool: Write_file, Content: '# 최종 정리 내용...'}
+         │
+         ▼
+Tool: {"Result": "저장 완료!"}
+         │
+         ▼
+LLM: "리포트 저장이 완료되었습니다!"
+```
+
+### Giver로서의 Tool Calling 활용
+
+<Callout type="info" title="양방향 활용">
+외부 Tool과 Text로 소통할 수 있는 인터페이스만 주어지면 양방향 활용이 가능합니다. 예: GitHub 이슈 해결 및 커밋, 웹 게시물 Upload
+</Callout>
+
+---
+
+## 6. Tool 정의 예시
+
+### Pydantic을 이용한 Tool 정의
+
+```python
+from pydantic import BaseModel, Field
+
+class get_news(BaseModel):
+    """query를 이용하여 뉴스 검색"""
+    query: str = Field(description="검색어(3단어 이하)")
+
+tools = [openai.pydantic_function_tool(get_news)]
+```
+
+### Tool의 Schema 형식 (JSON)
+
+```json
+{
+  "type": "function",
+  "function": {
+    "name": "get_news",
+    "strict": true,
+    "parameters": {
+      "description": "query를 이용하여 뉴스 검색",
+      "properties": {
+        "query": {
+          "description": "검색어(3단어 이하)",
+          "type": "string"
+        }
+      },
+      "required": ["query"]
+    }
+  }
+}
+```
+
+---
+
+## 7. Tool Calling의 기대 효과
+
+### LLM의 텍스트 출력을 실제 행동으로 연결
+
+| 효과 | 설명 |
+|------|------|
+| **상황 판단** | 상황을 판단하고, 지시하고, 제어할 수 있는 능력 |
+| **컨트롤 타워** | LLM의 여러 기능을 활용할 수 있는 컨트롤 타워 역할 |
+| **다양한 분야 적용** | Robotics, 업무 자동화, 스케줄링 등 |
+
+### 적용 가능 분야
+
+| 분야 | 활용 예시 |
+|------|-----------|
+| **Robotics** | 로봇 제어, 동작 명령 |
+| **업무 자동화** | 워크플로우 관리, 작업 스케줄링 |
+| **스케줄링** | 일정 관리, 리마인더 |
+| **개발 보조** | 코드 생성, 디버깅, 테스트 |
+
+---
+
+## 8. Memory: 서비스화를 위한 필수 요소
+
+### Memory의 두 가지 유형
+
+```
+Short-term memory          Long-term memory
+┌──────────────────┐      ┌─────────────────┐
+│ Human message    │      │  장기 저장소    │
+│ AI message       │      │  (Store)        │
+│ Human message    │      └─────────────────┘
+│ AI message       │              │
+└──────────────────┘              ▼
+    (Checkpointer)            ┌────────┐
+                              │  LLM   │
+                              └────────┘
+```
+
+### Short-term Memory (Checkpointer)
+
+| 특징 | 설명 |
+|------|------|
+| **범위** | Session 단위의 짧은 Memory |
+| **저장 내용** | 현재 대화 내용 |
+| **구조** | Human message ↔ AI message 교환 |
+
+### Long-term Memory (Store)
+
+| 특징 | 설명 |
+|------|------|
+| **범위** | User, 작업 별 정보를 따로 저장 |
+| **저장 내용** | 사용자 선호도, 이전 작업 내역 등 |
+| **목적** | 장기적 컨텍스트 유지 |
+
+### Memory 활용의 중요성
+
+| 가치 | 설명 |
+|------|------|
+| **대화 컨텍스트 유지** | 이전 대화 내용 참조 |
+| **개인화된 응답** | 사용자 맞춤 답변 |
+| **이전 작업 참조** | 작업 연속성 유지 |
+| **서비스 품질 향상** | 일관된 사용자 경험 |
+
+---
+
+## 핵심 요약
+
+### LLM 확장의 3요소
+
+| 요소 | 역할 |
+|------|------|
+| **Retrieval** | 외부 정보 검색 및 활용 |
+| **Tools** | 외부 함수/API 실행 |
+| **Memory** | 대화 히스토리 관리 |
+
+### Tool Calling 메커니즘
+
+| 개념 | 설명 |
+|------|------|
+| **Taker** | LLM이 Tool 결과를 받음 |
+| **Giver** | LLM이 Tool을 통해 작업 수행 |
+| **Function Call** | JSON 형식의 함수 호출 |
+
+### Memory의 역할
+
+| 유형 | 설명 |
+|------|------|
+| **Short-term** | 세션 단위 대화 저장 |
+| **Long-term** | 사용자별 장기 정보 저장 |
+
+### 실무 적용
+
+- RAG를 통한 환각 감소
+- Tool Calling으로 실제 행동 연결
+- Memory로 서비스 품질 향상

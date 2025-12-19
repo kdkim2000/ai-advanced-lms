@@ -1,0 +1,302 @@
+---
+title: "LangChain 실전 프로젝트"
+description: "외부 데이터 처리, Map-Reduce 요약, 문서 처리 파이프라인"
+---
+
+# LangChain 실전 프로젝트
+
+## 1. 외부 데이터 불러오기 워크플로우
+
+### 기본 파이프라인
+
+```
+PDF 문서 입력 → LLM 처리 → 요약 생성
+```
+
+### 상세 단계
+
+| 단계 | 설명 |
+|------|------|
+| **API로 검색어 입력** | 외부 데이터 소스(arXiv 등) 접근 |
+| **논문 정보 수집** | 메타데이터 및 본문 추출 |
+| **처리** | LLM을 통한 분석 및 요약 |
+
+### arXiv API 활용
+
+| 항목 | 설명 |
+|------|------|
+| **목적** | 학술 논문 검색 및 메타데이터 수집 |
+| **활용** | 논문 제목, 저자, 초록, 출판일 등 구조화된 정보 추출 |
+| **LangChain 통합** | API 결과를 LLM 체인에 연결하여 자동화 |
+
+---
+
+## 2. Map-Reduce 요약
+
+### 개념
+
+**Map-Reduce**는 대용량 문서를 효율적으로 요약하기 위한 **2단계 처리 방식**입니다.
+
+### 처리 과정
+
+```
+┌─────────┐
+│  문서   │
+│ (원본)  │
+└────┬────┘
+     │
+     ├──────┬──────┐
+     │      │      │
+┌────▼─┐ ┌─▼────┐ ┌▼────┐
+│ 요약1 │ │ 요약2 │ │요약3│  ← Map 단계 (개별 요약)
+└────┬─┘ └─┬────┘ └┬────┘
+     │      │      │
+     └──────┼──────┘
+            │
+       ┌────▼────┐
+       │ 최종요약 │  ← Reduce 단계 (통합 요약)
+       └─────────┘
+```
+
+### Map 단계 (매핑/분할)
+
+| 특징 | 설명 |
+|------|------|
+| **목적** | 큰 문서를 작은 청크(chunk)로 분할하여 개별 처리 |
+| **병렬 처리** | 각 청크를 독립적으로 요약 |
+| **토큰 제한 우회** | LLM의 컨텍스트 윈도우 제한 극복 |
+
+```python
+# 문서를 여러 청크로 분할
+chunks = split_document(document, chunk_size=1000)
+
+# 각 청크를 개별 요약 (Map)
+summaries = []
+for chunk in chunks:
+    summary = llm.summarize(chunk)
+    summaries.append(summary)
+```
+
+### Reduce 단계 (축소/병합)
+
+| 특징 | 설명 |
+|------|------|
+| **목적** | 개별 요약들을 하나의 최종 요약으로 통합 |
+| **중복 제거** | 핵심 내용 추출 |
+| **일관성** | 일관성 있는 최종 결과 생성 |
+
+```python
+# 개별 요약들을 최종 요약으로 통합 (Reduce)
+final_summary = llm.summarize(summaries)
+```
+
+---
+
+## 3. LangChain에서의 Map-Reduce 구현
+
+### 기본 구조
+
+```python
+from langchain.chains.summarize import load_summarize_chain
+from langchain.docstore.document import Document
+from langchain_openai import ChatOpenAI
+
+# LLM 초기화
+llm = ChatOpenAI(temperature=0, model="gpt-4")
+
+# Map-Reduce 체인 생성
+chain = load_summarize_chain(
+    llm=llm,
+    chain_type="map_reduce",
+    verbose=True
+)
+
+# 문서 리스트 준비
+docs = [
+    Document(page_content="첫 번째 청크 내용"),
+    Document(page_content="두 번째 청크 내용"),
+    Document(page_content="세 번째 청크 내용")
+]
+
+# 실행
+result = chain.run(docs)
+```
+
+### 주요 파라미터
+
+| 파라미터 | 설명 | 기본값 |
+|---------|------|--------|
+| `chain_type` | "map_reduce", "stuff", "refine" 중 선택 | - |
+| `map_prompt` | Map 단계에서 사용할 프롬프트 템플릿 | 기본 템플릿 |
+| `combine_prompt` | Reduce 단계에서 사용할 프롬프트 템플릿 | 기본 템플릿 |
+| `verbose` | 중간 과정 출력 여부 | False |
+
+---
+
+## 4. 다른 요약 방식과의 비교
+
+### Stuff (단순 연결)
+
+```python
+chain_type="stuff"
+```
+
+| 특징 | 설명 |
+|------|------|
+| **방식** | 모든 문서를 하나의 프롬프트에 연결 |
+| **장점** | 가장 간단함 |
+| **단점** | 토큰 제한에 취약 |
+| **적합** | 짧은 문서 |
+
+### Refine (순차 정제)
+
+```python
+chain_type="refine"
+```
+
+| 특징 | 설명 |
+|------|------|
+| **방식** | 첫 번째 청크 요약 → 두 번째 청크로 정제 → 반복 |
+| **장점** | 순차적 처리로 문맥 유지 |
+| **단점** | 처리 시간이 가장 길음 |
+| **적합** | 문맥이 중요한 문서 |
+
+### Map-Reduce (분할-병합)
+
+```python
+chain_type="map_reduce"
+```
+
+| 특징 | 설명 |
+|------|------|
+| **방식** | 병렬 처리 + 통합 |
+| **장점** | 균형 잡힌 접근 방식 |
+| **단점** | 문맥 손실 가능 |
+| **적합** | 대용량 문서 |
+
+### 선택 기준
+
+| 문서 크기 | 권장 방식 |
+|-----------|-----------|
+| **짧은 문서 (4K 토큰 미만)** | Stuff 방식 |
+| **문맥 중요 & 중간 크기** | Refine 방식 |
+| **긴 문서 (10K 토큰 이상)** | Map-Reduce 방식 |
+
+---
+
+## 5. Map-Reduce의 장단점
+
+### 장점
+
+| 장점 | 설명 |
+|------|------|
+| **토큰 제한 극복** | LLM의 컨텍스트 윈도우 제한 우회 |
+| **병렬 처리** | 각 청크를 독립적으로 처리하여 속도 향상 |
+| **확장성** | 문서 크기에 관계없이 처리 가능 |
+| **정확도** | 전체 문서를 세밀하게 분석 가능 |
+
+### 단점
+
+| 단점 | 설명 |
+|------|------|
+| **비용 증가** | 여러 번의 LLM 호출로 API 비용 상승 |
+| **처리 시간** | 단일 요청보다 전체 시간이 길 수 있음 |
+| **문맥 손실** | 청크 간 연결성이 약해질 수 있음 |
+| **복잡도** | 구현 및 디버깅이 복잡 |
+
+---
+
+## 6. 실전 활용 예시
+
+### 긴 논문 요약
+
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# 문서 로드
+with open("research_paper.txt", "r", encoding="utf-8") as f:
+    text = f.read()
+
+# 청크 분할
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=3000,
+    chunk_overlap=200
+)
+chunks = text_splitter.create_documents([text])
+
+# Map-Reduce 실행
+chain = load_summarize_chain(llm, chain_type="map_reduce")
+summary = chain.run(chunks)
+```
+
+### 커스텀 프롬프트 사용
+
+```python
+from langchain.prompts import PromptTemplate
+
+# Map 단계 프롬프트
+map_template = """다음 텍스트를 3문장으로 요약하세요:
+{text}
+
+요약:"""
+
+# Reduce 단계 프롬프트
+combine_template = """다음은 문서의 부분 요약들입니다:
+{text}
+
+이를 종합하여 전체 문서의 핵심을 5문장으로 정리하세요:"""
+
+# 체인 생성
+chain = load_summarize_chain(
+    llm,
+    chain_type="map_reduce",
+    map_prompt=PromptTemplate.from_template(map_template),
+    combine_prompt=PromptTemplate.from_template(combine_template)
+)
+```
+
+---
+
+## 7. 최적화 팁
+
+### 청크 크기 조정
+
+```python
+# 너무 작으면: 문맥 손실, API 호출 증가
+# 너무 크면: 토큰 제한 초과 위험
+
+# 권장 범위
+# chunk_size: 2000 - 4000 토큰
+# chunk_overlap: 200 - 400 토큰
+chunk_size = 3000
+chunk_overlap = 300
+```
+
+### 베스트 프랙티스
+
+| 항목 | 권장사항 |
+|------|----------|
+| **적절한 청크 크기** | 문서 특성에 맞게 조정 |
+| **오버랩 설정** | 청크 간 문맥 연결 유지 |
+| **프롬프트 최적화** | 명확하고 구체적인 지시 |
+| **캐싱 활용** | 반복 요청 시 결과 저장 |
+
+---
+
+## 핵심 요약
+
+### Map-Reduce 핵심 포인트
+
+| 개념 | 설명 |
+|------|------|
+| **Map 단계** | 개별 청크 요약 (병렬 처리 가능) |
+| **Reduce 단계** | 부분 요약들을 최종 요약으로 통합 |
+| **구현** | LangChain의 `load_summarize_chain`으로 간편하게 구현 |
+| **장점** | 토큰 제한 극복과 확장성 |
+
+### 적용 시나리오
+
+- 긴 논문, 보고서, 책 요약
+- 대량의 고객 리뷰 분석
+- 뉴스 기사 모음 요약
+- 법률 문서, 계약서 분석

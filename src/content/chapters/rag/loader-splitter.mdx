@@ -1,0 +1,300 @@
+---
+title: "랭체인의 Loader-Splitter 이해하기"
+description: "Document Loader, Chunking 전략, Text Splitter 활용"
+---
+
+# 랭체인의 Loader-Splitter 이해하기
+
+## 1. Indexing (색인화)
+
+### 정의
+
+문서를 **검색 가능한 형태로 변환하고 저장**하는 과정
+
+### 인덱싱 프로세스
+
+```
+원본 문서
+    ↓
+1. 문서 로딩 (Document Loading)
+    ↓
+2. 청킹 (Chunking)
+    ↓
+3. 임베딩 (Embedding)
+    ↓
+4. 벡터 DB 저장
+```
+
+### 인덱싱의 중요성
+
+| 단계 | 목적 |
+|------|------|
+| **문서 로딩** | 다양한 형식의 문서를 통일된 형태로 변환 |
+| **청킹** | 검색 효율성과 문맥 보존의 균형 |
+| **임베딩** | 의미 기반 검색 가능하게 변환 |
+| **저장** | 빠른 유사도 검색 지원 |
+
+---
+
+## 2. Document Loader
+
+### LangChain Document Loader 종류
+
+| Loader | 대상 파일 | 특징 |
+|--------|-----------|------|
+| **TextLoader** | 일반 텍스트 파일 (.txt) | 가장 기본적인 로더 |
+| **PDFLoader** | PDF 문서 | 페이지별 메타데이터 포함 |
+| **CSVLoader** | CSV 파일 | 행 단위 문서 생성 |
+| **WebBaseLoader** | 웹페이지 | URL에서 콘텐츠 추출 |
+| **DirectoryLoader** | 디렉토리 | 폴더 내 모든 파일 일괄 로딩 |
+
+### 사용 예시
+
+```python
+from langchain.document_loaders import (
+    TextLoader,
+    PDFLoader,
+    CSVLoader,
+    WebBaseLoader,
+    DirectoryLoader
+)
+
+# 텍스트 파일 로딩
+text_loader = TextLoader("document.txt")
+text_docs = text_loader.load()
+
+# PDF 로딩
+pdf_loader = PDFLoader("document.pdf")
+pdf_docs = pdf_loader.load()
+
+# 웹페이지 로딩
+web_loader = WebBaseLoader("https://example.com")
+web_docs = web_loader.load()
+
+# 디렉토리 내 모든 파일 로딩
+dir_loader = DirectoryLoader(
+    "./docs/",
+    glob="**/*.txt",
+    loader_cls=TextLoader
+)
+all_docs = dir_loader.load()
+```
+
+### Document 객체 구조
+
+```python
+# Document 객체는 다음과 같은 구조를 가짐
+document = {
+    "page_content": "문서의 실제 텍스트 내용...",
+    "metadata": {
+        "source": "파일 경로 또는 URL",
+        "page": 1,  # PDF의 경우 페이지 번호
+        "author": "저자 정보",
+        "date": "작성일"
+    }
+}
+```
+
+---
+
+## 3. 청킹 (Chunking)
+
+### 정의
+
+긴 문서를 **작은 단위(chunk)로 분할**하는 과정
+
+### 청킹이 필요한 이유
+
+| 이유 | 설명 |
+|------|------|
+| **LLM 토큰 제한** | 컨텍스트 윈도우 크기 한계 |
+| **검색 정확도** | 작은 단위가 더 정확한 매칭 |
+| **비용 최적화** | 불필요한 정보 배제 |
+| **속도 향상** | 처리 시간 단축 |
+
+### 청킹 전략 비교
+
+| 전략 | 장점 | 단점 |
+|------|------|------|
+| **고정 크기 (Fixed-size)** | 구현 간단, 일관된 크기 | 문맥 단절 가능 |
+| **의미 기반 (Semantic)** | 문맥 보존 우수 | 청크 크기 불균일 |
+| **재귀적 (Recursive)** | 문서 구조 고려 | 구현 복잡 |
+
+---
+
+## 4. Text Splitter 종류
+
+### CharacterTextSplitter
+
+**문자 수 기반 분할**
+
+```python
+from langchain.text_splitter import CharacterTextSplitter
+
+splitter = CharacterTextSplitter(
+    chunk_size=1000,      # 청크 크기 (문자 수)
+    chunk_overlap=200,    # 청크 간 중복 크기
+    separator="\n"        # 분할 기준 문자
+)
+
+chunks = splitter.split_documents(documents)
+```
+
+### RecursiveCharacterTextSplitter
+
+**계층적 분리자 기반 분할** (가장 권장)
+
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=200,
+    separators=["\n\n", "\n", ".", " "]  # 우선순위 순
+)
+
+chunks = splitter.split_documents(documents)
+```
+
+<Callout type="info" title="RecursiveCharacterTextSplitter 동작 원리">
+1. 먼저 "\n\n" (단락)으로 분할 시도
+2. 청크가 너무 크면 "\n" (줄바꿈)으로 분할
+3. 여전히 크면 "." (문장)으로 분할
+4. 마지막으로 " " (공백)으로 분할
+</Callout>
+
+### TokenTextSplitter
+
+**토큰 수 기반 분할**
+
+```python
+from langchain.text_splitter import TokenTextSplitter
+
+splitter = TokenTextSplitter(
+    chunk_size=500,       # 토큰 수
+    chunk_overlap=50
+)
+
+chunks = splitter.split_documents(documents)
+```
+
+### 특수 목적 Splitter
+
+| Splitter | 용도 |
+|----------|------|
+| **MarkdownHeaderTextSplitter** | 마크다운 헤더 기준 분할 |
+| **HTMLHeaderTextSplitter** | HTML 태그 기준 분할 |
+| **CodeTextSplitter** | 프로그래밍 언어별 분할 |
+| **LatexTextSplitter** | LaTeX 문서 분할 |
+
+---
+
+## 5. 청킹 파라미터 최적화
+
+### chunk_size 설정 가이드
+
+| 크기 | 특징 | 적합한 상황 |
+|------|------|-------------|
+| **작은 청크 (100-300)** | 정밀한 검색 | 단답형 Q&A |
+| **중간 청크 (500-1000)** | 균형 잡힌 성능 | 일반적인 RAG |
+| **큰 청크 (1000-2000)** | 풍부한 문맥 | 요약, 분석 |
+
+### chunk_overlap 설정
+
+```python
+# 권장: chunk_size의 10-20%
+chunk_size = 1000
+chunk_overlap = 200  # 20%
+
+# 중복의 목적: 문맥 연결 유지
+"""
+청크 1: "...인공지능의 발전은 매우 빠르게 진행되고 있다."
+청크 2: "빠르게 진행되고 있다. 특히 LLM 분야에서..."
+"""
+```
+
+### 청킹 품질 검증
+
+```python
+def analyze_chunks(chunks):
+    """청킹 결과 분석"""
+    sizes = [len(chunk.page_content) for chunk in chunks]
+
+    print(f"총 청크 수: {len(chunks)}")
+    print(f"평균 크기: {sum(sizes)/len(sizes):.0f}")
+    print(f"최소 크기: {min(sizes)}")
+    print(f"최대 크기: {max(sizes)}")
+
+    # 너무 작은 청크 확인
+    small_chunks = [c for c in chunks if len(c.page_content) < 100]
+    print(f"100자 미만 청크: {len(small_chunks)}개")
+```
+
+---
+
+## 6. Processing (문서 처리)
+
+### 전처리 기법
+
+| 기법 | 설명 |
+|------|------|
+| **정규화** | 소문자 변환, 특수문자 제거 |
+| **메타데이터 추가** | 출처, 날짜, 저자 정보 |
+| **필터링** | 불필요한 정보 제거 |
+| **중복 제거** | 동일 콘텐츠 제거 |
+
+### 메타데이터 활용
+
+```python
+from langchain.schema import Document
+
+# 메타데이터가 포함된 문서 생성
+doc = Document(
+    page_content="RAG는 검색 증강 생성 기술입니다.",
+    metadata={
+        "source": "rag_tutorial.pdf",
+        "page": 5,
+        "chapter": "Introduction",
+        "date": "2024-01-15"
+    }
+)
+
+# 메타데이터 기반 필터링
+filtered_docs = [
+    d for d in documents
+    if d.metadata.get("chapter") == "Introduction"
+]
+```
+
+---
+
+## 핵심 요약
+
+### Document Loader 선택
+
+| 상황 | 권장 Loader |
+|------|-------------|
+| 텍스트 파일 | TextLoader |
+| PDF 문서 | PDFLoader, PyPDFLoader |
+| 웹 콘텐츠 | WebBaseLoader |
+| 여러 파일 일괄 | DirectoryLoader |
+
+### Text Splitter 선택
+
+| 상황 | 권장 Splitter |
+|------|---------------|
+| 일반적인 경우 | RecursiveCharacterTextSplitter |
+| 토큰 제한 고려 | TokenTextSplitter |
+| 마크다운 문서 | MarkdownHeaderTextSplitter |
+| 코드 파일 | CodeTextSplitter |
+
+### 청킹 파라미터 권장값
+
+```python
+# 일반적인 RAG 시스템 권장 설정
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,      # 500-1000 권장
+    chunk_overlap=100,   # 10-20% 권장
+    separators=["\n\n", "\n", ".", " "]
+)
+```

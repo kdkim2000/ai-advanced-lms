@@ -1,0 +1,540 @@
+{
+  "moduleId": "data-analysis",
+  "exam_info": {
+    "title": "데이터 분석 퀴즈",
+    "level": "LV.2",
+    "type": "객관식 문항",
+    "total_questions": 30,
+    "points_per_question": 4,
+    "total_points": 120,
+    "description": "NumPy, Pandas, 텍스트 전처리 등에 대한 이해도를 확인합니다."
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "NumPy에 대한 설명으로 가장 적합한 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "Python의 표준 라이브러리로 문자열 처리에 특화되어 있다",
+        "2": "C 언어로 구현된 함수를 통해 벡터·행렬·텐서 연산을 빠르게 수행한다",
+        "3": "데이터베이스 관리를 위한 라이브러리이다",
+        "4": "웹 크롤링 전용 라이브러리이다",
+        "5": "이미지 처리만을 위한 특수 목적 라이브러리이다"
+      },
+      "answer": 2,
+      "category": "NumPy",
+      "explanation": ""
+    },
+    {
+      "id": 2,
+      "question": "다음 중 m×n 크기의 0으로 채워진 행렬을 생성하는 NumPy 함수는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "np.empty((m,n))",
+        "2": "np.zeros((m,n))",
+        "3": "np.ones((m,n))",
+        "4": "np.array((m,n))",
+        "5": "np.fill((m,n))"
+      },
+      "answer": 2,
+      "category": "NumPy",
+      "explanation": ""
+    },
+    {
+      "id": 3,
+      "question": "다음 NumPy 코드의 실행 결과는 무엇입니까?\n\nimport numpy as np\nv1 = np.array([1,2,3])\nv2 = np.array([4,5,6])\nprint(np.dot(v1, v2))",
+      "points": 4,
+      "options": {
+        "1": "[4, 10, 18]",
+        "2": "[5, 7, 9]",
+        "3": "32",
+        "4": "3.74",
+        "5": "오류가 발생합니다"
+      },
+      "answer": 3,
+      "category": "NumPy",
+      "explanation": ""
+    },
+    {
+      "id": 4,
+      "question": "NumPy에서 벡터의 크기(거리 개념)를 계산하는 함수는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "np.dot()",
+        "2": "np.linalg.norm()",
+        "3": "np.size()",
+        "4": "np.length()",
+        "5": "np.magnitude()"
+      },
+      "answer": 2,
+      "category": "NumPy",
+      "explanation": ""
+    },
+    {
+      "id": 5,
+      "question": "NumPy에서 행렬의 전치(Transpose)를 수행하는 방법으로 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "A.transpose()",
+        "2": "A.T",
+        "3": "np.transpose(A)",
+        "4": "위의 모든 방법이 가능하다",
+        "5": "1번과 2번만 가능하다"
+      },
+      "answer": 4,
+      "category": "NumPy",
+      "explanation": ""
+    },
+    {
+      "id": 6,
+      "question": "Pandas와 NumPy의 역할 차이에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "NumPy는 데이터 처리, Pandas는 연산에 특화되어 있다",
+        "2": "NumPy는 연산, Pandas는 데이터 처리/합산/병합에 특화되어 있다",
+        "3": "두 라이브러리는 완전히 동일한 기능을 제공한다",
+        "4": "Pandas는 NumPy를 사용할 수 없다",
+        "5": "NumPy는 1차원 데이터만 처리할 수 있다"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 7,
+      "question": "Pandas의 DataFrame에 대한 설명으로 가장 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "2차원 데이터 구조이다",
+        "2": "Series의 결합 형태이다",
+        "3": "테이블 형태로 데이터를 표현한다",
+        "4": "1차원 데이터만 저장할 수 있다",
+        "5": "행과 열로 구성되어 있다"
+      },
+      "answer": 4,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 8,
+      "question": "다음 중 DataFrame의 기본 정보를 확인하는 메서드로 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "df.shape - 크기 확인",
+        "2": "df.columns - 컬럼명 확인",
+        "3": "df.info() - 데이터 구조 요약",
+        "4": "df.describe() - 통계 분석",
+        "5": "df.load() - 데이터 불러오기"
+      },
+      "answer": 5,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 9,
+      "question": "Pandas에서 CSV 파일을 DataFrame으로 읽어오는 함수는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "pd.load_csv()",
+        "2": "pd.read_csv()",
+        "3": "pd.import_csv()",
+        "4": "pd.open_csv()",
+        "5": "pd.get_csv()"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 10,
+      "question": "다음 Pandas 코드에서 논리 연산자 &와 |의 의미로 올바른 것은?\n\ndf[(df['age'] >= 20) & (df['gender'] == 'male')]",
+      "points": 4,
+      "options": {
+        "1": "&는 OR, |는 AND를 의미한다",
+        "2": "&는 AND, |는 OR를 의미한다",
+        "3": "둘 다 AND를 의미한다",
+        "4": "둘 다 OR를 의미한다",
+        "5": "&는 XOR, |는 NOT을 의미한다"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 11,
+      "question": "Pandas에서 apply() 메서드와 lambda 함수를 사용하여 파생 변수를 생성할 때, 다음 코드의 목적으로 가장 적합한 것은?\n\ndf['level'] = df['age'].apply(lambda x: '성인' if x >= 20 else '미성년')",
+      "points": 4,
+      "options": {
+        "1": "나이를 숫자로 변환한다",
+        "2": "나이에 따라 성인/미성년 카테고리를 생성한다",
+        "3": "나이의 평균을 계산한다",
+        "4": "나이 데이터를 삭제한다",
+        "5": "나이를 정렬한다"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 12,
+      "question": "Pandas의 groupby() 메서드의 주요 용도는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "데이터를 정렬하는 것",
+        "2": "특정 기준으로 묶어서 통계를 계산하는 것",
+        "3": "데이터를 삭제하는 것",
+        "4": "데이터를 복사하는 것",
+        "5": "컬럼명을 변경하는 것"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 13,
+      "question": "Pandas에서 문자열 데이터의 길이를 계산하는 메서드는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": ".str.length()",
+        "2": ".str.len()",
+        "3": ".str.size()",
+        "4": ".str.count()",
+        "5": ".length()"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 14,
+      "question": "Pandas에서 날짜 데이터를 datetime 형식으로 변환하는 함수는 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "pd.convert_datetime()",
+        "2": "pd.to_datetime()",
+        "3": "pd.datetime()",
+        "4": "pd.parse_date()",
+        "5": "pd.date_convert()"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 15,
+      "question": "Pandas의 merge() 함수에서 'how' 파라미터의 'left' 옵션은 무엇을 의미합니까?",
+      "points": 4,
+      "options": {
+        "1": "오른쪽 DataFrame의 모든 행을 유지한다",
+        "2": "왼쪽 DataFrame의 모든 행을 유지한다",
+        "3": "양쪽 DataFrame의 공통 행만 유지한다",
+        "4": "양쪽 DataFrame의 모든 행을 유지한다",
+        "5": "중복 행을 제거한다"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 16,
+      "question": "Pandas의 pivot_table() 함수의 주요 목적은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "데이터를 정렬하는 것",
+        "2": "행·열 기준으로 데이터를 요약하는 것",
+        "3": "데이터를 삭제하는 것",
+        "4": "컬럼을 추가하는 것",
+        "5": "데이터를 복사하는 것"
+      },
+      "answer": 2,
+      "category": "Pandas",
+      "explanation": ""
+    },
+    {
+      "id": 17,
+      "question": "텍스트 전처리에서 정규표현식(Regex) 패턴 '\\d+'가 의미하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "한글 문자",
+        "2": "영문 대문자",
+        "3": "숫자",
+        "4": "공백 문자",
+        "5": "특수 문자"
+      },
+      "answer": 3,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 18,
+      "question": "정규표현식 패턴 '[가-힣]+'가 매칭하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "숫자",
+        "2": "영문",
+        "3": "한글",
+        "4": "특수문자",
+        "5": "공백"
+      },
+      "answer": 3,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 19,
+      "question": "텍스트 정제(Cleaning) 단계에서 수행하는 작업으로 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "HTML 태그 제거",
+        "2": "URL 제거",
+        "3": "감정 분석",
+        "4": "특수문자를 공백으로 치환",
+        "5": "이모지 제거"
+      },
+      "answer": 3,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 20,
+      "question": "토큰화(Tokenization)에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "텍스트를 의미 있는 단위로 분리하는 과정",
+        "2": "텍스트를 암호화하는 과정",
+        "3": "텍스트를 번역하는 과정",
+        "4": "텍스트의 길이를 측정하는 과정",
+        "5": "텍스트를 삭제하는 과정"
+      },
+      "answer": 1,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 21,
+      "question": "N-gram에 대한 설명으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "N개의 문서를 분석하는 기법",
+        "2": "연속된 n개의 단어 묶음으로 문맥을 반영하는 기법",
+        "3": "N번 반복하여 학습하는 기법",
+        "4": "N개의 언어를 번역하는 기법",
+        "5": "N차원 벡터로 변환하는 기법"
+      },
+      "answer": 2,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 22,
+      "question": "정규화(Normalization) 단계에서 수행하는 작업으로 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "대소문자 통일",
+        "2": "숫자를 NUM으로 치환",
+        "3": "반복 문자 축소",
+        "4": "문서 간 유사도 계산",
+        "5": "불필요한 공백 제거"
+      },
+      "answer": 4,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 23,
+      "question": "불용어(Stopwords) 처리의 목적은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "모든 단어를 제거하는 것",
+        "2": "의미 없는 조사, 접속사 등을 제거하는 것",
+        "3": "중요한 단어를 제거하는 것",
+        "4": "문장을 더 길게 만드는 것",
+        "5": "모든 명사를 제거하는 것"
+      },
+      "answer": 2,
+      "category": "텍스트 전처리",
+      "explanation": ""
+    },
+    {
+      "id": 24,
+      "question": "Bag of Words(BOW) 방식의 단점으로 가장 적합한 것은?",
+      "points": 4,
+      "options": {
+        "1": "구현이 매우 복잡하다",
+        "2": "단어의 순서 정보가 손실된다",
+        "3": "계산 속도가 매우 느리다",
+        "4": "메모리 사용량이 적다",
+        "5": "문맥을 완벽하게 이해한다"
+      },
+      "answer": 2,
+      "category": "텍스트 변환",
+      "explanation": ""
+    },
+    {
+      "id": 25,
+      "question": "TF(Term Frequency)가 의미하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "전체 문서 수",
+        "2": "문서 내 단어 비율",
+        "3": "단어의 길이",
+        "4": "문서의 길이",
+        "5": "단어의 희귀성"
+      },
+      "answer": 2,
+      "category": "텍스트 변환",
+      "explanation": ""
+    },
+    {
+      "id": 26,
+      "question": "IDF(Inverse Document Frequency)가 측정하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "단어의 빈도",
+        "2": "문서의 길이",
+        "3": "각 단어의 중요도(희귀성)",
+        "4": "문장의 개수",
+        "5": "텍스트의 감정"
+      },
+      "answer": 3,
+      "category": "텍스트 변환",
+      "explanation": ""
+    },
+    {
+      "id": 27,
+      "question": "TF-IDF 값이 높다는 것은 무엇을 의미합니까?",
+      "points": 4,
+      "options": {
+        "1": "해당 단어가 모든 문서에 자주 등장한다",
+        "2": "해당 단어가 특정 문서에서 중요하고 희귀하다",
+        "3": "해당 단어가 의미가 없다",
+        "4": "해당 단어가 불용어이다",
+        "5": "해당 문서가 길다"
+      },
+      "answer": 2,
+      "category": "텍스트 변환",
+      "explanation": ""
+    },
+    {
+      "id": 28,
+      "question": "Cosine Similarity(코사인 유사도)가 측정하는 것은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "두 벡터의 직선 거리",
+        "2": "두 문서 벡터가 얼마나 비슷한 방향인지",
+        "3": "문서의 길이",
+        "4": "단어의 개수",
+        "5": "문장의 복잡도"
+      },
+      "answer": 2,
+      "category": "문서 유사도",
+      "explanation": ""
+    },
+    {
+      "id": 29,
+      "question": "문서 유사도 계산이 활용되는 분야로 적합하지 않은 것은?",
+      "points": 4,
+      "options": {
+        "1": "검색 시스템",
+        "2": "추천 시스템",
+        "3": "RAG (Retrieval Augmented Generation)",
+        "4": "이미지 편집",
+        "5": "문서 분류"
+      },
+      "answer": 4,
+      "category": "문서 유사도",
+      "explanation": ""
+    },
+    {
+      "id": 30,
+      "question": "RAG 시스템에서 TF-IDF가 주로 사용되는 목적은 무엇입니까?",
+      "points": 4,
+      "options": {
+        "1": "이미지를 생성하기 위해",
+        "2": "텍스트를 음성으로 변환하기 위해",
+        "3": "관련 문서를 검색하고 유사도를 계산하기 위해",
+        "4": "데이터를 암호화하기 위해",
+        "5": "웹페이지를 크롤링하기 위해"
+      },
+      "answer": 3,
+      "category": "RAG 응용",
+      "explanation": ""
+    }
+  ],
+  "answer_key": {
+    "1": 2,
+    "2": 2,
+    "3": 3,
+    "4": 2,
+    "5": 4,
+    "6": 2,
+    "7": 4,
+    "8": 5,
+    "9": 2,
+    "10": 2,
+    "11": 2,
+    "12": 2,
+    "13": 2,
+    "14": 2,
+    "15": 2,
+    "16": 2,
+    "17": 3,
+    "18": 3,
+    "19": 3,
+    "20": 1,
+    "21": 2,
+    "22": 4,
+    "23": 2,
+    "24": 2,
+    "25": 2,
+    "26": 3,
+    "27": 2,
+    "28": 2,
+    "29": 4,
+    "30": 3
+  },
+  "category_summary": {
+    "NumPy": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "Pandas": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "텍스트 전처리": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "텍스트 변환": [
+      24,
+      25,
+      26,
+      27
+    ],
+    "문서 유사도": [
+      28,
+      29
+    ],
+    "RAG 응용": [
+      30
+    ]
+  }
+}
