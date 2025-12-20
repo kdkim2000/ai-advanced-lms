@@ -35,22 +35,31 @@ export function Header({ breadcrumbs }: HeaderProps) {
       <Separator orientation="vertical" className="mr-2 h-4" />
 
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <Breadcrumb>
-          <BreadcrumbList>
-            {breadcrumbs.map((item, index) => (
-              <React.Fragment key={index}>
-                <BreadcrumbItem>
-                  {index < breadcrumbs.length - 1 ? (
-                    <BreadcrumbLink href={item.href || "#"}>
-                      {item.label}
-                    </BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbPage>{item.label}</BreadcrumbPage>
+        <Breadcrumb className="min-w-0 flex-1">
+          <BreadcrumbList className="flex-nowrap">
+            {breadcrumbs.map((item, index) => {
+              const isFirst = index === 0;
+              const isLast = index === breadcrumbs.length - 1;
+              const isMiddle = !isFirst && !isLast;
+              const shouldHideOnMobile = isMiddle && breadcrumbs.length > 2;
+
+              return (
+                <React.Fragment key={index}>
+                  <BreadcrumbItem className={shouldHideOnMobile ? "hidden sm:flex" : ""}>
+                    {!isLast ? (
+                      <BreadcrumbLink href={item.href || "#"} className="truncate max-w-24 sm:max-w-none">
+                        {item.label}
+                      </BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbPage className="truncate max-w-32 sm:max-w-none">{item.label}</BreadcrumbPage>
+                    )}
+                  </BreadcrumbItem>
+                  {!isLast && (
+                    <BreadcrumbSeparator className={shouldHideOnMobile ? "hidden sm:flex" : ""} />
                   )}
-                </BreadcrumbItem>
-                {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-              </React.Fragment>
-            ))}
+                </React.Fragment>
+              );
+            })}
           </BreadcrumbList>
         </Breadcrumb>
       )}

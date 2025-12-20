@@ -105,7 +105,7 @@ export function QuestionCard({
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "flex-shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium border",
+                      "flex-shrink-0 w-8 h-8 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-sm sm:text-sm font-medium border",
                       isSelected && !isSubmitted
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-muted border-border",

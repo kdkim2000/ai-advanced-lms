@@ -40,7 +40,7 @@ export default function LearnPage() {
       <div className="flex flex-1 flex-col gap-12 p-6 md:p-10">
         {/* Page Header */}
         <section className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">학습 모듈</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">학습 모듈</h1>
           <p className="text-muted-foreground">
             AI Advanced 자격 취득을 위한 6개 모듈입니다.
           </p>
@@ -93,7 +93,7 @@ export default function LearnPage() {
                       </div>
 
                       {/* Chapter Preview */}
-                      <div className="pl-14 space-y-1">
+                      <div className="pl-0 sm:pl-14 space-y-1">
                         {module.chapters.slice(0, 3).map((chapter) => (
                           <p
                             key={chapter.id}
@@ -111,7 +111,7 @@ export default function LearnPage() {
                     </div>
 
                     {/* Progress & Action */}
-                    <div className="md:w-48 space-y-3 pl-14 md:pl-0">
+                    <div className="md:w-48 space-y-3 pl-0 md:pl-0">
                       <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">

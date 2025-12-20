@@ -32,30 +32,30 @@ export function CodeBlock({
   return (
     <div className="group relative my-4 rounded-lg border bg-zinc-950 dark:bg-zinc-900">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-2">
+      <div className="flex items-center justify-between border-b border-zinc-800 px-3 sm:px-4 py-2">
         <div className="flex items-center gap-2">
           <Terminal className="h-4 w-4 text-zinc-400" />
           {filename ? (
-            <span className="text-sm text-zinc-400">{filename}</span>
+            <span className="text-xs sm:text-sm text-zinc-400 truncate max-w-32 sm:max-w-none">{filename}</span>
           ) : (
-            <span className="text-sm text-zinc-400">{languageLabel}</span>
+            <span className="text-xs sm:text-sm text-zinc-400">{languageLabel}</span>
           )}
         </div>
         <Button
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="h-8 px-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+          className="h-9 px-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
         >
           {copied ? (
             <>
-              <Check className="h-4 w-4 mr-1" />
-              복사됨
+              <Check className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">복사됨</span>
             </>
           ) : (
             <>
-              <Copy className="h-4 w-4 mr-1" />
-              복사
+              <Copy className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">복사</span>
             </>
           )}
         </Button>
@@ -65,11 +65,11 @@ export function CodeBlock({
       <div className="overflow-x-auto">
         {highlightedCode ? (
           <div
-            className="p-4 text-sm"
+            className="p-3 sm:p-4 text-xs sm:text-sm"
             dangerouslySetInnerHTML={{ __html: highlightedCode }}
           />
         ) : (
-          <pre className={`p-4 text-sm ${showLineNumbers ? "line-numbers" : ""}`}>
+          <pre className={`p-3 sm:p-4 text-xs sm:text-sm ${showLineNumbers ? "line-numbers" : ""}`}>
             <code className={`language-${language}`}>{children}</code>
           </pre>
         )}

@@ -8,11 +8,11 @@ import { Info, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 
 // Custom MDX components
 export const mdxComponents = {
-  // Headings
+  // Headings - responsive sizes for mobile
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-8 mb-4 scroll-m-20 text-3xl font-bold tracking-tight",
+        "mt-8 mb-4 scroll-m-20 text-2xl sm:text-3xl font-bold tracking-tight",
         className
       )}
       {...props}
@@ -21,7 +21,7 @@ export const mdxComponents = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mt-8 mb-4 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0",
+        "mt-8 mb-4 scroll-m-20 border-b pb-2 text-xl sm:text-2xl font-semibold tracking-tight first:mt-0",
         className
       )}
       {...props}
@@ -30,7 +30,7 @@ export const mdxComponents = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        "mt-6 mb-3 scroll-m-20 text-xl font-semibold tracking-tight",
+        "mt-6 mb-3 scroll-m-20 text-lg sm:text-xl font-semibold tracking-tight",
         className
       )}
       {...props}
@@ -39,7 +39,7 @@ export const mdxComponents = {
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
-        "mt-4 mb-2 scroll-m-20 text-lg font-semibold tracking-tight",
+        "mt-4 mb-2 scroll-m-20 text-base sm:text-lg font-semibold tracking-tight",
         className
       )}
       {...props}

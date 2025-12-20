@@ -117,17 +117,17 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
         </div>
 
         {/* Chapter Content */}
-        <div className="flex-1 overflow-auto p-6">
+        <div className="flex-1 overflow-auto p-4 sm:p-6">
           <div className="max-w-4xl mx-auto">
             {chapterContent ? (
               <Card>
-                <CardContent className="p-8">
+                <CardContent className="p-4 sm:p-6 md:p-8">
                   <MDXContent source={chapterContent.content} />
                 </CardContent>
               </Card>
             ) : (
               <Card>
-                <CardContent className="p-8">
+                <CardContent className="p-4 sm:p-6 md:p-8">
                   <div className="prose prose-neutral dark:prose-invert max-w-none">
                     <div className="rounded-lg border-2 border-dashed border-muted-foreground/25 p-8 text-center">
                       <p className="text-lg font-medium text-muted-foreground">

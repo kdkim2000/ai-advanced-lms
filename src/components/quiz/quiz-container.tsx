@@ -359,7 +359,7 @@ export function QuizContainer({ quiz: rawQuiz, moduleId }: QuizContainerProps) {
             <button
               key={index}
               onClick={() => setCurrentQuestionIndex(index)}
-              className={`w-7 h-7 rounded-full text-xs font-medium transition-all flex-shrink-0 ${isCurrent ? "ring-2 ring-primary ring-offset-1" : ""} ${isSubmitted ? (isCorrectAfterSubmit ? "bg-green-500 text-white" : isWrongAfterSubmit ? "bg-red-500 text-white" : "bg-muted text-muted-foreground") : isAnswered ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+              className={`w-9 h-9 sm:w-7 sm:h-7 rounded-full text-sm sm:text-xs font-medium transition-all flex-shrink-0 ${isCurrent ? "ring-2 ring-primary ring-offset-1" : ""} ${isSubmitted ? (isCorrectAfterSubmit ? "bg-green-500 text-white" : isWrongAfterSubmit ? "bg-red-500 text-white" : "bg-muted text-muted-foreground") : isAnswered ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
             >
               {index + 1}
             </button>

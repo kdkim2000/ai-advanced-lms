@@ -118,29 +118,29 @@ export function ChapterFooter({
         <Separator className="my-4" />
 
         {/* Navigation */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           {prevChapter ? (
-            <Button variant="outline" asChild>
+            <Button variant="outline" className="w-full sm:w-auto" asChild>
               <Link href={`/learn/${module.id}/${prevChapter.slug}`}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">이전: </span>
-                <span className="max-w-32 truncate">{prevChapter.title}</span>
+                <span className="max-w-48 sm:max-w-32 truncate">{prevChapter.title}</span>
               </Link>
             </Button>
           ) : (
-            <div />
+            <div className="hidden sm:block" />
           )}
 
           {nextChapter ? (
-            <Button asChild>
+            <Button className="w-full sm:w-auto" asChild>
               <Link href={`/learn/${module.id}/${nextChapter.slug}`}>
                 <span className="hidden sm:inline">다음: </span>
-                <span className="max-w-32 truncate">{nextChapter.title}</span>
+                <span className="max-w-48 sm:max-w-32 truncate">{nextChapter.title}</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           ) : nextModuleFirstChapter && nextModule ? (
-            <Button asChild>
+            <Button className="w-full sm:w-auto" asChild>
               <Link href={`/learn/${nextModule.id}/${nextModuleFirstChapter.slug}`}>
                 <span className="hidden sm:inline">다음 모듈: </span>
                 {nextModule.titleKo}
@@ -148,7 +148,7 @@ export function ChapterFooter({
               </Link>
             </Button>
           ) : (
-            <Button asChild>
+            <Button className="w-full sm:w-auto" asChild>
               <Link href="/dashboard">
                 학습 완료!
                 <ArrowRight className="ml-2 h-4 w-4" />

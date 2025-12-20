@@ -77,12 +77,12 @@ export default function DashboardPage() {
       <div className="flex flex-1 flex-col gap-12 p-6 md:p-10">
         {/* Page Header */}
         <section className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">대시보드</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">대시보드</h1>
           <p className="text-muted-foreground">학습 현황을 확인하세요.</p>
         </section>
 
         {/* Stats Grid */}
-        <section className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="grid gap-4 sm:gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">전체 진행률</p>
             <p className="text-4xl font-bold">{overallProgress}%</p>
