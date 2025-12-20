@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { use } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowRight, Check } from "lucide-react";
 import modulesData from "@/content/modules.json";
 import { useProgressStore } from "@/stores/progress-store";
+import { useIsHydrated } from "@/hooks/use-hydrated";
 import type { Module } from "@/types";
 
 const modules = modulesData.modules as Module[];
@@ -31,13 +32,9 @@ export default function ModulePage({ params }: ModulePageProps) {
   const { moduleId } = use(params);
   const currentModule = modules.find((m) => m.id === moduleId);
 
-  const [isHydrated, setIsHydrated] = useState(false);
+  const isHydrated = useIsHydrated();
   const { progress, getModuleProgress, markChapterComplete, markChapterIncomplete } =
     useProgressStore();
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   if (!currentModule) {
     notFound();

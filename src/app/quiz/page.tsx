@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, Trophy, Shuffle, BookOpen, History } from "lucide-react";
 import { useProgressStore } from "@/stores/progress-store";
+import { useIsHydrated } from "@/hooks/use-hydrated";
 
 const practiceQuiz = {
   moduleId: "practice",
@@ -62,12 +62,8 @@ const quizList = [
 ];
 
 export default function QuizListPage() {
-  const [isHydrated, setIsHydrated] = useState(false);
+  const isHydrated = useIsHydrated();
   const { progress, getWrongAnswerCount, getPracticeAttempts } = useProgressStore();
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const wrongAnswerCount = isHydrated ? getWrongAnswerCount() : 0;
   const practiceAttempts = isHydrated ? getPracticeAttempts() : [];

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowRight } from "lucide-react";
 import modulesData from "@/content/modules.json";
 import { useProgressStore } from "@/stores/progress-store";
+import { useIsHydrated } from "@/hooks/use-hydrated";
 import type { Module } from "@/types";
 
 const modules = modulesData.modules as Module[];
@@ -22,12 +22,8 @@ const moduleIcons: Record<string, string> = {
 };
 
 export default function HomePage() {
-  const [isHydrated, setIsHydrated] = useState(false);
+  const isHydrated = useIsHydrated();
   const { progress, getModuleProgress } = useProgressStore();
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const totalChapters = modules.reduce((sum, m) => sum + m.chapters.length, 0);
   const completedChapters = isHydrated
