@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Progress } from "@/components/ui/progress";
@@ -21,7 +22,16 @@ const moduleIcons: Record<string, string> = {
 };
 
 export default function LearnPage() {
+  const [isHydrated, setIsHydrated] = useState(false);
   const { getModuleProgress } = useProgressStore();
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  const getModuleProgressSafe = (moduleId: string) => {
+    return isHydrated ? getModuleProgress(moduleId) : 0;
+  };
 
   return (
     <>
@@ -39,7 +49,7 @@ export default function LearnPage() {
         {/* Module List */}
         <section className="space-y-8">
           {modules.map((module, index) => {
-            const moduleProgressCount = getModuleProgress(module.id);
+            const moduleProgressCount = getModuleProgressSafe(module.id);
             const progressPercent =
               module.chapters.length > 0
                 ? Math.round(

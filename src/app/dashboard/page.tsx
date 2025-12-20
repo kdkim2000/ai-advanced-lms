@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Progress } from "@/components/ui/progress";
@@ -21,24 +22,34 @@ const moduleIcons: Record<string, string> = {
 };
 
 export default function DashboardPage() {
+  const [isHydrated, setIsHydrated] = useState(false);
   const { progress, getModuleProgress } = useProgressStore();
 
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   const totalChapters = modules.reduce((sum, m) => sum + m.chapters.length, 0);
-  const completedChapters = Object.values(progress.moduleProgress).reduce(
-    (sum, mp) => sum + mp.completedChapters.length,
-    0
-  );
+  const completedChapters = isHydrated
+    ? Object.values(progress.moduleProgress).reduce(
+        (sum, mp) => sum + mp.completedChapters.length,
+        0
+      )
+    : 0;
   const overallProgress =
     totalChapters > 0
       ? Math.round((completedChapters / totalChapters) * 100)
       : 0;
 
-  const completedModules = modules.filter((m) => {
-    const moduleProgress = getModuleProgress(m.id);
-    return moduleProgress === m.chapters.length;
-  }).length;
+  const completedModules = isHydrated
+    ? modules.filter((m) => {
+        const moduleProgress = getModuleProgress(m.id);
+        return moduleProgress === m.chapters.length;
+      }).length
+    : 0;
 
   const getRecentActivity = () => {
+    if (!isHydrated) return [];
     const activities: { mod: Module; chapterId: string }[] = [];
     for (const mod of modules) {
       const moduleProgress = progress.moduleProgress[mod.id];
@@ -52,6 +63,10 @@ export default function DashboardPage() {
   };
 
   const recentActivity = getRecentActivity();
+
+  const getModuleProgressSafe = (moduleId: string) => {
+    return isHydrated ? getModuleProgress(moduleId) : 0;
+  };
 
   return (
     <>
@@ -96,7 +111,9 @@ export default function DashboardPage() {
 
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">북마크</p>
-            <p className="text-4xl font-bold">{progress.bookmarks.length}</p>
+            <p className="text-4xl font-bold">
+              {isHydrated ? progress.bookmarks.length : 0}
+            </p>
           </div>
         </section>
 
@@ -110,7 +127,7 @@ export default function DashboardPage() {
 
           <div className="space-y-6">
             {modules.map((module) => {
-              const moduleProgressCount = getModuleProgress(module.id);
+              const moduleProgressCount = getModuleProgressSafe(module.id);
               const progressPercent =
                 module.chapters.length > 0
                   ? Math.round(

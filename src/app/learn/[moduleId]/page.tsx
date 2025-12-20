@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/layout/header";
@@ -31,20 +31,26 @@ export default function ModulePage({ params }: ModulePageProps) {
   const { moduleId } = use(params);
   const currentModule = modules.find((m) => m.id === moduleId);
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const { progress, getModuleProgress, markChapterComplete, markChapterIncomplete } =
     useProgressStore();
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   if (!currentModule) {
     notFound();
   }
 
-  const moduleProgressCount = getModuleProgress(currentModule.id);
+  const moduleProgressCount = isHydrated ? getModuleProgress(currentModule.id) : 0;
   const progressPercent =
     currentModule.chapters.length > 0
       ? Math.round((moduleProgressCount / currentModule.chapters.length) * 100)
       : 0;
 
   const getFirstIncompleteChapter = () => {
+    if (!isHydrated) return currentModule.chapters[0];
     const moduleProgress = progress.moduleProgress[currentModule.id];
     for (const chapter of currentModule.chapters) {
       if (!moduleProgress?.completedChapters.includes(chapter.id)) {
@@ -62,6 +68,11 @@ export default function ModulePage({ params }: ModulePageProps) {
     } else {
       markChapterComplete(currentModule.id, chapterId);
     }
+  };
+
+  const isChapterComplete = (chapterId: string) => {
+    if (!isHydrated) return false;
+    return progress.moduleProgress[currentModule.id]?.completedChapters.includes(chapterId) ?? false;
   };
 
   return (
@@ -129,10 +140,7 @@ export default function ModulePage({ params }: ModulePageProps) {
 
           <div className="space-y-2">
             {currentModule.chapters.map((chapter, index) => {
-              const isComplete =
-                progress.moduleProgress[currentModule.id]?.completedChapters.includes(
-                  chapter.id
-                ) ?? false;
+              const isComplete = isChapterComplete(chapter.id);
 
               return (
                 <div
