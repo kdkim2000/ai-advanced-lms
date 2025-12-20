@@ -3,68 +3,59 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, Trophy, HelpCircle, Shuffle, BookOpen, History } from "lucide-react";
+import { ArrowRight, Trophy, Shuffle, BookOpen, History } from "lucide-react";
 import { useProgressStore } from "@/stores/progress-store";
 
 const practiceQuiz = {
   moduleId: "practice",
   title: "실전 문제풀이",
-  description: "모든 챕터에서 랜덤으로 20문제를 출제합니다. 실전처럼 풀어보세요!",
+  description: "모든 챕터에서 랜덤으로 20문제를 출제합니다.",
   icon: "🎲",
   questionCount: 20,
-  isPractice: true,
 };
 
 const quizList = [
   {
     moduleId: "python",
-    title: "Python 기초 퀴즈",
-    description: "Python 프로그래밍 기초 지식을 확인하는 퀴즈입니다.",
+    title: "Python 기초",
+    description: "Python 프로그래밍 기초 지식",
     icon: "🐍",
     questionCount: 67,
   },
   {
     moduleId: "data-analysis",
-    title: "데이터 분석 퀴즈",
-    description: "Pandas, NumPy 등 데이터 분석 라이브러리에 대한 퀴즈입니다.",
+    title: "데이터 분석",
+    description: "Pandas, NumPy 등 데이터 분석 라이브러리",
     icon: "📊",
     questionCount: 30,
   },
   {
     moduleId: "llm",
-    title: "LLM 기초 퀴즈",
-    description: "Large Language Model의 기본 개념에 대한 퀴즈입니다.",
+    title: "LLM 기초",
+    description: "Large Language Model의 기본 개념",
     icon: "🤖",
     questionCount: 324,
   },
   {
     moduleId: "prompt-engineering",
-    title: "프롬프트 엔지니어링 퀴즈",
-    description: "효과적인 프롬프트 작성 기법에 대한 퀴즈입니다.",
+    title: "프롬프트 엔지니어링",
+    description: "효과적인 프롬프트 작성 기법",
     icon: "⚡",
     questionCount: 310,
   },
   {
     moduleId: "rag",
-    title: "RAG 퀴즈",
-    description: "Retrieval-Augmented Generation에 대한 퀴즈입니다.",
+    title: "RAG",
+    description: "Retrieval-Augmented Generation",
     icon: "🔍",
     questionCount: 75,
   },
   {
     moduleId: "fine-tuning",
-    title: "Fine-tuning 퀴즈",
-    description: "모델 파인튜닝에 대한 퀴즈입니다.",
+    title: "Fine-tuning",
+    description: "모델 파인튜닝 기법",
     icon: "🎯",
     questionCount: 245,
   },
@@ -74,9 +65,7 @@ export default function QuizListPage() {
   const [isHydrated, setIsHydrated] = useState(false);
   const { progress, getWrongAnswerCount, getPracticeAttempts } = useProgressStore();
 
-  // Prevent hydration mismatch by only showing progress after client mount
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional hydration detection
     setIsHydrated(true);
   }, []);
 
@@ -87,7 +76,6 @@ export default function QuizListPage() {
     if (!isHydrated) return null;
     const moduleProgress = progress.moduleProgress[moduleId];
     if (!moduleProgress?.quizScores?.length) return null;
-    // Get the latest quiz score
     const latestScore = moduleProgress.quizScores[moduleProgress.quizScores.length - 1];
     return latestScore;
   };
@@ -101,125 +89,107 @@ export default function QuizListPage() {
         ]}
       />
 
-      <div className="flex flex-1 flex-col gap-6 p-6">
+      <div className="flex flex-1 flex-col gap-12 p-6 md:p-10">
         {/* Page Header */}
-        <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <HelpCircle className="h-6 w-6" />
-            퀴즈
-          </h1>
-          <p className="text-muted-foreground mt-1">
+        <section className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">퀴즈</h1>
+          <p className="text-muted-foreground">
             각 모듈별 학습 내용을 퀴즈로 확인해보세요.
           </p>
-        </div>
+        </section>
 
-        {/* Featured Cards Grid */}
-        <div className="grid gap-4 md:grid-cols-2">
-          {/* Practice Quiz - Featured */}
-          <Card className="border-2 border-primary/50 bg-gradient-to-r from-primary/5 to-primary/10">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <span className="text-4xl">{practiceQuiz.icon}</span>
-                <div>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    {practiceQuiz.title}
-                    <Badge variant="outline" className="ml-2">
-                      <Shuffle className="h-3 w-3 mr-1" />
-                      랜덤
-                    </Badge>
-                    {practiceAttempts.length > 0 && (
-                      <Badge variant="secondary" className="ml-1">
-                        {practiceAttempts.length}회 도전
-                      </Badge>
-                    )}
-                  </CardTitle>
-                  <CardDescription className="mt-1">
-                    {practiceQuiz.description}
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
+        {/* Featured Section */}
+        <section className="grid gap-6 md:grid-cols-2">
+          {/* Practice Quiz */}
+          <Link href="/quiz/practice" className="block group">
+            <div className="space-y-3 p-6 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-muted-foreground">
-                    {practiceQuiz.questionCount}문제
+                <span className="text-4xl">{practiceQuiz.icon}</span>
+                {practiceAttempts.length > 0 && (
+                  <span className="text-xs text-muted-foreground">
+                    {practiceAttempts.length}회 도전
                   </span>
-                  {(() => {
-                    const score = getQuizScore(practiceQuiz.moduleId);
-                    if (score) {
-                      const percentage = Math.round((score.score / score.totalQuestions) * 100);
-                      return (
-                        <span className="text-sm font-medium">
-                          최근: {score.score}/{score.totalQuestions} ({percentage}%)
-                        </span>
-                      );
-                    }
-                    return null;
-                  })()}
-                </div>
+                )}
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold flex items-center gap-2 group-hover:text-primary transition-colors">
+                  {practiceQuiz.title}
+                  <Shuffle className="h-4 w-4 text-muted-foreground" />
+                </h2>
+                <p className="text-muted-foreground text-sm mt-1">
+                  {practiceQuiz.description}
+                </p>
+              </div>
+              <div className="flex items-center justify-between pt-2">
+                <span className="text-sm text-muted-foreground">
+                  {practiceQuiz.questionCount}문제
+                </span>
                 <div className="flex gap-2">
                   {practiceAttempts.length > 0 && (
-                    <Button variant="outline" asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <Link href="/quiz/practice/history">
-                        <History className="h-4 w-4 mr-1" />
-                        기록
+                        <History className="h-4 w-4" />
                       </Link>
                     </Button>
                   )}
-                  <Button asChild>
-                    <Link href="/quiz/practice">
-                      실전 도전
-                      <Shuffle className="h-4 w-4 ml-2" />
-                    </Link>
+                  <Button size="sm">
+                    실전 도전
+                    <ArrowRight className="h-4 w-4 ml-1" />
                   </Button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </Link>
 
-          {/* Wrong Answers - Featured */}
-          <Card className="border-2 border-orange-500/50 bg-gradient-to-r from-orange-500/5 to-orange-500/10">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <span className="text-4xl">📝</span>
-                <div>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    오답노트
-                    {wrongAnswerCount > 0 && (
-                      <Badge variant="destructive" className="ml-2">
-                        {wrongAnswerCount}문제
-                      </Badge>
-                    )}
-                  </CardTitle>
-                  <CardDescription className="mt-1">
-                    틀린 문제를 다시 풀어보며 실력을 향상시키세요.
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
+          {/* Wrong Answers */}
+          <Link href="/quiz/wrong-answers" className="block group">
+            <div className="space-y-3 p-6 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
               <div className="flex items-center justify-between">
+                <span className="text-4xl">📝</span>
+                {wrongAnswerCount > 0 && (
+                  <span className="text-xs font-medium text-orange-600">
+                    {wrongAnswerCount}문제
+                  </span>
+                )}
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold flex items-center gap-2 group-hover:text-primary transition-colors">
+                  오답노트
+                  <BookOpen className="h-4 w-4 text-muted-foreground" />
+                </h2>
+                <p className="text-muted-foreground text-sm mt-1">
+                  틀린 문제를 다시 풀어보며 실력을 향상시키세요.
+                </p>
+              </div>
+              <div className="flex items-center justify-between pt-2">
                 <span className="text-sm text-muted-foreground">
                   {wrongAnswerCount > 0
-                    ? `${wrongAnswerCount}개의 문제가 대기 중입니다`
-                    : "아직 틀린 문제가 없습니다"}
+                    ? `${wrongAnswerCount}개의 문제가 대기 중`
+                    : "아직 틀린 문제 없음"}
                 </span>
-                <Button asChild variant={wrongAnswerCount > 0 ? "default" : "outline"}>
-                  <Link href="/quiz/wrong-answers">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    오답노트
-                  </Link>
+                <Button size="sm" variant={wrongAnswerCount > 0 ? "default" : "outline"}>
+                  오답노트
+                  <ArrowRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </Link>
+        </section>
+
+        <hr className="border-border" />
 
         {/* Module Quizzes */}
-        <div>
-          <h2 className="text-lg font-semibold mb-4">모듈별 퀴즈</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <section className="space-y-6">
+          <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            모듈별 퀴즈
+          </h2>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {quizList.map((quiz) => {
               const score = getQuizScore(quiz.moduleId);
               const hasAttempted = score !== null;
@@ -229,64 +199,54 @@ export default function QuizListPage() {
               const isPassing = percentage >= 70;
 
               return (
-                <Card key={quiz.moduleId} className="flex flex-col">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <span className="text-3xl">{quiz.icon}</span>
+                <Link
+                  key={quiz.moduleId}
+                  href={`/quiz/${quiz.moduleId}`}
+                  className="block group space-y-3"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="text-3xl">{quiz.icon}</span>
+                    {hasAttempted && (
+                      <span
+                        className={`text-xs font-medium ${
+                          isPassing ? "text-green-600" : "text-muted-foreground"
+                        }`}
+                      >
+                        {isPassing && <Trophy className="h-3 w-3 inline mr-1" />}
+                        {percentage}%
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-1">
+                    <h3 className="font-semibold group-hover:text-primary transition-colors">
+                      {quiz.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-1">
+                      {quiz.description}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {quiz.questionCount}문제
+                      </span>
                       {hasAttempted && (
-                        <Badge
-                          variant={isPassing ? "default" : "secondary"}
-                          className={isPassing ? "bg-green-600" : ""}
-                        >
-                          {isPassing ? (
-                            <>
-                              <Trophy className="h-3 w-3 mr-1" />
-                              합격
-                            </>
-                          ) : (
-                            "재도전 필요"
-                          )}
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg">{quiz.title}</CardTitle>
-                    <CardDescription>{quiz.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1 flex flex-col justify-end gap-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">
-                          {quiz.questionCount}문제
+                        <span className="text-xs">
+                          {score.score}/{score.totalQuestions}
                         </span>
-                        {hasAttempted && (
-                          <span className="font-medium">
-                            최고 점수: {score.score}/{score.totalQuestions}
-                          </span>
-                        )}
-                      </div>
-                      {hasAttempted && (
-                        <Progress
-                          value={percentage}
-                          className={
-                            isPassing
-                              ? "[&>div]:bg-green-600"
-                              : "[&>div]:bg-yellow-600"
-                          }
-                        />
                       )}
                     </div>
-                    <Button asChild className="w-full">
-                      <Link href={`/quiz/${quiz.moduleId}`}>
-                        {hasAttempted ? "다시 풀기" : "퀴즈 시작"}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                    {hasAttempted && (
+                      <Progress value={percentage} className="h-1" />
+                    )}
+                  </div>
+                </Link>
               );
             })}
           </div>
-        </div>
+        </section>
       </div>
     </>
   );

@@ -2,16 +2,8 @@
 
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import modulesData from "@/content/modules.json";
 import { useProgressStore } from "@/stores/progress-store";
@@ -35,16 +27,18 @@ export default function LearnPage() {
     <>
       <Header breadcrumbs={[{ label: "홈", href: "/" }, { label: "학습" }]} />
 
-      <div className="flex flex-1 flex-col gap-6 p-6">
-        <div>
-          <h1 className="text-2xl font-bold">학습 모듈</h1>
+      <div className="flex flex-1 flex-col gap-12 p-6 md:p-10">
+        {/* Page Header */}
+        <section className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">학습 모듈</h1>
           <p className="text-muted-foreground">
             AI Advanced 자격 취득을 위한 6개 모듈입니다.
           </p>
-        </div>
+        </section>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {modules.map((module) => {
+        {/* Module List */}
+        <section className="space-y-8">
+          {modules.map((module, index) => {
             const moduleProgressCount = getModuleProgress(module.id);
             const progressPercent =
               module.chapters.length > 0
@@ -52,73 +46,87 @@ export default function LearnPage() {
                     (moduleProgressCount / module.chapters.length) * 100
                   )
                 : 0;
-            const isCompleted = progressPercent === 100;
 
             return (
-              <Card key={module.id} className="flex flex-col">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <span className="text-4xl">
-                      {moduleIcons[module.id] || module.icon}
-                    </span>
-                    {isCompleted ? (
-                      <Badge variant="default" className="bg-green-500">
-                        완료
-                      </Badge>
-                    ) : progressPercent > 0 ? (
-                      <Badge variant="secondary">진행 중</Badge>
-                    ) : (
-                      <Badge variant="outline">미시작</Badge>
-                    )}
-                  </div>
-                  <CardTitle className="text-xl">
-                    {module.order}. {module.titleKo}
-                  </CardTitle>
-                  <CardDescription>{module.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col justify-end">
-                  <div className="mb-4">
-                    <div className="mb-2 flex justify-between text-sm">
-                      <span className="text-muted-foreground">
-                        {moduleProgressCount} / {module.chapters.length} 챕터
-                        완료
-                      </span>
-                      <span className="font-medium">{progressPercent}%</span>
+              <div key={module.id}>
+                {index > 0 && <hr className="border-border mb-8" />}
+
+                <Link
+                  href={`/learn/${module.id}`}
+                  className="block group"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start gap-6">
+                    {/* Icon & Info */}
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-4xl">{moduleIcons[module.id]}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h2 className="text-xl font-semibold group-hover:text-primary transition-colors">
+                              {module.order}. {module.titleKo}
+                            </h2>
+                            {progressPercent === 100 && (
+                              <span className="text-xs text-green-600 font-medium px-2 py-0.5 bg-green-50 dark:bg-green-900/20 rounded-full">
+                                완료
+                              </span>
+                            )}
+                            {progressPercent > 0 && progressPercent < 100 && (
+                              <span className="text-xs text-muted-foreground">
+                                진행 중
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-muted-foreground mt-1">
+                            {module.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Chapter Preview */}
+                      <div className="pl-14 space-y-1">
+                        {module.chapters.slice(0, 3).map((chapter) => (
+                          <p
+                            key={chapter.id}
+                            className="text-sm text-muted-foreground"
+                          >
+                            · {chapter.title}
+                          </p>
+                        ))}
+                        {module.chapters.length > 3 && (
+                          <p className="text-xs text-muted-foreground">
+                            외 {module.chapters.length - 3}개 챕터
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <Progress value={progressPercent} className="h-2" />
-                  </div>
 
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-medium">챕터 목록</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      {module.chapters.slice(0, 3).map((chapter) => (
-                        <li key={chapter.id} className="truncate">
-                          • {chapter.title}
-                        </li>
-                      ))}
-                      {module.chapters.length > 3 && (
-                        <li className="text-xs">
-                          ... 외 {module.chapters.length - 3}개
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                    {/* Progress & Action */}
+                    <div className="md:w-48 space-y-3 pl-14 md:pl-0">
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">
+                            {moduleProgressCount} / {module.chapters.length}
+                          </span>
+                          <span className="font-medium">{progressPercent}%</span>
+                        </div>
+                        <Progress value={progressPercent} className="h-1" />
+                      </div>
 
-                  <Button asChild className="mt-4 w-full">
-                    <Link href={`/learn/${module.id}`}>
-                      {progressPercent === 0
-                        ? "시작하기"
-                        : progressPercent === 100
-                          ? "복습하기"
-                          : "계속하기"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                      <Button className="w-full" variant="outline">
+                        {progressPercent === 0
+                          ? "시작하기"
+                          : progressPercent === 100
+                            ? "복습하기"
+                            : "계속하기"}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </Link>
+              </div>
             );
           })}
-        </div>
+        </section>
       </div>
     </>
   );

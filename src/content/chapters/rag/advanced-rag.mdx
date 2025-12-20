@@ -82,9 +82,9 @@ docs = retriever.get_relevant_documents("질의")
 
 | 장점 | 설명 |
 |------|------|
-| **검색 정확도** | 작은 청크로 정밀한 매칭 |
-| **풍부한 문맥** | 큰 부모 문서로 충분한 정보 |
-| **유연성** | 검색과 생성 최적화 분리 |
+| ** 검색 정확도** | 작은 청크로 정밀한 매칭 |
+| ** 풍부한 문맥** | 큰 부모 문서로 충분한 정보 |
+| ** 유연성** | 검색과 생성 최적화 분리 |
 
 <Callout type="info" title="Small2Big 효과">
 작은 청크는 검색 정확도를 높이고, 큰 부모 문서는 LLM에게 충분한 문맥을 제공합니다.
@@ -225,8 +225,8 @@ docs = hyde_search("RAG의 장점은?", llm, vectorstore, embeddings)
 
 | 장점 | 설명 |
 |------|------|
-| **의미 갭 감소** | 질의와 문서 간 의미 차이 해소 |
-| **검색 품질 향상** | 더 관련성 높은 문서 검색 |
+| ** 의미 갭 감소** | 질의와 문서 간 의미 차이 해소 |
+| ** 검색 품질 향상** | 더 관련성 높은 문서 검색 |
 | **Zero-shot 가능** | 학습 데이터 없이 적용 |
 
 ---
@@ -551,6 +551,6 @@ Answer:"""
 
 ### 적용 우선순위
 
-1. **기본**: Reranking (즉시 효과)
-2. **중급**: Hybrid Search, Multi-Query
-3. **고급**: HyDE, Small2Big, Contextual
+1. ** 기본**: Reranking (즉시 효과)
+2. ** 중급**: Hybrid Search, Multi-Query
+3. ** 고급**: HyDE, Small2Big, Contextual

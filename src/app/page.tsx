@@ -4,16 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, BookOpen, Trophy, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import modulesData from "@/content/modules.json";
 import { useProgressStore } from "@/stores/progress-store";
 import type { Module } from "@/types";
@@ -33,9 +25,7 @@ export default function HomePage() {
   const [isHydrated, setIsHydrated] = useState(false);
   const { progress, getModuleProgress } = useProgressStore();
 
-  // Prevent hydration mismatch
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional hydration detection
     setIsHydrated(true);
   }, []);
 
@@ -51,10 +41,8 @@ export default function HomePage() {
       ? Math.round((completedChapters / totalChapters) * 100)
       : 0;
 
-  // Find last accessed or first incomplete chapter
   const getRecommendedChapter = () => {
     if (!isHydrated) {
-      // Return first chapter when not hydrated
       if (modules.length > 0 && modules[0].chapters.length > 0) {
         return { module: modules[0], chapter: modules[0].chapters[0] };
       }
@@ -72,7 +60,6 @@ export default function HomePage() {
       }
     }
 
-    // Find first incomplete chapter
     for (const mod of modules) {
       const moduleProgress = progress.moduleProgress[mod.id];
       for (const chapter of mod.chapters) {
@@ -87,7 +74,6 @@ export default function HomePage() {
 
   const recommended = getRecommendedChapter();
 
-  // Helper to get module progress with hydration safety
   const getModuleProgressSafe = (moduleId: string) => {
     return isHydrated ? getModuleProgress(moduleId) : 0;
   };
@@ -96,71 +82,60 @@ export default function HomePage() {
     <>
       <Header breadcrumbs={[{ label: "홈" }]} />
 
-      <div className="flex flex-1 flex-col gap-6 p-6">
-        {/* Hero Section */}
-        <div className="rounded-xl bg-gradient-to-r from-primary/10 via-primary/5 to-background p-8">
-          <h1 className="text-3xl font-bold tracking-tight">
-            AI Advanced Learning Platform
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            AI Advanced 자격 취득을 위한 체계적인 학습 플랫폼입니다.
-          </p>
+      <div className="flex flex-1 flex-col gap-12 p-6 md:p-10">
+        {/* Hero Section - Clean & Minimal */}
+        <section className="space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold tracking-tight">
+              AI Advanced
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              자격 취득을 위한 학습 플랫폼
+            </p>
+          </div>
 
-          <div className="mt-6 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              <span className="text-sm">
-                <strong>{modules.length}</strong> 모듈
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="text-sm">
-                <strong>{totalChapters}</strong> 챕터
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-primary" />
-              <span className="text-sm">
-                <strong>{completedChapters}</strong> 완료
-              </span>
-            </div>
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <span>{modules.length}개 모듈</span>
+            <span>{totalChapters}개 챕터</span>
+            <span>{completedChapters}개 완료</span>
           </div>
 
           {recommended && (
-            <div className="mt-6">
-              <Button asChild>
-                <Link
-                  href={`/learn/${recommended.module.id}/${recommended.chapter.slug}`}
-                >
-                  {isHydrated && progress.lastAccessed ? "이어서 학습하기" : "학습 시작하기"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+            <Button asChild size="lg">
+              <Link
+                href={`/learn/${recommended.module.id}/${recommended.chapter.slug}`}
+              >
+                {isHydrated && progress.lastAccessed ? "이어서 학습하기" : "학습 시작하기"}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           )}
-        </div>
+        </section>
 
-        {/* Progress Overview */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">전체 학습 진행률</CardTitle>
-            <CardDescription>
-              {completedChapters} / {totalChapters} 챕터 완료
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-4">
-              <Progress value={overallProgress} className="flex-1" />
-              <span className="text-2xl font-bold">{overallProgress}%</span>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Progress Section */}
+        <section className="space-y-4">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+              전체 진행률
+            </h2>
+            <span className="text-3xl font-bold">{overallProgress}%</span>
+          </div>
+          <Progress value={overallProgress} className="h-2" />
+          <p className="text-sm text-muted-foreground">
+            {completedChapters} / {totalChapters} 챕터 완료
+          </p>
+        </section>
 
-        {/* Module Cards */}
-        <div>
-          <h2 className="mb-4 text-xl font-semibold">학습 모듈</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Divider */}
+        <hr className="border-border" />
+
+        {/* Module List - Simple & Clean */}
+        <section className="space-y-8">
+          <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+            학습 모듈
+          </h2>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {modules.map((module) => {
               const moduleProgressCount = getModuleProgressSafe(module.id);
               const progressPercent =
@@ -169,64 +144,40 @@ export default function HomePage() {
                       (moduleProgressCount / module.chapters.length) * 100
                     )
                   : 0;
-              const isCompleted = progressPercent === 100;
 
               return (
-                <Card
+                <Link
                   key={module.id}
-                  className="group transition-shadow hover:shadow-md"
+                  href={`/learn/${module.id}`}
+                  className="group block space-y-3"
                 >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <span className="text-3xl">
-                        {moduleIcons[module.id] || module.icon}
-                      </span>
-                      {isCompleted ? (
-                        <Badge variant="default" className="bg-green-500">
-                          완료
-                        </Badge>
-                      ) : progressPercent > 0 ? (
-                        <Badge variant="secondary">{progressPercent}%</Badge>
-                      ) : (
-                        <Badge variant="outline">미시작</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg">{module.titleKo}</CardTitle>
-                    <CardDescription className="line-clamp-2">
+                  <div className="flex items-start justify-between">
+                    <span className="text-3xl">{moduleIcons[module.id]}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {progressPercent}%
+                    </span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h3 className="font-semibold group-hover:text-primary transition-colors">
+                      {module.titleKo}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
                       {module.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-3">
-                      <div className="mb-1 flex justify-between text-xs text-muted-foreground">
-                        <span>
-                          {moduleProgressCount} / {module.chapters.length} 챕터
-                        </span>
-                        <span>{progressPercent}%</span>
-                      </div>
-                      <Progress value={progressPercent} className="h-2" />
-                    </div>
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      asChild
-                      size="sm"
-                    >
-                      <Link href={`/learn/${module.id}`}>
-                        {progressPercent === 0
-                          ? "시작하기"
-                          : progressPercent === 100
-                            ? "복습하기"
-                            : "계속하기"}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                    </p>
+                  </div>
+
+                  <div className="space-y-1">
+                    <Progress value={progressPercent} className="h-1" />
+                    <p className="text-xs text-muted-foreground">
+                      {moduleProgressCount} / {module.chapters.length} 챕터
+                    </p>
+                  </div>
+                </Link>
               );
             })}
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
