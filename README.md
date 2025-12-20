@@ -1,29 +1,53 @@
-# AI Advanced Learning Platform
+# AI Advanced LMS
 
-AI Advanced 자격 취득을 위한 체계적인 학습 플랫폼입니다.
+AI Advanced 자격 취득을 위한 체계적인 학습 관리 시스템(LMS)입니다.
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ## 주요 기능
 
+### 학습 시스템
 - **6개 학습 모듈**: Python, 데이터 분석, LLM, 프롬프트 엔지니어링, RAG, Fine-tuning
-- **31개 챕터**: 단계별 체계적인 학습 콘텐츠
-- **브라우저 내 Python 실행**: Pyodide를 활용한 인터랙티브 코드 실행
-- **퀴즈 시스템**: 모듈별 자가진단 테스트
-- **진도 관리**: 학습 진행률 추적 및 저장
-- **검색 기능**: 콘텐츠 빠른 검색 (Ctrl+K)
-- **북마크 & 메모**: 중요 내용 저장
-- **다크 모드**: 라이트/다크 테마 지원
+- **36개 챕터**: MDX 기반의 체계적인 학습 콘텐츠
+- **진도 관리**: 챕터별 완료 체크 및 학습 진행률 추적
+- **메모 기능**: 챕터별 개인 메모 저장
+
+### 퀴즈 시스템
+- **1,051개 문제**: 모듈별 객관식 퀴즈
+- **오답노트**: 틀린 문제 자동 저장 및 복습
+- **실전 문제풀이**: 전체 문제에서 랜덤 20문제 출제
+- **풀이 기록**: 퀴즈 시도 히스토리 및 점수 추적
+- **세션 저장**: 퀴즈 중단 시 진행 상태 자동 저장
+
+### UI/UX
 - **반응형 디자인**: 모바일/태블릿/데스크톱 지원
+- **다크 모드**: 라이트/다크/시스템 테마 지원
+- **빠른 검색**: `Ctrl+K`로 콘텐츠 검색
+- **사이드바 네비게이션**: 모듈/챕터 빠른 이동
+
+## 학습 모듈
+
+| 모듈 | 설명 | 챕터 | 문제 |
+|------|------|:----:|:----:|
+| 🐍 **Python 기초** | 변수, 함수, 클래스, 파일 처리 | 5 | 67 |
+| 📊 **데이터 분석** | NumPy, Pandas, 텍스트 분석 | 4 | 30 |
+| 🤖 **LLM** | Transformer, API, LangChain | 7 | 324 |
+| ⚡ **프롬프트 엔지니어링** | 프롬프트 기법, LCEL, Agent | 6 | 310 |
+| 🔍 **RAG** | 검색 증강 생성, 멀티모달 | 7 | 75 |
+| 🎯 **Fine-tuning** | SFT, LoRA, PEFT | 7 | 245 |
 
 ## 기술 스택
 
-- **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
-- **State Management**: Zustand (with LocalStorage persist)
-- **Content**: MDX (next-mdx-remote)
-- **Code Execution**: Pyodide (WebAssembly Python)
-- **Code Highlighting**: Shiki
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) (with LocalStorage persist)
+- **Content**: [MDX](https://mdxjs.com/) (next-mdx-remote)
+- **Code Highlighting**: [Shiki](https://shiki.style/)
 
 ## 시작하기
 
@@ -32,11 +56,11 @@ AI Advanced 자격 취득을 위한 체계적인 학습 플랫폼입니다.
 - Node.js 18.17 이상
 - pnpm 8 이상
 
-### 설치
+### 설치 및 실행
 
 ```bash
 # 저장소 클론
-git clone <repository-url>
+git clone https://github.com/YOUR_USERNAME/ai-advanced-lms.git
 cd ai-advanced-lms
 
 # 의존성 설치
@@ -46,13 +70,15 @@ pnpm install
 pnpm dev
 ```
 
+브라우저에서 http://localhost:3000 접속
+
 ### 빌드
 
 ```bash
 # 프로덕션 빌드
 pnpm build
 
-# 빌드 미리보기
+# 빌드 결과 실행
 pnpm start
 ```
 
@@ -68,97 +94,52 @@ ai-advanced-lms/
 │   │   └── settings/          # 설정
 │   ├── components/
 │   │   ├── ui/                # shadcn/ui 컴포넌트
-│   │   ├── layout/            # 레이아웃 컴포넌트
+│   │   ├── layout/            # 레이아웃 (Header, Sidebar)
 │   │   ├── mdx/               # MDX 렌더링 컴포넌트
 │   │   ├── quiz/              # 퀴즈 컴포넌트
-│   │   ├── code/              # 코드 에디터 컴포넌트
-│   │   ├── search/            # 검색 컴포넌트
-│   │   └── common/            # 공통 컴포넌트
+│   │   └── search/            # 검색 컴포넌트
 │   ├── content/
 │   │   ├── modules.json       # 모듈/챕터 메타데이터
-│   │   ├── chapters/          # MDX 콘텐츠
-│   │   └── quizzes/           # 퀴즈 데이터
-│   ├── hooks/                 # React 커스텀 훅
-│   ├── lib/                   # 유틸리티 함수
-│   ├── stores/                # Zustand 스토어
+│   │   ├── chapters/          # MDX 학습 콘텐츠
+│   │   └── quizzes/           # 퀴즈 JSON 데이터
+│   ├── stores/                # Zustand 상태 관리
 │   └── types/                 # TypeScript 타입 정의
-├── scripts/                   # 스크립트 (노트북 변환 등)
+├── scripts/                   # 유틸리티 스크립트
 └── public/                    # 정적 파일
 ```
 
-## 학습 모듈
-
-| 모듈 | 설명 | 챕터 수 |
-|------|------|---------|
-| 🐍 Python | Python 프로그래밍 기초 | 5 |
-| 📊 데이터 분석 | NumPy, Pandas, 텍스트 처리 | 5 |
-| 🤖 LLM | OpenAI API, LangChain 기초 | 2 |
-| ⚡ 프롬프트 엔지니어링 | 프롬프트 설계, LCEL, Agent | 5 |
-| 🔍 RAG | 검색 증강 생성 | 6 |
-| 🎯 Fine-tuning | 모델 파인튜닝 | 4 |
-
-## 주요 기능 사용법
-
-### 검색
-
-- `Ctrl + K` (Windows) / `⌘ + K` (Mac)으로 검색 다이얼로그 열기
-- 모듈, 챕터, 퀴즈 검색 가능
-
-### 학습 진도
-
-- 각 챕터 하단의 체크박스로 완료 표시
-- 진도는 브라우저 LocalStorage에 자동 저장
-- 대시보드에서 전체 진행률 확인
-
-### Python 코드 실행
-
-- MDX 콘텐츠 내 PythonEditor 컴포넌트 사용
-- 브라우저에서 직접 Python 코드 실행 가능
-- Pyodide 로드 후 사용 (첫 로드 시 약간의 시간 소요)
-
-### 퀴즈
-
-- 각 모듈별 10문항 객관식 퀴즈
-- 제출 후 정답/오답 확인 및 해설 제공
-- 퀴즈 점수 히스토리 저장
-
 ## 배포
 
-### Vercel 배포
+### Vercel 배포 (권장)
 
-1. [Vercel](https://vercel.com)에 로그인
-2. "New Project" 클릭
-3. Git 저장소 연결
-4. 자동 감지된 설정 확인 후 "Deploy" 클릭
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/ai-advanced-lms)
+
+1. [Vercel](https://vercel.com)에 GitHub 계정으로 로그인
+2. "Add New Project" → GitHub 저장소 선택
+3. Framework Preset: Next.js 자동 감지
+4. "Deploy" 클릭
+
+### Vercel CLI
 
 ```bash
-# Vercel CLI로 배포
+# Vercel CLI 설치 및 배포
 pnpm dlx vercel
 ```
 
-### 환경 변수
+## 스크린샷
 
-`.env.example` 파일을 참조하여 필요한 환경 변수를 설정하세요.
-
-## 개발
-
-### 콘텐츠 추가
-
-1. `src/content/chapters/[module]/` 디렉토리에 MDX 파일 생성
-2. `src/content/modules.json`에 챕터 메타데이터 추가
-
-### 퀴즈 추가
-
-`src/content/quizzes/` 디렉토리의 JSON 파일 형식을 참조하여 퀴즈 추가
-
-### 스타일링
-
-Tailwind CSS 및 shadcn/ui 컴포넌트 사용. `tailwind.config.ts`에서 커스터마이징 가능.
+| 대시보드 | 학습 페이지 | 퀴즈 |
+|:--------:|:-----------:|:----:|
+| 전체 진행률 확인 | MDX 콘텐츠 학습 | 객관식 문제 풀이 |
 
 ## 라이선스
 
-MIT License
+MIT License - 자유롭게 사용, 수정, 배포할 수 있습니다.
 
 ## 기여
 
 이슈 및 풀 리퀘스트를 환영합니다.
+
+---
+
+Made with [Claude Code](https://claude.ai/code)
