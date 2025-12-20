@@ -9,9 +9,9 @@ description: "CPT, SFT, Instruction Tuning, RLHF, PPO, DPO 학습 방법론"
 
 ### 개념
 
-**CPT**: Pretrained 모델을 새로운 Corpus로 ** 추가 학습**시키는 방법
+**CPT**: Pretrained 모델을 새로운 Corpus로 **추가 학습**시키는 방법
 
-** 목적**:
+**목적**:
 - 특정 언어 능력 강화
 - 최신 정보 업데이트
 - 도메인 특화
@@ -26,15 +26,15 @@ description: "CPT, SFT, Instruction Tuning, RLHF, PPO, DPO 학습 방법론"
 
 | 방식 | 설명 |
 |------|------|
-| **SFT** | 정답 데이터를 다음 토큰 예측 문제로 학습 |
-| **CPT** | 새로운 Corpus로 추가 학습 (Domain Knowledge, Multilingual) |
+| **SFT**| 정답 데이터를 다음 토큰 예측 문제로 학습 |
+| **CPT**| 새로운 Corpus로 추가 학습 (Domain Knowledge, Multilingual) |
 
 ### CPT의 특징
 
-- ** 데이터 요구사항**: 광대한 데이터 필요
-- ** 한계**: Instruct Model에는 수행하지 않음 (Instruction 능력 손상 우려)
+- **데이터 요구사항**: 광대한 데이터 필요
+- **한계**: Instruct Model에는 수행하지 않음 (Instruction 능력 손상 우려)
 
-** 실제 사례**: A.X 4.0 (SK telecom) - Qwen 2.5 모델에 한국어 데이터를 Pretrained 적용
+**실제 사례**: A.X 4.0 (SK telecom) - Qwen 2.5 모델에 한국어 데이터를 Pretrained 적용
 
 ---
 
@@ -42,7 +42,7 @@ description: "CPT, SFT, Instruction Tuning, RLHF, PPO, DPO 학습 방법론"
 
 ### 개념
 
-질의응답 데이터를 하나의 ** 템플릿으로 구성**해 학습시키는 방식
+질의응답 데이터를 하나의 **템플릿으로 구성**해 학습시키는 방식
 
 ```
 <|start_header_id|>system<|end_header_id|>
@@ -54,8 +54,8 @@ What can you help me with?<|eot_id|>
 
 ### 구성 요소
 
-- ** 시스템 데이터**: Instruction, User Prompt, 답변 Prompt로 구성
-- ** 핵심**: 하나의 세트로 묶어 다음 토큰 예측 방식으로 튜닝
+- **시스템 데이터**: Instruction, User Prompt, 답변 Prompt로 구성
+- **핵심**: 하나의 세트로 묶어 다음 토큰 예측 방식으로 튜닝
 
 ### 대표적 Instruction Tuning 데이터
 
@@ -86,10 +86,10 @@ What can you help me with?<|eot_id|>
 Negative 문서 3개 + Positive 문서 1개
 ```
 
-** 학습 프로세스**:
+**학습 프로세스**:
 1. 질문 → 판단 → 근거 제시 → 문서 인용 → 해석 병행
 
-** 학습 목표**:
+**학습 목표**:
 - 관련 문서(Positive)와 무관한 문서(Negative)가 섞여 있을 때도 올바른 답변
 - RAG의 답변 형식 향상
 
@@ -102,7 +102,7 @@ Negative 문서 3개 + Positive 문서 1개
 따라서, 주어진 조건은 보험 보장이 가능합니다. ##정답: 가능
 ```
 
-** 효과**:
+**효과**:
 - 모델이 문서를 기반으로 문제를 풀게 됨
 - 단순 RAG보다 더 똑똑한 답변 가능
 - 환각(Hallucination) 감소
@@ -113,14 +113,14 @@ Negative 문서 3개 + Positive 문서 1개
 
 ### SFT (Supervised Fine-Tuning)
 
-- 질문과 답변이 ** 정해져 있음**
+- 질문과 답변이 **정해져 있음**
 - 정답을 100% 암기하도록 학습 (레이블 기반)
-- ** 일반화가 어려움**
+- **일반화가 어려움**
 
 ### RL (Reinforcement Learning)
 
-- 지식 ** 일반화**를 위해 필요
-- 확률 분포 기반 예측에 ** 보상 학습**을 적용
+- 지식 **일반화**를 위해 필요
+- 확률 분포 기반 예측에 **보상 학습**을 적용
 
 ```
 SFT 완료 후: 모든 데이터를 "100% 정답"으로만 학습
@@ -136,7 +136,7 @@ RL 적용:    다양한 답변 중 좋은 답변에 높은 보상
 
 ### 개념
 
-** 보상 함수의 역할**: LLM의 질문과 답변 평가
+**보상 함수의 역할**: LLM의 질문과 답변 평가
 
 ```
 나쁜 답변 → 낮은 보상
@@ -145,9 +145,9 @@ RL 적용:    다양한 답변 중 좋은 답변에 높은 보상
 
 ### 보상 모델
 
-** 구조**: (프롬프트 + 응답) → Score
+**구조**: (프롬프트 + 응답) → Score
 
-** 학습 데이터 예시**:
+**학습 데이터 예시**:
 
 | Question | Chosen (좋은 답변) | Rejected (나쁜 답변) |
 |----------|-------------------|---------------------|
@@ -155,8 +155,8 @@ RL 적용:    다양한 답변 중 좋은 답변에 높은 보상
 
 ### 상대적 비교 학습
 
-- ** 점수 매기기 (Score Labeling)**: 정확한 레이블링 어려움
-- ** 점수 비교 (Score Comparison)**: 우월 데이터 확립으로 보상 모델 학습 쉬움
+- **점수 매기기 (Score Labeling)**: 정확한 레이블링 어려움
+- **점수 비교 (Score Comparison)**: 우월 데이터 확립으로 보상 모델 학습 쉬움
 
 ---
 
@@ -173,23 +173,23 @@ Reward 최대화     KL Divergence: 원본 모델과의 차이 완화
 
 ### Reward Hacking 방지
 
-** 문제**: 모델이 본래 목적(정확한 답변) 대신 편법적 행동을 학습할 수 있음
+**문제**: 모델이 본래 목적(정확한 답변) 대신 편법적 행동을 학습할 수 있음
 
-** 예시**:
+**예시**:
 ```
 Continuation: had no idea how to release that gift, but she knew
 no penalty: ! These These These sound flowed instantly easily easily!
 ```
 
-** 해결**: 원본 모델과의 차이 완화 (KL Divergence)
+**해결**: 원본 모델과의 차이 완화 (KL Divergence)
 
 ### PPO의 필요 요소
 
-- ** 보상 모델** (Reward Model)
-- ** 기존 원본 모델** (Reference Model)
-- ** 강화 학습** (Reinforcement Learning)
+- **보상 모델** (Reward Model)
+- **기존 원본 모델** (Reference Model)
+- **강화 학습** (Reinforcement Learning)
 
-** 한계**:
+**한계**:
 - 3 LMs 동시 구동으로 인한 오버헤드
 - PPO 자체의 불안정성
 
@@ -199,7 +199,7 @@ no penalty: ! These These These sound flowed instantly easily easily!
 
 ### 개념
 
-** 보상 모델 없이** LLM에 질문-답변 세트를 직접 주어 좋은 답변과 나쁜 답변을 구분하는 방식
+**보상 모델 없이** LLM에 질문-답변 세트를 직접 주어 좋은 답변과 나쁜 답변을 구분하는 방식
 
 ```
 질문 → Instruct Model → 좋은 답변 / 나쁜 답변
@@ -211,7 +211,7 @@ no penalty: ! These These These sound flowed instantly easily easily!
 
 - 구현이 간단함
 - 데이터만 있으면 충분
-- ** 보상 모델 불필요**
+- **보상 모델 불필요**
 
 ### 학습 절차
 
@@ -225,10 +225,10 @@ no penalty: ! These These These sound flowed instantly easily easily!
 
 ### 개념
 
-** 좋은 데이터만 선별**하여 추가 학습하는 방법
+**좋은 데이터만 선별**하여 추가 학습하는 방법
 
-** 방식**:
-- 모델 출력 중 보상 모델/기준을 통과하지 못하면 ** 기각**
+**방식**:
+- 모델 출력 중 보상 모델/기준을 통과하지 못하면 **기각**
 - 통과한 고품질 데이터로만 SFT
 
 ### 효과
@@ -244,24 +244,24 @@ no penalty: ! These These These sound flowed instantly easily easily!
 
 | 방법 | 데이터 요구사항 | 학습 방식 | 장점 | 단점 |
 |------|----------------|----------|------|------|
-| **CPT** | 대규모 Corpus | 지식 주입 | 도메인 특화 | Instruction 능력 손상 가능 |
-| **SFT** | QA 데이터 | 정답 암기 | 구현 간단 | 일반화 어려움 |
-| **IT** | Template 데이터 | 패턴 학습 | 지시사항 이행 | 질의응답 데이터 필수 |
-| **RAFT** | RAG 포맷 데이터 | 문서 기반 학습 | 환각 감소 | 데이터 구성 복잡 |
+| **CPT**| 대규모 Corpus | 지식 주입 | 도메인 특화 | Instruction 능력 손상 가능 |
+| **SFT**| QA 데이터 | 정답 암기 | 구현 간단 | 일반화 어려움 |
+| **IT**| Template 데이터 | 패턴 학습 | 지시사항 이행 | 질의응답 데이터 필수 |
+| **RAFT**| RAG 포맷 데이터 | 문서 기반 학습 | 환각 감소 | 데이터 구성 복잡 |
 
 ### 강화 학습 방법론 비교
 
 | 방법 | 보상 모델 | 구현 난이도 | 주요 장점 | 주요 단점 |
 |------|----------|------------|---------|---------|
-| **RLHF** | 필요 | 높음 | 친절한 모델 | 아첨 모델 가능성 |
-| **PPO** | 필요 | 매우 높음 | 이론적 완성도 | 3 LMs 오버헤드 |
-| **DPO** | 불필요 | 낮음 | 구현 간단 | 표현력 제한 |
-| **Rejection Sampling** | 선택적 | 중간 | 품질 향상 | 기준 설정 필요 |
+| **RLHF**| 필요 | 높음 | 친절한 모델 | 아첨 모델 가능성 |
+| **PPO**| 필요 | 매우 높음 | 이론적 완성도 | 3 LMs 오버헤드 |
+| **DPO**| 불필요 | 낮음 | 구현 간단 | 표현력 제한 |
+| **Rejection Sampling**| 선택적 | 중간 | 품질 향상 | 기준 설정 필요 |
 
 ### 실전 활용 팁
 
-1. ** 도메인 지식 넣기**: Base Model → CPT → IT 순서 권장
+1. **도메인 지식 넣기**: Base Model → CPT → IT 순서 권장
 2. **Instruction 강화**: Template 데이터로 IT 학습
 3. **RAG 성능 향상**: RAFT로 문서 기반 학습
-4. ** 모델 정렬**: DPO로 간단하게 선호 학습
-5. ** 품질 개선**: Rejection Sampling으로 우수 데이터만 선별
+4. **모델 정렬**: DPO로 간단하게 선호 학습
+5. **품질 개선**: Rejection Sampling으로 우수 데이터만 선별
