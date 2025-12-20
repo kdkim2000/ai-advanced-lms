@@ -9,7 +9,7 @@ description: "RLVR, GRPO, DeepSeek-R1 학습 과정, SFT vs RL 비교"
 
 ### Reasoning 시대의 도래
 
-2024년부터 LLM은 단순한 텍스트 생성을 넘어 **추론(Reasoning)**능력을 강화하는 방향으로 발전하고 있습니다.
+2024년부터 LLM은 단순한 텍스트 생성을 넘어 **추론(Reasoning)** 능력을 강화하는 방향으로 발전하고 있습니다.
 
 ### 주요 모델 비교
 
@@ -34,7 +34,7 @@ description: "RLVR, GRPO, DeepSeek-R1 학습 과정, SFT vs RL 비교"
 
 ### 기본 개념
 
-**보상함수 (Reward Function)의 역할**:
+** 보상함수 (Reward Function)의 역할**:
 
 ```
 질문 제공
@@ -48,9 +48,9 @@ description: "RLVR, GRPO, DeepSeek-R1 학습 과정, SFT vs RL 비교"
 
 ### 검증 가능한 보상 (Verifiable Reward)
 
-**적용 분야**: STEM 분야 (Science, Technology, Engineering, Mathematics)
+** 적용 분야**: STEM 분야 (Science, Technology, Engineering, Mathematics)
 
-**검증 방법**:
+** 검증 방법**:
 - 코딩 문제: 테스트 케이스 실행
 - 수학 문제: 답의 정오 판단
 
@@ -104,12 +104,12 @@ Rule-based Reward Model
 
 ### GRPO의 장점
 
-**상대적 평가의 이점**:
+** 상대적 평가의 이점**:
 - 점수가 낮아도 상대적으로 우수하면 학습 반영
 - 점수가 높아도 표준화로 조정 가능
 - 스케일 밸런스 조절 가능
 
-**그룹 내 최적화**:
+** 그룹 내 최적화**:
 - 그룹 내에서 높은 Reward를 받는 출력 강화
 - 상대적으로 낮은 출력은 억제
 
@@ -136,11 +136,11 @@ The reasoning process and answer are enclosed within:
 
 ### Rule-Based Reward를 활용한 강화학습
 
-**특징**:
+** 특징**:
 - 질문에 대한 정답 데이터 없음 (SFT 불가)
 - 형식 준수 여부와 답의 정오만 판단
 
-**검증 규칙**:
+** 검증 규칙**:
 1. think 태그 사이에 잘 작성했는가? (O/X)
 2. 답이 맞는가? (O/X)
 
@@ -152,7 +152,7 @@ The reasoning process and answer are enclosed within:
 
 ### DeepSeek-R1-Zero 결과
 
-**학습 진행에 따른 변화**:
+** 학습 진행에 따른 변화**:
 - 진행할수록 답변이 길어짐 (평균 응답 길이 증가)
 - 추론 능력이 점진적으로 향상됨 (AIME 정확도 증가)
 
@@ -162,7 +162,7 @@ The reasoning process and answer are enclosed within:
 
 ### RLVR 학습 중 놀라운 현상
 
-**학습 중 의인화된 자기 성찰 등장**:
+** 학습 중 의인화된 자기 성찰 등장**:
 
 ```python
 # 예시: 수학 문제 풀이 중
@@ -172,7 +172,7 @@ The reasoning process and answer are enclosed within:
 if the correct sum can be..."
 ```
 
-**의미**:
+** 의미**:
 - 출력 중 다시 생각하고 수정·재검토 과정 등장
 - 모델의 출력이 정해진 패턴이 아니라 개선하고 검증하는 과정으로 진화
 - **SFT 없이 강화학습만으로 발현**
@@ -231,7 +231,7 @@ if the correct sum can be..."
 
 #### 4단계: All-Scenario RL
 
-**최종 단계**:
+** 최종 단계**:
 - R1-Zero를 이용해 답변 데이터 세트 생성
 - 모든 시나리오에 대한 RL 적용
 
@@ -249,7 +249,7 @@ if the correct sum can be..."
 
 **SFT만으로도 추론 성능을 끌어올림**
 
-**의미**:
+** 의미**:
 ```
 추론 모델 = SFT + RL의 합작
 ```
@@ -260,7 +260,7 @@ if the correct sum can be..."
 
 ### SFT의 효과
 
-**결과**:
+** 결과**:
 - 불필요한 반복을 줄임
 - 적절한 길이로 간결하게 답변
 - 지식을 잘 꺼내서 정확하게 추론
@@ -268,7 +268,7 @@ if the correct sum can be..."
 
 ### RL의 효과
 
-**결과**:
+** 결과**:
 - 불필요한 반복을 줄이고 적절한 길이로 간결하게 답변
 - 지식을 잘 꺼내서 정확하게 추론
 - 매끄럽게 정리해 문제 풀이
@@ -313,7 +313,7 @@ Coverage 관점에서는 오히려 성능 감소
 - 베이스 모델에 비해 Coverage가 늘어나지 않음
 - 어려운 문제의 경우, RL에서 오히려 성공률이 더 떨어짐
 
-**대안: Distillation**
+** 대안: Distillation**
 - 큰 모델의 답변을 받아오는 Distillation 방법
 - 더 높은 Coverage를 보임
 
@@ -328,7 +328,7 @@ Coverage 관점에서는 오히려 성능 감소
 RL만 수행하는 경우에는 성능 향상에 한계가 존재함
 ```
 
-**단독으로 RL을 수행하면**:
+** 단독으로 RL을 수행하면**:
 - 답변은 매끄러워지지만
 - 근본적인 변화를 만들지는 못함
 
@@ -381,7 +381,7 @@ SFT + RL 모두 필요
 | **RL만으로는**| 한계가 있음 |
 | **SFT만으로도**| 한계가 있음 |
 | **SFT + RL**| 가장 효과적 |
-| **베이스 모델**| 품질이 매우 중요 |
+| ** 베이스 모델**| 품질이 매우 중요 |
 
 ### 핵심 메시지
 
