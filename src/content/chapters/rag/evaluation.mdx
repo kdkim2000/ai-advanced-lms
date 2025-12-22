@@ -161,7 +161,7 @@ def ndcg_at_k(retrieved_relevances, ideal_relevances, k):
 
 ### Faithfulness (충실성)
 
-생성된 답변이 **검색된 문서에 근거하는지**평가
+생성된 답변이 **검색된 문서에 근거하는지** 평가
 
 ```python
 def evaluate_faithfulness(answer, context, llm):
@@ -185,7 +185,7 @@ def evaluate_faithfulness(answer, context, llm):
 
 ### Relevance (관련성)
 
-답변이 **질문에 적절히 대응하는지**평가
+답변이 **질문에 적절히 대응하는지** 평가
 
 ```python
 def evaluate_relevance(question, answer, llm):
@@ -209,7 +209,7 @@ def evaluate_relevance(question, answer, llm):
 
 ### Answer Correctness (정확성)
 
-답변이 **사실적으로 정확한지**평가
+답변이 **사실적으로 정확한지** 평가
 
 ```python
 def evaluate_correctness(answer, ground_truth, llm):
@@ -233,7 +233,7 @@ def evaluate_correctness(answer, ground_truth, llm):
 
 ### Coherence (일관성)
 
-답변의 **논리적 흐름과 구조**평가
+답변의 **논리적 흐름과 구조** 평가
 
 ```python
 def evaluate_coherence(answer, llm):
@@ -259,7 +259,7 @@ def evaluate_coherence(answer, llm):
 
 ### Context Precision
 
-검색된 문서 중 **답변 생성에 실제로 사용된**문서 비율
+검색된 문서 중 **답변 생성에 실제로 사용된** 문서 비율
 
 ```python
 def context_precision(contexts, answer, llm):
@@ -285,7 +285,7 @@ def context_precision(contexts, answer, llm):
 
 ### Context Recall
 
-답변에 필요한 정보 중 **검색된 문서에 포함된**비율
+답변에 필요한 정보 중 **검색된 문서에 포함된** 비율
 
 ```python
 def context_recall(contexts, ground_truth, llm):
