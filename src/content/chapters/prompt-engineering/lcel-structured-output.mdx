@@ -12,8 +12,8 @@ description: "LangChain Expression Language, Parser, Runnable 활용"
 | 항목 | 설명 |
 |------|------|
 | **정의**| LLM의 구성 요소들을 연결하고 실행하기 위한 프레임워크 |
-| ** 핵심 개념**| Chain이라는 구조로 LLM의 구성 요소들을 연결 |
-| ** 표준 언어**| LCEL (LangChain Expression Language) |
+| **핵심 개념**| Chain이라는 구조로 LLM의 구성 요소들을 연결 |
+| **표준 언어**| LCEL (LangChain Expression Language) |
 
 ### LangChain의 기본 구조
 
@@ -21,14 +21,14 @@ description: "LangChain Expression Language, Parser, Runnable 활용"
 Prompt Template → LLM → Parser → 결과
 ```
 
-** 구성 요소**:
+**구성 요소**:
 
 | 구성 요소 | 역할 |
 |-----------|------|
 | **Prompt Template**| 입력 데이터를 프롬프트 형식으로 포맷팅 |
 | **LLM**| 대규모 언어 모델 |
 | **Parser**| LLM 출력을 원하는 형식으로 변환 |
-| ** 결과**| 최종 처리된 출력 |
+| **결과**| 최종 처리된 출력 |
 
 ---
 
@@ -38,7 +38,7 @@ Prompt Template → LLM → Parser → 결과
 
 | 방식 | 코드 |
 |------|------|
-| ** 기존 방식**| `prompt.format() → llm.invoke()` |
+| **기존 방식**| `prompt.format() → llm.invoke()` |
 | **Chain 방식**| `chain = prompt \| llm` |
 
 ### 파이프 연산자 (`|`)
@@ -56,7 +56,7 @@ chain = prompt | llm
 chain.invoke({"변수": "값"})
 ```
 
-** 흐름:**
+**흐름:**
 ```
 입력 변수 → Prompt → LLM → 결과
 ```
@@ -69,9 +69,9 @@ chain.invoke({"변수": "값"})
 
 | 항목 | 설명 |
 |------|------|
-| ** 목적** | LLM 뒤에 연결하여 출력 형식을 변환 |
-| ** 핵심 기능** | 구조화된 출력 생성 |
-| ** 활용** | Agent, Tool과 함께 다룰 때 필수 |
+| **목적**| LLM 뒤에 연결하여 출력 형식을 변환 |
+| **핵심 기능**| 구조화된 출력 생성 |
+| **활용**| Agent, Tool과 함께 다룰 때 필수 |
 
 ### 주요 Parser 종류
 
@@ -97,8 +97,8 @@ LLM 사용 시 구조화된 출력 생성이 핵심입니다. Agent, Tool과 함
 Prompt → LLM → Parser → Tool → ...
 ```
 
-- ** 공통점**: Runnable Sequence로 연결하여 LangChain의 Chain 구성
-- ** 실행 방식**: `invoke()`로 실행 가능
+- **공통점**: Runnable Sequence로 연결하여 LangChain의 Chain 구성
+- **실행 방식**: `invoke()`로 실행 가능
 
 ### 특수 Runnable들
 
@@ -219,9 +219,9 @@ result = structured_llm.invoke("질문")
 
 | 장점 | 설명 |
 |------|------|
-| ** 타입 안전성**| Pydantic 모델로 타입 검증 |
-| ** 일관성**| 항상 동일한 구조의 출력 |
-| ** 편의성**| 파싱 없이 바로 객체로 사용 |
+| **타입 안전성**| Pydantic 모델로 타입 검증 |
+| **일관성**| 항상 동일한 구조의 출력 |
+| **편의성**| 파싱 없이 바로 객체로 사용 |
 
 ---
 
@@ -249,13 +249,13 @@ result = structured_llm.invoke("질문")
 
 1. **LCEL을 이용한 Chain 구성**: 파이프 연산자로 간결한 체인 생성
 2. **Parser와 with_structured_output()을 이용한 구조화 출력**: 일관된 데이터 형식 보장
-3. ** 특수 Runnable을 이용한 Pipeline 구성**: RunnablePassthrough, RunnableParallel, .assign()
+3. **특수 Runnable을 이용한 Pipeline 구성**: RunnablePassthrough, RunnableParallel, .assign()
 
 ### LCEL의 장점
 
 | 장점 | 설명 |
 |------|------|
-| ** 간결성** | 파이프 연산자로 직관적인 체인 구성 |
-| ** 모듈성** | 각 구성 요소를 독립적으로 관리 |
-| ** 재사용성** | Runnable을 재사용 가능 |
-| ** 확장성** | 새로운 구성 요소 추가 용이 |
+| **간결성**| 파이프 연산자로 직관적인 체인 구성 |
+| **모듈성**| 각 구성 요소를 독립적으로 관리 |
+| **재사용성**| Runnable을 재사용 가능 |
+| **확장성**| 새로운 구성 요소 추가 용이 |

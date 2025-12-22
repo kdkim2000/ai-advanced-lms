@@ -176,7 +176,7 @@ qa_chain = RetrievalQA.from_chain_type(
 [Doc1] + [Doc2] + [Doc3] → 하나의 프롬프트 → LLM
 ```
 
-** 특징**:
+**특징**:
 - 모든 문서를 하나로 결합
 - 간단하고 빠름
 - 토큰 제한 주의
@@ -189,7 +189,7 @@ qa_chain = RetrievalQA.from_chain_type(
 [Doc3] → LLM → [Summary3]
 ```
 
-** 특징**:
+**특징**:
 - 대량 문서 처리 가능
 - 병렬 처리 가능
 - 비용 증가
@@ -202,7 +202,7 @@ qa_chain = RetrievalQA.from_chain_type(
 [Answer2] + [Doc3] → LLM → [최종 답변]
 ```
 
-** 특징**:
+**특징**:
 - 점진적 개선
 - 문맥 유지
 - 순차 처리로 느림
@@ -215,7 +215,7 @@ qa_chain = RetrievalQA.from_chain_type(
 [Doc3] → LLM → [Answer3, Score3]
 ```
 
-** 특징**:
+**특징**:
 - 각 문서별 답변 생성
 - 점수 기반 선택
 - 최적 답변 선택
