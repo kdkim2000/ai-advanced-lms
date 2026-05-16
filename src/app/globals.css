@@ -1,13 +1,83 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* =========================================================
+   OPUS-X Design System — AI Advanced LMS
+   v1.1.3 (Samsung SDS · OPUS-X)
+   ========================================================= */
+
+/* ---------- Noto Sans KR — local TTFs ---------- */
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Thin.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-ExtraLight.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-ExtraBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/NotoSansKR-Black.ttf") format("truetype");
+}
+
+@custom-variant dark (&:is([data-theme="dark"] *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: -apple-system, BlinkMacSystemFont, var(--font-geist-sans), var(--font-noto-sans-kr), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --font-mono: var(--font-geist-mono), "SF Mono", Monaco, monospace;
+  --font-sans: "Noto Sans KR", Sora, "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-roboto-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -46,108 +116,165 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* Apple-style Light Theme */
+/* =========================================================
+   OPUS-X Light Mode — :root tokens
+   ========================================================= */
 :root {
-  --radius: 0.75rem;
+  /* shadcn/ui required variables */
+  --background:         #F8F9FC;
+  --foreground:         #101828;
+  --card:               #FFFFFF;
+  --card-foreground:    #101828;
+  --popover:            #FFFFFF;
+  --popover-foreground: #101828;
+  --primary:            #6941C6;
+  --primary-foreground: #FFFFFF;
+  --secondary:          #F2F4F7;
+  --secondary-foreground: #1D2939;
+  --muted:              #F2F4F7;
+  --muted-foreground:   #667085;
+  --accent:             #F4F3FF;
+  --accent-foreground:  #53389E;
+  --destructive:        #D92D20;
+  --destructive-foreground: #FFFFFF;
+  --border:             #EAECF0;
+  --input:              #D0D5DD;
+  --ring:               #6941C6;
+  --radius:             0.75rem;
 
-  /* Clean white background */
-  --background: #ffffff;
-  --foreground: #1d1d1f;
+  /* Sidebar */
+  --sidebar:                    #FFFFFF;
+  --sidebar-foreground:         #101828;
+  --sidebar-primary:            #6941C6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:             #F4F3FF;
+  --sidebar-accent-foreground:  #53389E;
+  --sidebar-border:             #EAECF0;
+  --sidebar-ring:               #6941C6;
 
-  /* Cards - transparent, no elevation */
-  --card: transparent;
-  --card-foreground: #1d1d1f;
+  /* OPUS-X extended background tokens */
+  --bg-canvas:              #F8F9FC;
+  --bg-base:                #FFFFFF;
+  --bg-subtle:              #F9FAFB;
+  --bg-muted:               #F2F4F7;
+  --bg-primary-tint:        #F4F3FF;
+  --bg-primary-tint-hover:  #EBE9FE;
+  --bg-neutral-tint:        #F9FAFB;
+  --bg-neutral-tint-hover:  #F2F4F7;
+  --bg-success-tint:        #ECFDF3;
+  --bg-warning-tint:        #FEFBE8;
+  --bg-error-tint:          #FEF3F2;
+  --bg-info-tint:           #EFF8FF;
 
-  --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
+  /* OPUS-X border tokens */
+  --border-neutral:         #D0D5DD;
+  --border-neutral-hover:   #98A2B3;
+  --border-subtle:          #EAECF0;
+  --border-primary:         #6941C6;
 
-  /* Blue primary (Apple Blue) */
-  --primary: #007aff;
-  --primary-foreground: #ffffff;
+  /* Semantic status */
+  --success:                #039855;
+  --success-foreground:     #FFFFFF;
+  --warning:                #854A0E;
+  --warning-foreground:     #FFFFFF;
+  --info:                   #1570EF;
+  --info-foreground:        #FFFFFF;
 
-  /* Soft gray secondary */
-  --secondary: #f5f5f7;
-  --secondary-foreground: #1d1d1f;
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(16,24,40,.05);
+  --shadow-sm: 0 1px 3px 0 rgba(16,24,40,.10), 0 1px 2px 0 rgba(16,24,40,.06);
+  --shadow-md: 0 4px 8px -2px rgba(16,24,40,.10), 0 2px 4px -2px rgba(16,24,40,.06);
+  --shadow-lg: 0 12px 16px -4px rgba(16,24,40,.08), 0 4px 6px -2px rgba(16,24,40,.03);
 
-  /* Muted backgrounds */
-  --muted: #f5f5f7;
-  --muted-foreground: #86868b;
+  /* Motion */
+  --duration-fast:   120ms;
+  --duration-medium: 200ms;
+  --duration-slow:   320ms;
+  --ease-standard:   cubic-bezier(.2, .0, .0, 1);
 
-  /* Accent */
-  --accent: #f5f5f7;
-  --accent-foreground: #1d1d1f;
+  /* Module category colors */
+  --module-python-bg:   #DCFCE7; --module-python-text:  #15803D;
+  --module-data-bg:     #DBEAFE; --module-data-text:    #1D4ED8;
+  --module-llm-bg:      #FCE7F3; --module-llm-text:     #BE185D;
+  --module-prompt-bg:   #FEF3C7; --module-prompt-text:  #B45309;
+  --module-rag-bg:      #CFFAFE; --module-rag-text:     #0E7490;
+  --module-fine-bg:     #FFE4E6; --module-fine-text:    #BE123C;
 
-  /* Destructive red */
-  --destructive: #ff3b30;
-
-  /* Subtle borders */
-  --border: #e5e5e7;
-  --input: #e5e5e7;
-  --ring: #007aff;
-
-  /* Chart colors - vibrant Apple palette */
-  --chart-1: #007aff;
-  --chart-2: #34c759;
-  --chart-3: #ff9500;
-  --chart-4: #af52de;
-  --chart-5: #ff2d55;
-
-  /* Sidebar - clean and minimal */
-  --sidebar: #fafafa;
-  --sidebar-foreground: #1d1d1f;
-  --sidebar-primary: #007aff;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f0f0f2;
-  --sidebar-accent-foreground: #1d1d1f;
-  --sidebar-border: #e5e5e7;
-  --sidebar-ring: #007aff;
+  /* Chart */
+  --chart-1: #6941C6;
+  --chart-2: #039855;
+  --chart-3: #F79009;
+  --chart-4: #1570EF;
+  --chart-5: #D92D20;
 }
 
-/* Apple-style Dark Theme */
-.dark {
-  --background: #000000;
-  --foreground: #f5f5f7;
+/* =========================================================
+   OPUS-X Dark Mode — [data-theme="dark"] tokens
+   ========================================================= */
+[data-theme="dark"] {
+  --background:         #0A0C12;
+  --foreground:         #F4F6FA;
+  --card:               #0F1117;
+  --card-foreground:    #F4F6FA;
+  --popover:            #161922;
+  --popover-foreground: #F4F6FA;
+  --primary:            #9B8AFB;
+  --primary-foreground: #FFFFFF;
+  --secondary:          #1C202B;
+  --secondary-foreground: #F4F6FA;
+  --muted:              #1C202B;
+  --muted-foreground:   #8A93AB;
+  --accent:             #261C4A;
+  --accent-foreground:  #BDB4FE;
+  --destructive:        #FF453A;
+  --destructive-foreground: #FFFFFF;
+  --border:             #1F2330;
+  --input:              #2A2F3D;
+  --ring:               #9B8AFB;
 
-  --card: transparent;
-  --card-foreground: #f5f5f7;
+  --sidebar:                    #0F1117;
+  --sidebar-foreground:         #F4F6FA;
+  --sidebar-primary:            #9B8AFB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:             #261C4A;
+  --sidebar-accent-foreground:  #BDB4FE;
+  --sidebar-border:             #1F2330;
+  --sidebar-ring:               #9B8AFB;
 
-  --popover: #1c1c1e;
-  --popover-foreground: #f5f5f7;
+  --bg-canvas:              #0A0C12;
+  --bg-base:                #0F1117;
+  --bg-subtle:              #161922;
+  --bg-muted:               #1C202B;
+  --bg-primary-tint:        #261C4A;
+  --bg-primary-tint-hover:  #2F2358;
+  --bg-neutral-tint:        #161922;
+  --bg-neutral-tint-hover:  #1C202B;
+  --bg-success-tint:        #0F2B1C;
+  --bg-warning-tint:        #2A1F08;
+  --bg-error-tint:          #2B1414;
+  --bg-info-tint:           #0E1F36;
 
-  /* Blue primary (Dark mode) */
-  --primary: #0a84ff;
-  --primary-foreground: #ffffff;
+  --border-neutral:         #2A2F3D;
+  --border-neutral-hover:   #3A4054;
+  --border-subtle:          #1F2330;
+  --border-primary:         #9B8AFB;
 
-  --secondary: #2c2c2e;
-  --secondary-foreground: #f5f5f7;
+  --success:                #30D158;
+  --warning:                #F0A429;
+  --info:                   #3B8EEA;
 
-  --muted: #2c2c2e;
-  --muted-foreground: #98989d;
+  --module-python-bg:   rgba(22,163,74,.15);  --module-python-text:  #4ADE80;
+  --module-data-bg:     rgba(37,99,235,.15);  --module-data-text:    #60A5FA;
+  --module-llm-bg:      rgba(219,39,119,.15); --module-llm-text:     #F472B6;
+  --module-prompt-bg:   rgba(217,119,6,.15);  --module-prompt-text:  #FCD34D;
+  --module-rag-bg:      rgba(8,145,178,.15);  --module-rag-text:     #22D3EE;
+  --module-fine-bg:     rgba(225,29,72,.15);  --module-fine-text:    #FB7185;
 
-  --accent: #2c2c2e;
-  --accent-foreground: #f5f5f7;
-
-  --destructive: #ff453a;
-
-  --border: #38383a;
-  --input: #38383a;
-  --ring: #0a84ff;
-
-  /* Chart colors - dark mode */
-  --chart-1: #0a84ff;
-  --chart-2: #30d158;
-  --chart-3: #ff9f0a;
-  --chart-4: #bf5af2;
-  --chart-5: #ff375f;
-
-  --sidebar: #1c1c1e;
-  --sidebar-foreground: #f5f5f7;
-  --sidebar-primary: #0a84ff;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #2c2c2e;
-  --sidebar-accent-foreground: #f5f5f7;
-  --sidebar-border: #38383a;
-  --sidebar-ring: #0a84ff;
+  --chart-1: #9B8AFB;
+  --chart-2: #30D158;
+  --chart-3: #FF9F0A;
+  --chart-4: #0A84FF;
+  --chart-5: #FF453A;
 }
 
 @layer base {
@@ -156,13 +283,18 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: "Noto Sans KR", Sora, "Malgun Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-feature-settings: "kern" 1, "liga" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.003em;
   }
+  h1, h2, h3, h4, h5, .page-title { word-break: keep-all; }
 }
 
-/* Apple-style smooth scrollbar */
+/* =========================================================
+   Utilities
+   ========================================================= */
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;

@@ -48,8 +48,8 @@ export default function ChapterLoading() {
       <div className="border-t bg-background px-6 py-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between">
-            <Skeleton className="h-10 w-32" />
-            <Skeleton className="h-10 w-32" />
+            <Skeleton className="h-11 w-32" />
+            <Skeleton className="h-11 w-32" />
           </div>
         </div>
       </div>

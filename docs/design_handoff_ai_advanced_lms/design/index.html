@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Advanced · 자격 취득을 위한 학습 플랫폼</title>
+
+  <link rel="stylesheet" href="opus-x/colors_and_type.css">
+  <link rel="stylesheet" href="app.css">
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="chrome.jsx"></script>
+  <script type="text/babel" src="screens-home.jsx"></script>
+  <script type="text/babel" src="screens-module.jsx"></script>
+  <script type="text/babel" src="screens-quiz.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+
+    // Tweakable defaults (host can rewrite this block on disk)
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "theme": "light",
+      "primaryHue": "purple"
+    }/*EDITMODE-END*/;
+
+    /* ─── Routing (hash-based) ─── */
+    function parseRoute() {
+      const h = window.location.hash.replace(/^#\/?/, "");
+      if (!h) return { name: "home" };
+      const parts = h.split("/");
+      const [name, ...rest] = parts;
+      switch (name) {
+        case "home": return { name: "home" };
+        case "dashboard": return { name: "dashboard" };
+        case "quiz": return { name: "quiz-hub" };
+        case "quiz-intro": return { name: "quiz-intro", moduleId: rest[0] };
+        case "quiz-run": return { name: "quiz-run" };
+        case "quiz-result": return { name: "quiz-result" };
+        case "quiz-wrong": return { name: "quiz-wrong" };
+        case "module":
+          return { name: "module", moduleId: rest[0], chapterId: rest[1] };
+        case "settings": return { name: "settings" };
+        default: return { name: "home" };
+      }
+    }
+    function serializeRoute(r) {
+      switch (r.name) {
+        case "home": return "#/";
+        case "dashboard": return "#/dashboard";
+        case "quiz-hub": return "#/quiz";
+        case "quiz-intro": return "#/quiz-intro" + (r.moduleId ? "/" + r.moduleId : "");
+        case "quiz-run": return "#/quiz-run";
+        case "quiz-result": return "#/quiz-result";
+        case "quiz-wrong": return "#/quiz-wrong";
+        case "module": return `#/module/${r.moduleId}/${r.chapterId}`;
+        case "settings": return "#/settings";
+        default: return "#/";
+      }
+    }
+    function buildCrumbs(route, state, navigate) {
+      const home = { label: "홈", onClick: () => navigate({ name: "home" }) };
+      switch (route.name) {
+        case "home": return [{ label: "홈" }];
+        case "dashboard": return [home, { label: "대시보드" }];
+        case "quiz-hub": return [home, { label: "퀴즈" }];
+        case "quiz-intro": case "quiz-run":
+          return [home, { label: "퀴즈", onClick: () => navigate({ name: "quiz-hub" })}, { label: "실전 문제풀이" }];
+        case "quiz-result":
+          return [home, { label: "퀴즈", onClick: () => navigate({ name: "quiz-hub" })}, { label: "결과" }];
+        case "quiz-wrong":
+          return [home, { label: "퀴즈", onClick: () => navigate({ name: "quiz-hub" })}, { label: "오답노트" }];
+        case "module": {
+          const mod = MODULES.find(m => m.id === route.moduleId);
+          const ch = mod?.chapters.find(c => c.id === route.chapterId);
+          return [
+            home,
+            { label: "학습", onClick: () => navigate({ name: "home" })},
+            { label: mod?.name || "모듈", onClick: () => navigate({ name: "module", moduleId: mod.id, chapterId: mod.chapters[0].id })},
+            { label: ch?.title || "챕터" },
+          ];
+        }
+        case "settings": return [home, { label: "설정" }];
+        default: return [home];
+      }
+    }
+
+    function App() {
+      const [state, update] = useAppState();
+      const [route, setRoute] = useState(parseRoute);
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      // Hash sync
+      useEffect(() => {
+        const onHash = () => setRoute(parseRoute());
+        window.addEventListener("hashchange", onHash);
+        return () => window.removeEventListener("hashchange", onHash);
+      }, []);
+      useEffect(() => {
+        const target = serializeRoute(route);
+        if (window.location.hash !== target) window.location.hash = target;
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }, [route]);
+
+      const navigate = useCallback((r) => setRoute(r), []);
+
+      // Theme
+      const dark = tweaks.theme === "dark";
+      useEffect(() => {
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      }, [dark]);
+      const setDark = (v) => setTweak("theme", v ? "dark" : "light");
+
+      const crumbs = buildCrumbs(route, state, navigate);
+
+      return (
+        <div className={`shell ${menuOpen ? "menu-open" : ""}`}>
+          <Sidebar route={route} navigate={navigate} state={state}
+                   menuOpen={menuOpen} onCloseMenu={() => setMenuOpen(false)}/>
+          <div className="main">
+            <Topbar crumbs={crumbs} navigate={navigate}
+                    dark={dark} setDark={setDark}
+                    onToggleMenu={() => setMenuOpen(o => !o)}/>
+
+            {route.name === "home" && <HomeScreen state={state} navigate={navigate}/>}
+            {route.name === "dashboard" && <DashboardScreen state={state} navigate={navigate}/>}
+            {route.name === "quiz-hub" && <QuizHubScreen state={state} navigate={navigate}/>}
+            {route.name === "quiz-intro" && <QuizIntroScreen state={state} update={update} navigate={navigate} moduleId={route.moduleId}/>}
+            {route.name === "quiz-run" && <QuizRunScreen state={state} update={update} navigate={navigate}/>}
+            {route.name === "quiz-result" && <QuizResultScreen state={state} update={update} navigate={navigate}/>}
+            {route.name === "quiz-wrong" && <QuizWrongScreen state={state} navigate={navigate}/>}
+            {route.name === "module" && (
+              <ModuleScreen state={state} update={update} navigate={navigate}
+                            moduleId={route.moduleId} chapterId={route.chapterId}/>
+            )}
+            {route.name === "settings" && (
+              <div className="page">
+                <header style={{ marginBottom: 32 }}>
+                  <h1 className="page-title">설정</h1>
+                  <p className="page-sub">학습 환경을 사용자에 맞게 조정하세요.</p>
+                </header>
+                <div className="card" style={{ padding: 24 }}>
+                  <div className="row between" style={{ marginBottom: 16 }}>
+                    <div>
+                      <div style={{ font: "600 14px/20px var(--font-sans)", color: "var(--gray-900)" }}>테마</div>
+                      <div style={{ font: "400 13px/20px var(--font-sans)", color: "var(--gray-500)" }}>다크/라이트 모드를 전환합니다.</div>
+                    </div>
+                    <Btn variant="outline" leadingIcon={dark ? "sun" : "moon"} onClick={() => setDark(!dark)}>
+                      {dark ? "라이트로 전환" : "다크로 전환"}
+                    </Btn>
+                  </div>
+                  <div className="row between" style={{ paddingTop: 16, borderTop: "1px solid var(--border-subtle)" }}>
+                    <div>
+                      <div style={{ font: "600 14px/20px var(--font-sans)", color: "var(--gray-900)" }}>학습 데이터 초기화</div>
+                      <div style={{ font: "400 13px/20px var(--font-sans)", color: "var(--gray-500)" }}>모든 진행 상황과 점수가 삭제됩니다.</div>
+                    </div>
+                    <Btn variant="outline" leadingIcon="trash-2"
+                         onClick={() => {
+                           if (confirm("정말로 모든 학습 데이터를 초기화하시겠습니까?")) {
+                             localStorage.removeItem(STORAGE_KEY);
+                             window.location.reload();
+                           }
+                         }}>초기화</Btn>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <TweaksPanel title="Tweaks" noDeckControls>
+            <TweakSection label="테마">
+              <TweakRadio label="모드"
+                value={tweaks.theme}
+                options={["light", "dark"]}
+                onChange={v => setTweak("theme", v)}/>
+            </TweakSection>
+            <TweakSection label="개발용">
+              <TweakButton label="학습 데이터 초기화" onClick={() => {
+                if (confirm("정말로 모든 학습 데이터를 초기화하시겠습니까?")) {
+                  localStorage.removeItem(STORAGE_KEY);
+                  window.location.reload();
+                }
+              }}/>
+            </TweakSection>
+          </TweaksPanel>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

@@ -32,11 +32,11 @@ export function QuizResult({
   const isPerfect = percentage === 100;
 
   const getGrade = () => {
-    if (percentage >= 90) return { grade: "A", color: "text-green-600" };
-    if (percentage >= 80) return { grade: "B", color: "text-blue-600" };
-    if (percentage >= 70) return { grade: "C", color: "text-yellow-600" };
-    if (percentage >= 60) return { grade: "D", color: "text-orange-600" };
-    return { grade: "F", color: "text-red-600" };
+    if (percentage >= 90) return { grade: "A", color: "text-[color:var(--success)]" };
+    if (percentage >= 80) return { grade: "B", color: "text-[color:var(--info)]" };
+    if (percentage >= 70) return { grade: "C", color: "text-[color:var(--warning)]" };
+    if (percentage >= 60) return { grade: "D", color: "text-[color:var(--warning)]" };
+    return { grade: "F", color: "text-destructive" };
   };
 
   const { grade, color } = getGrade();
@@ -57,18 +57,18 @@ export function QuizResult({
           className={cn(
             "w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-4",
             isPerfect
-              ? "bg-yellow-100 dark:bg-yellow-900/30"
+              ? "bg-[--bg-warning-tint]"
               : isPassing
-                ? "bg-green-100 dark:bg-green-900/30"
-                : "bg-red-100 dark:bg-red-900/30"
+                ? "bg-[--bg-success-tint]"
+                : "bg-[--bg-error-tint]"
           )}
         >
           {isPerfect ? (
-            <Trophy className="h-10 w-10 text-yellow-600" />
+            <Trophy className="h-10 w-10 text-[color:var(--warning)]" />
           ) : isPassing ? (
-            <CheckCircle2 className="h-10 w-10 text-green-600" />
+            <CheckCircle2 className="h-10 w-10 text-[color:var(--success)]" />
           ) : (
-            <XCircle className="h-10 w-10 text-red-600" />
+            <XCircle className="h-10 w-10 text-destructive" />
           )}
         </div>
         <CardTitle className="text-2xl">퀴즈 결과</CardTitle>
@@ -91,8 +91,8 @@ export function QuizResult({
             className={cn(
               "h-3",
               isPassing
-                ? "[&>div]:bg-green-600"
-                : "[&>div]:bg-red-600"
+                ? "[&>div]:bg-[color:var(--success)]"
+                : "[&>div]:bg-destructive"
             )}
           />
         </div>
@@ -102,10 +102,10 @@ export function QuizResult({
           className={cn(
             "p-4 rounded-lg text-center",
             isPerfect
-              ? "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200"
+              ? "bg-[--bg-warning-tint] text-[color:var(--warning)]"
               : isPassing
-                ? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200"
-                : "bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200"
+                ? "bg-[--bg-success-tint] text-[color:var(--success)]"
+                : "bg-[--bg-error-tint] text-destructive"
           )}
         >
           <p className="font-medium">{getMessage()}</p>
@@ -114,11 +114,11 @@ export function QuizResult({
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 text-center">
           <div className="p-3 bg-muted/50 rounded-lg">
-            <p className="text-2xl font-bold text-green-600">{score}</p>
+            <p className="text-2xl font-bold text-[color:var(--success)]">{score}</p>
             <p className="text-xs text-muted-foreground">정답</p>
           </div>
           <div className="p-3 bg-muted/50 rounded-lg">
-            <p className="text-2xl font-bold text-red-600">
+            <p className="text-2xl font-bold text-destructive">
               {totalQuestions - score}
             </p>
             <p className="text-xs text-muted-foreground">오답</p>

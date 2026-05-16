@@ -5,20 +5,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-xs font-semibold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-colors overflow-hidden",
+  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "border-transparent bg-[--bg-primary-tint] text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/70",
+          "border-transparent bg-[--bg-neutral-tint] text-muted-foreground",
         destructive:
-          "bg-destructive/10 text-destructive dark:bg-destructive/20 [a&]:hover:bg-destructive/20",
+          "border-transparent bg-[--bg-error-tint] text-destructive",
         outline:
-          "border border-border text-foreground [a&]:hover:bg-secondary",
+          "border-[--border-neutral] text-foreground",
         success:
-          "bg-green-500/10 text-green-600 dark:text-green-400 [a&]:hover:bg-green-500/20",
+          "border-transparent bg-[--bg-success-tint] text-[color:var(--success)]",
+        warning:
+          "border-transparent bg-[--bg-warning-tint] text-[color:var(--warning)]",
+        info:
+          "border-transparent bg-[--bg-info-tint] text-[color:var(--info)]",
       },
     },
     defaultVariants: {
@@ -26,6 +30,10 @@ const badgeVariants = cva(
     },
   }
 )
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
 
 function Badge({
   className,

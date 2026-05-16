@@ -46,8 +46,8 @@ export default function QuizLoading() {
 
         {/* Navigation */}
         <div className="flex justify-between">
-          <Skeleton className="h-10 w-24" />
-          <Skeleton className="h-10 w-24" />
+          <Skeleton className="h-11 w-24" />
+          <Skeleton className="h-11 w-24" />
         </div>
       </div>
     </div>

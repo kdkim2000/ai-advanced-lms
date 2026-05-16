@@ -21,6 +21,15 @@ const moduleIcons: Record<string, string> = {
   "fine-tuning": "🎯",
 };
 
+const moduleColorVars: Record<string, { bg: string; text: string }> = {
+  "python":              { bg: "var(--module-python-bg)",  text: "var(--module-python-text)" },
+  "data-analysis":       { bg: "var(--module-data-bg)",    text: "var(--module-data-text)" },
+  "llm":                 { bg: "var(--module-llm-bg)",     text: "var(--module-llm-text)" },
+  "prompt-engineering":  { bg: "var(--module-prompt-bg)",  text: "var(--module-prompt-text)" },
+  "rag":                 { bg: "var(--module-rag-bg)",     text: "var(--module-rag-text)" },
+  "fine-tuning":         { bg: "var(--module-fine-bg)",    text: "var(--module-fine-text)" },
+};
+
 export default function HomePage() {
   const isHydrated = useIsHydrated();
   const { progress, getModuleProgress } = useProgressStore();
@@ -148,7 +157,15 @@ export default function HomePage() {
                   className="group block space-y-3"
                 >
                   <div className="flex items-start justify-between">
-                    <span className="text-3xl">{moduleIcons[module.id]}</span>
+                    <span
+                      className="text-3xl w-12 h-12 flex items-center justify-center rounded-lg"
+                      style={{
+                        backgroundColor: moduleColorVars[module.id]?.bg ?? "var(--bg-subtle)",
+                        color: moduleColorVars[module.id]?.text ?? "var(--foreground)",
+                      }}
+                    >
+                      {moduleIcons[module.id]}
+                    </span>
                     <span className="text-sm text-muted-foreground">
                       {progressPercent}%
                     </span>

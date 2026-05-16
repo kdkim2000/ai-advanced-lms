@@ -96,7 +96,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                     {currentModule.order}. {currentModule.titleKo}
                   </h1>
                   {progressPercent === 100 && (
-                    <span className="text-xs text-green-600 font-medium px-2 py-0.5 bg-green-50 dark:bg-green-900/20 rounded-full">
+                    <span className="text-xs text-[color:var(--success)] font-medium px-2 py-0.5 bg-[--bg-success-tint] rounded-full">
                       완료
                     </span>
                   )}
@@ -170,7 +170,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                           {chapter.title}
                         </span>
                         {isComplete && (
-                          <Check className="h-4 w-4 text-green-500" />
+                          <Check className="h-4 w-4 text-[color:var(--success)]" />
                         )}
                       </div>
                       {chapter.description && (

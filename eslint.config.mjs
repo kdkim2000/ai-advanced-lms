@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design handoff files (not Next.js source)
+    "docs/design_handoff_ai_advanced_lms/**",
+    // Utility scripts (CommonJS)
+    "scripts/**",
+    // Claude worktrees
+    ".claude/worktrees/**",
   ]),
 ]);
 

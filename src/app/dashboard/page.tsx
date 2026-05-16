@@ -144,7 +144,7 @@ export default function DashboardPage() {
                         {module.titleKo}
                       </span>
                       {progressPercent === 100 && (
-                        <span className="text-xs text-green-600 font-medium">완료</span>
+                        <span className="text-xs text-[color:var(--success)] font-medium">완료</span>
                       )}
                     </div>
                     <div className="flex items-center gap-4">
@@ -194,7 +194,7 @@ export default function DashboardPage() {
                         </p>
                       </div>
                     </div>
-                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                    <CheckCircle2 className="h-4 w-4 text-[color:var(--success)]" />
                   </Link>
                 );
               })}
