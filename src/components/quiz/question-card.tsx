@@ -46,7 +46,7 @@ export function QuestionCard({
               variant={isCorrect ? "default" : "destructive"}
               className={cn(
                 "text-xs",
-                isCorrect && "bg-green-600 hover:bg-green-700"
+                isCorrect && "bg-[color:var(--success)] hover:bg-[color:var(--success)]/90"
               )}
             >
               {isCorrect ? (
@@ -96,9 +96,9 @@ export function QuestionCard({
                   "disabled:cursor-not-allowed",
                   isSelected && !isSubmitted && "border-primary bg-primary/10",
                   showCorrectHighlight &&
-                    "border-green-500 bg-green-50 dark:bg-green-950/30",
+                    "border-[color:var(--success)] bg-[--bg-success-tint]",
                   showWrongHighlight &&
-                    "border-red-500 bg-red-50 dark:bg-red-950/30"
+                    "border-destructive bg-[--bg-error-tint]"
                 )}
               >
                 <div className="flex items-start gap-2 sm:gap-3">
@@ -110,19 +110,19 @@ export function QuestionCard({
                         ? "bg-primary text-primary-foreground border-primary"
                         : "bg-muted border-border",
                       showCorrectHighlight &&
-                        "bg-green-500 text-white border-green-500",
+                        "bg-[color:var(--success)] text-white border-[color:var(--success)]",
                       showWrongHighlight &&
-                        "bg-red-500 text-white border-red-500"
+                        "bg-destructive text-white border-destructive"
                     )}
                   >
                     {optionLabel}
                   </span>
                   <span className="flex-1 pt-0.5 break-words">{option}</span>
                   {isSubmitted && isCorrectOption && (
-                    <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" aria-hidden="true" />
+                    <CheckCircle2 className="h-5 w-5 text-[color:var(--success)] flex-shrink-0" aria-hidden="true" />
                   )}
                   {showWrongHighlight && (
-                    <XCircle className="h-5 w-5 text-red-600 flex-shrink-0" aria-hidden="true" />
+                    <XCircle className="h-5 w-5 text-destructive flex-shrink-0" aria-hidden="true" />
                   )}
                 </div>
               </button>

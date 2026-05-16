@@ -72,7 +72,7 @@ export default function LearnPage() {
                               {module.order}. {module.titleKo}
                             </h2>
                             {progressPercent === 100 && (
-                              <span className="text-xs text-green-600 font-medium px-2 py-0.5 bg-green-50 dark:bg-green-900/20 rounded-full">
+                              <span className="text-xs text-[color:var(--success)] font-medium px-2 py-0.5 bg-[--bg-success-tint] rounded-full">
                                 완료
                               </span>
                             )}

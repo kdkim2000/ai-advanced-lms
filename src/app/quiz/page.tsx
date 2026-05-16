@@ -148,7 +148,7 @@ export default function QuizListPage() {
               <div className="flex items-center justify-between">
                 <span className="text-4xl">📝</span>
                 {wrongAnswerCount > 0 && (
-                  <span className="text-xs font-medium text-orange-600">
+                  <span className="text-xs font-medium text-[color:var(--warning)]">
                     {wrongAnswerCount}문제
                   </span>
                 )}
@@ -205,7 +205,7 @@ export default function QuizListPage() {
                     {hasAttempted && (
                       <span
                         className={`text-xs font-medium ${
-                          isPassing ? "text-green-600" : "text-muted-foreground"
+                          isPassing ? "text-[color:var(--success)]" : "text-muted-foreground"
                         }`}
                       >
                         {isPassing && <Trophy className="h-3 w-3 inline mr-1" />}

@@ -98,7 +98,7 @@ export function PythonEditor({
                 </Badge>
               )}
               {status === "ready" && (
-                <Badge variant="default" className="text-xs bg-green-600">
+                <Badge variant="default" className="text-xs bg-[color:var(--success)]">
                   <CheckCircle2 className="h-3 w-3 mr-1" />
                   준비됨
                 </Badge>
@@ -192,9 +192,9 @@ export function PythonEditor({
             className={`rounded-lg border p-4 ${
               result.success
                 ? isOutputCorrect
-                  ? "border-green-500 bg-green-50 dark:bg-green-950/20"
+                  ? "border-[color:var(--success)] bg-[--bg-success-tint]"
                   : "border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900"
-                : "border-red-500 bg-red-50 dark:bg-red-950/20"
+                : "border-destructive bg-[--bg-error-tint]"
             }`}
           >
             <div className="flex items-center justify-between mb-2">
@@ -202,8 +202,8 @@ export function PythonEditor({
                 {result.success ? (
                   isOutputCorrect ? (
                     <>
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
-                      <span className="text-green-700 dark:text-green-400">
+                      <CheckCircle2 className="h-4 w-4 text-[color:var(--success)]" />
+                      <span className="text-[color:var(--success)]">
                         정답입니다!
                       </span>
                     </>
@@ -215,8 +215,8 @@ export function PythonEditor({
                   )
                 ) : (
                   <>
-                    <AlertCircle className="h-4 w-4 text-red-600" />
-                    <span className="text-red-700 dark:text-red-400">오류</span>
+                    <AlertCircle className="h-4 w-4 text-destructive" />
+                    <span className="text-destructive">오류</span>
                   </>
                 )}
               </span>
@@ -232,7 +232,7 @@ export function PythonEditor({
             )}
 
             {result.error && (
-              <pre className="text-sm font-mono whitespace-pre-wrap text-red-600 dark:text-red-400 bg-white dark:bg-zinc-950 rounded p-3 border border-red-200 dark:border-red-800 mt-2">
+              <pre className="text-sm font-mono whitespace-pre-wrap text-destructive bg-white dark:bg-zinc-950 rounded p-3 border border-destructive/30 mt-2">
                 {result.error}
               </pre>
             )}

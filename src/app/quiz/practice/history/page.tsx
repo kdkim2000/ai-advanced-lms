@@ -115,10 +115,10 @@ export default function PracticeHistoryPage() {
 
   // Get grade color
   const getGradeColor = (percentage: number) => {
-    if (percentage >= 90) return "text-green-600";
-    if (percentage >= 70) return "text-blue-600";
-    if (percentage >= 50) return "text-yellow-600";
-    return "text-red-600";
+    if (percentage >= 90) return "text-[color:var(--success)]";
+    if (percentage >= 70) return "text-[color:var(--info)]";
+    if (percentage >= 50) return "text-[color:var(--warning)]";
+    return "text-destructive";
   };
 
   // Empty state
@@ -198,7 +198,7 @@ export default function PracticeHistoryPage() {
           <Card>
             <CardHeader className="pb-2">
               <CardDescription>최고 점수</CardDescription>
-              <CardTitle className="text-3xl text-green-600 flex items-center gap-2">
+              <CardTitle className="text-3xl text-[color:var(--success)] flex items-center gap-2">
                 <Trophy className="h-6 w-6" />
                 {stats.bestScore}%
               </CardTitle>
@@ -209,12 +209,12 @@ export default function PracticeHistoryPage() {
               <CardDescription>취약 영역</CardDescription>
               <CardTitle className="text-xl">
                 {advice.length > 0 ? (
-                  <span className="flex items-center gap-1 text-orange-600">
+                  <span className="flex items-center gap-1 text-[color:var(--warning)]">
                     <AlertTriangle className="h-5 w-5" />
                     {advice.length}개
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 text-green-600">
+                  <span className="flex items-center gap-1 text-[color:var(--success)]">
                     <CheckCircle2 className="h-5 w-5" />
                     없음
                   </span>
@@ -258,10 +258,10 @@ export default function PracticeHistoryPage() {
                           value={accuracy}
                           className={`h-2 ${
                             accuracy >= 70
-                              ? "[&>div]:bg-green-500"
+                              ? "[&>div]:bg-[color:var(--success)]"
                               : accuracy >= 50
-                              ? "[&>div]:bg-yellow-500"
-                              : "[&>div]:bg-red-500"
+                              ? "[&>div]:bg-[color:var(--warning)]"
+                              : "[&>div]:bg-destructive"
                           }`}
                         />
                       </div>
@@ -274,13 +274,13 @@ export default function PracticeHistoryPage() {
 
         {/* Advice Section */}
         {advice.length > 0 && (
-          <Card className="border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/30">
+          <Card className="bg-[--bg-warning-tint] border-[color:var(--warning)]/30">
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2 text-orange-800 dark:text-orange-200">
+              <CardTitle className="text-lg flex items-center gap-2 text-[color:var(--warning)]">
                 <Lightbulb className="h-5 w-5" />
                 학습 조언
               </CardTitle>
-              <CardDescription className="text-orange-700 dark:text-orange-300">
+              <CardDescription className="text-[color:var(--warning)]">
                 분석 결과를 바탕으로 한 맞춤 학습 조언입니다.
               </CardDescription>
             </CardHeader>
@@ -359,10 +359,10 @@ export default function PracticeHistoryPage() {
                       <div
                         className={`w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold ${
                           attempt.percentage >= 70
-                            ? "bg-green-100 text-green-600 dark:bg-green-900/30"
+                            ? "bg-[--bg-success-tint] text-[color:var(--success)]"
                             : attempt.percentage >= 50
-                            ? "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30"
-                            : "bg-red-100 text-red-600 dark:bg-red-900/30"
+                            ? "bg-[--bg-warning-tint] text-[color:var(--warning)]"
+                            : "bg-[--bg-error-tint] text-destructive"
                         }`}
                       >
                         {attempt.percentage}%
@@ -456,10 +456,10 @@ export default function PracticeHistoryPage() {
                           variant="outline"
                           className={`${
                             accuracy >= 70
-                              ? "border-green-500 text-green-700 dark:text-green-300"
+                              ? "border-[color:var(--success)] text-[color:var(--success)]"
                               : accuracy >= 50
-                              ? "border-yellow-500 text-yellow-700 dark:text-yellow-300"
-                              : "border-red-500 text-red-700 dark:text-red-300"
+                              ? "border-[color:var(--warning)] text-[color:var(--warning)]"
+                              : "border-destructive text-destructive"
                           }`}
                         >
                           {stat.moduleIcon} {stat.moduleTitle}: {stat.correct}/{stat.total} ({accuracy}%)
@@ -477,16 +477,16 @@ export default function PracticeHistoryPage() {
                           key={index}
                           className={`p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors ${
                             q.isCorrect
-                              ? "border-green-200 dark:border-green-800"
-                              : "border-red-200 dark:border-red-800"
+                              ? "border-[color:var(--success)]/40"
+                              : "border-destructive/40"
                           }`}
                           onClick={() => setSelectedQuestion(q)}
                         >
                           <div className="flex items-start gap-3">
                             {q.isCorrect ? (
-                              <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                              <CheckCircle2 className="h-5 w-5 text-[color:var(--success)] shrink-0 mt-0.5" />
                             ) : (
-                              <XCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                              <XCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
                             )}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
@@ -525,7 +525,7 @@ export default function PracticeHistoryPage() {
                       {selectedQuestion.moduleIcon} {selectedQuestion.moduleTitle}
                     </Badge>
                     {selectedQuestion.isCorrect ? (
-                      <Badge className="bg-green-500">
+                      <Badge className="bg-[--bg-success-tint] text-[color:var(--success)] border-[color:var(--success)]/50">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         정답
                       </Badge>
@@ -552,9 +552,9 @@ export default function PracticeHistoryPage() {
                           key={index}
                           className={`p-3 rounded-lg border text-sm ${
                             isCorrect
-                              ? "bg-green-50 border-green-300 dark:bg-green-950 dark:border-green-700"
+                              ? "bg-[--bg-success-tint] border-[color:var(--success)]/50"
                               : wasSelected
-                              ? "bg-red-50 border-red-300 dark:bg-red-950 dark:border-red-700"
+                              ? "bg-[--bg-error-tint] border-destructive/50"
                               : "bg-muted/30 border-muted"
                           }`}
                         >
@@ -562,7 +562,7 @@ export default function PracticeHistoryPage() {
                             <span className="font-medium shrink-0">{index + 1}.</span>
                             <span className="flex-1">{option}</span>
                             {isCorrect && (
-                              <Badge className="bg-green-500 shrink-0">정답</Badge>
+                              <Badge className="bg-[--bg-success-tint] text-[color:var(--success)] border-[color:var(--success)]/50 shrink-0">정답</Badge>
                             )}
                             {wasSelected && !isCorrect && (
                               <Badge variant="destructive" className="shrink-0">내 선택</Badge>

@@ -205,7 +205,7 @@ export default function WrongAnswersPage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>해결한 문제</CardDescription>
-                <CardTitle className="text-3xl text-green-600">{solvedCount}</CardTitle>
+                <CardTitle className="text-3xl text-[color:var(--success)]">{solvedCount}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
@@ -315,7 +315,7 @@ export default function WrongAnswersPage() {
           {solvedCount > 0 && (
             <div className="space-y-4">
               <h2 className="text-lg font-semibold flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-green-500" />
+                <CheckCircle2 className="h-5 w-5 text-[color:var(--success)]" />
                 해결한 문제 ({solvedCount})
               </h2>
               <div className="space-y-3">
@@ -364,7 +364,7 @@ export default function WrongAnswersPage() {
                       <Badge variant="outline">
                         {selectedSolvedQuestion.moduleIcon} {selectedSolvedQuestion.moduleTitle}
                       </Badge>
-                      <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                      <Badge variant="success">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         해결됨
                       </Badge>
@@ -384,9 +384,9 @@ export default function WrongAnswersPage() {
                             key={index}
                             className={`p-3 rounded-lg border text-sm ${
                               isCorrect
-                                ? "bg-green-50 border-green-300 dark:bg-green-950 dark:border-green-700"
+                                ? "bg-[--bg-success-tint] border-[color:var(--success)]/40"
                                 : wasSelected
-                                ? "bg-red-50 border-red-300 dark:bg-red-950 dark:border-red-700"
+                                ? "bg-[--bg-error-tint] border-destructive/40"
                                 : "bg-muted/30 border-muted"
                             }`}
                           >
@@ -396,7 +396,7 @@ export default function WrongAnswersPage() {
                               </span>
                               <span className="flex-1">{option}</span>
                               {isCorrect && (
-                                <Badge className="bg-green-500 shrink-0">정답</Badge>
+                                <Badge className="bg-[color:var(--success)] shrink-0">정답</Badge>
                               )}
                               {wasSelected && !isCorrect && (
                                 <Badge variant="destructive" className="shrink-0">내 선택</Badge>
@@ -507,8 +507,8 @@ export default function WrongAnswersPage() {
                     } ${
                       isRevealedQ
                         ? isCorrectQ
-                          ? "bg-green-500 text-white"
-                          : "bg-red-500 text-white"
+                          ? "bg-[color:var(--success)] text-white"
+                          : "bg-destructive text-white"
                         : isAnsweredQ
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -591,8 +591,8 @@ export default function WrongAnswersPage() {
 
           {/* Solved Message */}
           {currentQuestion && isRevealed && isCorrect && (
-            <div className="p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg text-sm text-center">
-              <p className="text-green-800 dark:text-green-200 font-medium">
+            <div className="p-3 bg-[--bg-success-tint] border border-[color:var(--success)]/30 rounded-lg text-sm text-center">
+              <p className="text-[color:var(--success)] font-medium">
                 🎉 정답입니다! 이 문제는 해결됨으로 표시되었습니다.
               </p>
             </div>

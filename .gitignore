@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*.local
+.claude/
+/docs/ai-advanced-lms.vercel.app.zip
+docs/history.md

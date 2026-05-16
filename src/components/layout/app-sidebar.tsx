@@ -169,7 +169,7 @@ export function AppSidebar() {
                           </span>
                           <span className="flex-1">{module.titleKo}</span>
                           {isHydrated && progressPercent === 100 ? (
-                            <Check className="size-4 text-green-500" />
+                            <Check className="size-4 text-[color:var(--success)]" />
                           ) : isHydrated && progressPercent > 0 ? (
                             <Badge variant="secondary" className="text-xs">
                               {progressPercent}%
@@ -200,7 +200,7 @@ export function AppSidebar() {
                                     href={`/learn/${module.id}/${chapter.slug}`}
                                   >
                                     {isChapterComplete && (
-                                      <Check className="size-3 text-green-500 mr-1" />
+                                      <Check className="size-3 text-[color:var(--success)] mr-1" />
                                     )}
                                     <span
                                       className={

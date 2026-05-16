@@ -440,7 +440,7 @@ export default function PracticeQuizPage() {
       />
 
       <div className="flex flex-1 flex-col gap-6 p-6">
-        <div className="mx-auto w-full max-w-3xl space-y-4 sm:space-y-6">
+        <div className="mx-auto w-full max-w-3xl space-y-5 sm:space-y-7">
           {/* Title and Info */}
           <div className="space-y-1 sm:space-y-2">
             <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
@@ -491,7 +491,7 @@ export default function PracticeQuizPage() {
                   <button
                     key={index}
                     onClick={() => setCurrentQuestionIndex(index)}
-                    className={`w-9 h-9 sm:w-7 sm:h-7 rounded-full text-sm sm:text-xs font-medium transition-all flex-shrink-0 ${isCurrent ? "ring-2 ring-primary ring-offset-1" : ""} ${isSubmitted ? (isCorrectAfterSubmit ? "bg-green-500 text-white" : isWrongAfterSubmit ? "bg-red-500 text-white" : "bg-muted text-muted-foreground") : isAnswered ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
+                    className={`w-9 h-9 sm:w-7 sm:h-7 rounded-full text-sm sm:text-xs font-medium transition-all flex-shrink-0 ${isCurrent ? "ring-2 ring-primary ring-offset-1" : ""} ${isSubmitted ? (isCorrectAfterSubmit ? "bg-[color:var(--success)] text-white" : isWrongAfterSubmit ? "bg-destructive text-white" : "bg-muted text-muted-foreground") : isAnswered ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"}`}
                   >
                     {index + 1}
                   </button>
